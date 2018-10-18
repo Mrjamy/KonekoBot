@@ -82,9 +82,9 @@ For the versions available, see the [tags on this repository](https://github.com
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Jamy Muilwijk** - *Initial work* - [jmuilwijk](https://github.com/jmuilwijk/)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/jmuilwijk/DiscordBot/contributors) who participated in this project.
 
 ## License
 
