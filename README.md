@@ -1,5 +1,5 @@
 # DiscordBot
-A discord bot written in python
+A discord bot written in python 3.6 on a linux based system.
 
 ## Getting Started
 
