@@ -6,11 +6,22 @@ A discord bot written in python
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
-
-What things you need to install the software and how to install them
-
+Make sure apt-get is updated
 ```
-Give examples
+$ sudo apt update
+```
+
+- Python 3.6
+```
+$ sudo apt install python3.6
+```
+- pip
+```
+$ sudo apt install python3-pip
+```
+- discord.py
+```
+$ python -m pip install discord.py
 ```
 
 ### Installing
