@@ -19,7 +19,7 @@ $ sudo apt install python3-pip
 ```
 - discord.py
 ```
-$ python -m pip install discord.py
+$ python -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
 ```
 
 ### Installing
