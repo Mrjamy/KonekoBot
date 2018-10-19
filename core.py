@@ -1,9 +1,13 @@
-# Work with Python 3.6
 import discord
-
-TOKEN = 'XXXXXXXXXX'
+import config
 
 client = discord.Client()
+
+
+@client.event
+async def on_ready():
+    # Bot logged in.
+    print('We have logged in as {0.user}'.format(client))
 
 
 @client.event
@@ -13,15 +17,6 @@ async def on_message(message):
         return
 
     if message.content.startswith('!hello'):
-        msg = 'Hello {0.author.mention}'.format(message)
-        await client.send_message(message.channel, msg)
+        await message.channel.send('Hello!')
 
-
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
-
-client.run(TOKEN)
+client.run(config.token)
