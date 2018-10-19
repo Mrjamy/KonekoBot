@@ -1,22 +1,23 @@
-import discord
+from discord.ext import commands
+
 import config
 
-client = discord.Client()
+prefix = "!"
+extension_folder = "modules"
+startup_extensions = ["general"]
+
+bot = commands.Bot(command_prefix=prefix)
+bot.case_insensitive = False
+bot.pm_help = False
 
 
-@client.event
+# Function called when the bot is ready.
+@bot.event
 async def on_ready():
     # Bot logged in.
-    print('We have logged in as {0.user}'.format(client))
+    print('Logged in as {0.user}'.format(bot))
 
-
-@client.event
-async def on_message(message):
-    # we do not want the bot to reply to itself
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('!hello'):
-        await message.channel.send('Hello!')
-
-client.run(config.token)
+if __name__ == '__main__':
+    for extension in startup_extensions:
+        bot.load_extension(extension_folder + "." + extension)
+    bot.run(config.token)
