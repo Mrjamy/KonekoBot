@@ -8,10 +8,8 @@ class General:
     # Command hello, listen to !hello
     @commands.command()
     async def hello(self, message):
-        # we do not want the bot to reply to itself
-        if message.content.startswith('!hello'):
-            msg = 'Hello {0.author.mention}'.format(message)
-            await message.channel.send(msg)
+        msg = 'Hello {0.author.mention}'.format(message)
+        await message.channel.send(msg)
 
     # Command ping, listen to !ping
     @commands.command(pass_context=True, description='Get the latency of the bot.')
