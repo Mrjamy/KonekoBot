@@ -4,6 +4,7 @@ import config
 
 prefix = "!"
 startup_extensions = [
+    "modules.welcome",
     "modules.general",
     "modules.response.response"
 ]
