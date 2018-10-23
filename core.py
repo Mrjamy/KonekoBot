@@ -1,6 +1,5 @@
 from discord.ext import commands
-
-import config
+from sys import argv
 
 prefix = "!"
 startup_extensions = [
@@ -23,4 +22,4 @@ async def on_ready():
 if __name__ == '__main__':
     for extension in startup_extensions:
         bot.load_extension(extension)
-    bot.run(config.token)
+    bot.run(argv[1])
