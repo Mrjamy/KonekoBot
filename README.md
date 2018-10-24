@@ -9,9 +9,9 @@ Make sure apt-get is updated
 ```
 $ sudo apt update
 ```
-- Python 3.6
+- Python 3.5
 ```
-$ sudo apt install python3.6
+$ sudo apt install python3.5
 ```
 - pip
 ```
@@ -19,23 +19,18 @@ $ sudo apt install python3-pip
 ```
 - discord.py
 ```
-$ python -m pip install -U git+https://github.com/Rapptz/discord.py@rewrite#egg=discord.py[voice]
+$ pip3 install -r requirements.txt
 ```
 
 ### Installing
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
-
+To start you need a working copy of this repo
 ```
-Give the example
+$ git clone https://github.com/jmuilwijk/DiscordBot.git
 ```
-And repeat
+Run the bot.
 ```
-until finished
+$ python core.py TOKEN
 ```
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Running the tests
 Explain how to run the automated tests for this system
 
