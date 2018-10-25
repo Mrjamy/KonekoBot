@@ -56,14 +56,30 @@ class Music:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def join(self, ctx, *, channel: discord.VoiceChannel):
-        """Joins a voice channel"""
+    @commands.command(pass_context=True)
+    async def join(self, ctx, *, channel: discord.VoiceChannel = None):
+        if not channel:
+            try:
+                channel = ctx.author.voice.channel
+            except AttributeError:
+                print("InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')")
 
-        if ctx.voice_client is not None:
-            return await ctx.voice_client.move_to(channel)
+        vc = ctx.voice_client
 
-        await channel.connect()
+        if vc:
+            if vc.channel.id == channel.id:
+                return
+            try:
+                await vc.move_to(channel)
+            except asyncio.TimeoutError:
+                print("VoiceConnectionError(f'Moving to channel: <{channel}> timed out.')")
+        else:
+            try:
+                await channel.connect()
+            except asyncio.TimeoutError:
+                print("VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')")
+
+        await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
     @commands.command()
     async def play(self, ctx, *, query):
