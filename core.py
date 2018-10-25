@@ -6,7 +6,8 @@ startup_extensions = [
     "modules.welcome",
     "modules.goodbye",
     "modules.general",
-    "modules.response.response"
+    "modules.response.response",
+    "modules.music"
 ]
 
 bot = commands.Bot(command_prefix=prefix)
