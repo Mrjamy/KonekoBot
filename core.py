@@ -10,7 +10,7 @@ startup_extensions = [
     "modules.music"
 ]
 
-bot = commands.Bot(command_prefix=prefix)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
 bot.pm_help = False
 
 
