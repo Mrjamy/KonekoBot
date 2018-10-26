@@ -7,7 +7,7 @@ startup_extensions = [
     "modules.goodbye",
     "modules.general",
     "modules.response.response",
-    "modules.music"
+    "modules.music.music"
 ]
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
