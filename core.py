@@ -3,10 +3,10 @@ from sys import argv
 
 prefix = "!"
 startup_extensions = [
-    "modules.welcome",
-    "modules.goodbye",
-    "modules.general",
-    "modules.response.response",
+    "modules.general.welcome",
+    "modules.general.goodbye",
+    "modules.general.general",
+    "modules.general.response",
     "modules.music.music"
 ]
 
