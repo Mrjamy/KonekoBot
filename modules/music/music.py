@@ -18,7 +18,7 @@ ytdl_format_options = {
     'quiet': True,
     'no_warnings': True,
     'default_search': 'auto',
-    'source_address': '0.0.0.0' # bind to ipv4 since ipv6 addresses cause issues sometimes
+    'source_address': '0.0.0.0'  # bind to ipv4 since ipv6 addresses cause issues sometimes
 }
 
 ffmpeg_options = {
@@ -108,8 +108,16 @@ class Music:
         await ctx.voice_client.disconnect()
 
     # TODO: add method que.
+    async def add_que(self, song):
+        self.que.append(song)
 
     # TODO: add method deque.
+    async def remove_first(self):
+        self.que.pop(0)
+
+    # TODO: add method empty_que
+    async def empty_que(self):
+        self.que = []
 
     @play.before_invoke
     async def ensure_voice(self, ctx):
