@@ -1,6 +1,6 @@
 from discord.ext import commands
 from profanity import profanity
-from modules.response.words import predefined
+from modules.general.words import predefined
 
 
 class Response:

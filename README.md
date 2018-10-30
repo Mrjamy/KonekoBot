@@ -19,7 +19,7 @@ $ sudo apt install python3-pip
 ```
 - discord.py
 ```
-$ pip3 install -r requirements.txt
+$ pip3 install -U -r requirements.txt
 ```
 
 ### Installing

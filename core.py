@@ -3,13 +3,14 @@ from sys import argv
 
 prefix = "!"
 startup_extensions = [
-    "modules.welcome",
-    "modules.goodbye",
-    "modules.general",
-    "modules.response.response"
+    "modules.general.welcome",
+    "modules.general.goodbye",
+    "modules.general.general",
+    "modules.general.response",
+    "modules.music.music"
 ]
 
-bot = commands.Bot(command_prefix=prefix)
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
 bot.pm_help = False
 
 
