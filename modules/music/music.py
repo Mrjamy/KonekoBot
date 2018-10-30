@@ -1,6 +1,8 @@
 import asyncio
 import discord
 import youtube_dl
+
+from multiprocessing import Process
 from discord.ext import commands
 
 # Suppress noise about console usage from errors
@@ -53,7 +55,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
 class Music:
     def __init__(self, bot):
         self.bot = bot
-        self.que = []
+        self.__queue = asyncio.Queue()
 
     @commands.command(pass_context=True)
     async def join(self, ctx, *, channel: discord.VoiceChannel = None):
@@ -82,14 +84,18 @@ class Music:
         await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
     @commands.command()
-    async def play(self, ctx, *, url):
+    async def play(self, ctx):
         """Plays from a url, only youtube supported."""
+        while self.__queue:
+            for task in self.__queue:
 
-        async with ctx.typing():
-            player = await YTDLSource.from_url(url, loop=self.bot.loop)
-            ctx.voice_client.play(player, after=lambda e: print('Player error: %s' % e) if e else None)
 
-        await ctx.send('Now playing: {}'.format(player.title))
+    @commands.command()
+    async def add(self, ctx, *, url):
+        player = await YTDLSource.from_url(url, loop=self.bot.loop)
+        await self.__queue.put(ctx.voice_client.play(
+            player, after=lambda e: print('Player error: %s' % e) if e else None
+        ))
 
     @commands.command()
     async def volume(self, ctx, volume: int):
@@ -107,17 +113,14 @@ class Music:
 
         await ctx.voice_client.disconnect()
 
-    # TODO: add method que.
-    async def add_que(self, song):
-        self.que.append(song)
-
     # TODO: add method deque.
-    async def remove_first(self):
-        self.que.pop(0)
+    async def next(self):
+        return self.__queue.get()
 
     # TODO: add method empty_que
     async def empty_que(self):
-        self.que = []
+        self.__queue.empty()
+        return
 
     @play.before_invoke
     async def ensure_voice(self, ctx):
