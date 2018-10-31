@@ -14,6 +14,7 @@ class General:
     # Command ping, listen to !ping
     @commands.command(pass_context=True, description='Get the latency of the bot.')
     async def ping(self, ctx):
+        """Get the latency of the bot."""
         # Get the latency of the bot
         latency = str(round(self.bot.latency * 1000)) + " ms"  # Included in the Discord.py library
         # Send it to the user
