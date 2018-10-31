@@ -8,6 +8,7 @@ class General:
     # Command hello, listen to !hello
     @commands.command()
     async def hello(self, message):
+        # TODO: add command description.
         msg = 'Hello {0.author.mention}'.format(message)
         await message.channel.send(msg)
 
