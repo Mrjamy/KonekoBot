@@ -48,7 +48,10 @@ Explain what these tests test and why
 ```
 
 ## Deployment
-Add additional notes about how to deploy this on a live system
+Use the following link to invte the public bot to your server
+```
+https://discordapp.com/api/oauth2/authorize?client_id=502913609458909194&permissions=36785152&scope=bot
+```
 
 ## Built With
 ```python
