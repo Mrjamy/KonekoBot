@@ -391,8 +391,6 @@ class Music:
 
         await self.cleanup(ctx.guild)
 
-    # TODO: add support for PlayLists.
-
 
 def setup(bot):
     bot.add_cog(Music(bot))

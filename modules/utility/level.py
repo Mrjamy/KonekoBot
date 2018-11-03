@@ -1,6 +1,4 @@
-# TODO: import sql.
-
-# TODO: open connection.
+# TODO: add table for xp.
 
 # TODO: get user current xp.
 
