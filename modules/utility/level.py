@@ -17,3 +17,24 @@
 # TODO: Command - !xp (get user's card.)
 
 # TODO: Command - !levels (get the server's scoreboard.)
+
+from discord.ext import commands
+import services.database.connection as conn
+
+
+class Level:
+    def __init__(self, bot):
+        self.bot = bot
+
+    @commands.command()
+    async def xp(self, ctx, *user):
+        conn.create_connection()
+        # if not user:
+        #     user = ctx.author
+        # card = "card here"
+        msg = "Inprogress!"
+        await ctx.channel.send(msg)
+
+
+def setup(bot):
+    bot.add_cog(Level(bot))
