@@ -17,7 +17,7 @@
 # TODO: Command - !levels (get the server's scoreboard.)
 
 from discord.ext import commands
-import services.database.connection as conn
+import services.database.cursors.xp as xp
 
 
 class Level:
@@ -27,7 +27,7 @@ class Level:
     @commands.command()
     async def xp(self, ctx):
         """Get the user's level progress."""
-        conn.create_connection("services/database/pythonsqlite.db")
+        xp.XP.xp_by_user(ctx.author)
         # if not user:
         #     user = ctx.author
         # card = "card here"
