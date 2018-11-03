@@ -21,6 +21,13 @@ class General:
         # Send it to the user
         await ctx.send(latency)
 
+    @commands.command()
+    async def hug(self, message):
+        """Hug!"""
+        # TODO: add support for passing a user as parameter.
+        msg = 'hugs {0.author.mention}'.format(message)
+        await message.channel.send(msg)
+
 
 def setup(bot):
     bot.add_cog(General(bot))
