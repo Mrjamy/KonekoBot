@@ -28,6 +28,7 @@ class Level:
 
     @commands.command()
     async def xp(self, ctx, *user):
+        """Get the user's level progress"""
         conn.create_connection()
         # if not user:
         #     user = ctx.author
