@@ -3,11 +3,12 @@ from sys import argv
 
 prefix = "!"
 startup_extensions = [
-    "modules.general.welcome",
-    "modules.general.goodbye",
-    "modules.general.general",
-    "modules.general.response",
-    "modules.music.music"
+    "general.welcome",
+    "general.goodbye",
+    "general.general",
+    "general.response",
+    "music.music",
+    "utility.level"
 ]
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
@@ -22,5 +23,5 @@ async def on_ready():
 
 if __name__ == '__main__':
     for extension in startup_extensions:
-        bot.load_extension(extension)
+        bot.load_extension("modules." + extension)
     bot.run(argv[1])
