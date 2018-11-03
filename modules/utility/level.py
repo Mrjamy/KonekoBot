@@ -27,9 +27,9 @@ class Level:
         self.bot = bot
 
     @commands.command()
-    async def xp(self, ctx, *user):
-        """Get the user's level progress"""
-        conn.create_connection()
+    async def xp(self, ctx):
+        """Get the user's level progress."""
+        conn.create_connection("services/database/pythonsqlite.db")
         # if not user:
         #     user = ctx.author
         # card = "card here"

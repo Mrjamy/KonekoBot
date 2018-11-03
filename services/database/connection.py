@@ -1,12 +1,11 @@
 import sqlite3
-from os import path
 from sqlite3 import Error
 
 
-def create_connection():
+def create_connection(db_file):
     """ create a database connection to a SQLite database """
     try:
-        conn = sqlite3.connect(path.dirname(path.abspath(__file__)) + '/' + 'pythonsqlite.db')
+        conn = sqlite3.connect(db_file)
         print(sqlite3.version)
     except Error as e:
         print(e)
