@@ -17,7 +17,7 @@ class XP:
         cur.execute("""
                 CREATE TABLE IF NOT EXISTS xp (
                     id integer PRIMARY KEY,
-                    user text NOT NULL,
+                    user INTEGER NOT NULL,
                     timestamp INTEGER,
                     xp INTEGER,
                     guild INTEGER
