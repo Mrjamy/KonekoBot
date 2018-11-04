@@ -3,10 +3,10 @@ import services.database.connection as conn
 
 class XP:
     @staticmethod
-    def xp_by_user(user):
+    def xp_by_user(user, guild):
         connection = conn.create_connection("services/database/xp.db")
         cur = connection.cursor()
-        cur.execute("SELECT * FROM xp WHERE user=?", user)
+        cur.execute("SELECT * FROM xp WHERE user=? AND guild=?", (user, guild))
 
         return cur.fetchone()
 
@@ -19,6 +19,7 @@ class XP:
                     id integer PRIMARY KEY,
                     user text NOT NULL,
                     timestamp INTEGER,
-                    xp INTEGER
+                    xp INTEGER,
+                    guild INTEGER
                 );
                 """)
