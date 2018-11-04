@@ -27,7 +27,12 @@ class Level:
     @commands.command()
     async def xp(self, ctx):
         """Get the user's level progress."""
-        xp.XP.xp_by_user(ctx.author)
+        author = ctx.author.id
+        guild = ctx.guild.id
+
+        uxp = xp.XP.xp_by_user(author, guild)
+
+        print(uxp)
         # if not user:
         #     user = ctx.author
         # card = "card here"

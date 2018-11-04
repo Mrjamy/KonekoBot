@@ -3,10 +3,10 @@ import services.database.connection as conn
 
 class XP:
     @staticmethod
-    def xp_by_user(user, guild):
+    def xp_by_user(user: int, guild: int):
         connection = conn.create_connection("services/database/xp.db")
         cur = connection.cursor()
-        cur.execute("SELECT * FROM xp WHERE user=? AND guild=?", (user, guild))
+        cur.execute("SELECT * FROM xp WHERE user=? AND guild=?", [user, guild])
 
         return cur.fetchone()
 
@@ -17,7 +17,7 @@ class XP:
         cur.execute("""
                 CREATE TABLE IF NOT EXISTS xp (
                     id integer PRIMARY KEY,
-                    user text NOT NULL,
+                    user INTEGER NOT NULL,
                     timestamp INTEGER,
                     xp INTEGER,
                     guild INTEGER
