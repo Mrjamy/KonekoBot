@@ -1,4 +1,4 @@
-from core import bot as core
+from KonekoBot import bot as koneko
 
 
 class Goodbye:
@@ -6,7 +6,7 @@ class Goodbye:
         self.bot = bot
 
     # Function called after member joins.
-    @core.event
+    @koneko.event
     async def on_member_remove(self, member):
         guild = member.guild
         msg = 'Goodbye {0.mention}'
