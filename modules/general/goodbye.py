@@ -1,4 +1,4 @@
-from core import bot as core
+from KonekoBot import bot as core
 
 
 class Goodbye:
