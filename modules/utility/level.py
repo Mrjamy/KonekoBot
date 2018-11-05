@@ -41,6 +41,12 @@ class Level:
         msg = "Inprogress!"
         await ctx.channel.send(msg)
 
+    async def __local_check(self, ctx):
+        """A local check which applies to all commands in this cog."""
+        if not ctx.guild:
+            raise commands.NoPrivateMessage
+        return True
+
 
 def setup(bot):
     bot.add_cog(Level(bot))
