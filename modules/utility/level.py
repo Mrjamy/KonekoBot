@@ -29,6 +29,11 @@ class Level:
     @koneko.event
     async def on_message(self, ctx):
         """Get the user's level progress."""
+        if ctx.author == self.bot.user:
+            return
+        if ctx.author.bot:
+            return
+
         author = ctx.author.id
         guild = ctx.guild.id
         xp_reward = random.randint(1, 11)
