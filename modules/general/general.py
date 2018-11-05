@@ -25,7 +25,7 @@ class General:
     async def hug(self, message):
         """Hug!"""
         # TODO: add support for passing a user as parameter.
-        msg = 'hugs {0.author.mention}'.format(message)
+        msg = 'Hugs {0.author.mention}'.format(message)
         await message.channel.send(msg)
 
 
