@@ -16,36 +16,40 @@
 
 # TODO: Command - !levels (get the server's scoreboard.)
 
-from discord.ext import commands
-import services.database.cursors.xp as xp
+import random
+import time
+from KonekoBot import bot as koneko
+from services.database.cursors.xp import XP
 
 
 class Level:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def xp(self, ctx):
+    @koneko.event
+    async def on_message(self, ctx):
         """Get the user's level progress."""
         author = ctx.author.id
         guild = ctx.guild.id
+        xp_reward = random.randint(1, 11)
+        timestamp = time.time()
+        timeout = 30
 
-        xp.XP.setup()
-        xp.XP.test_data(guild, author)
-        uxp = xp.XP.xp_by_user(author, guild)
+        u_obj = XP.get_xp(author, guild)
+        old_timestamp = timestamp
+        current_xp = 0
 
-        print(uxp)
-        # if not user:
-        #     user = ctx.author
+        if len(u_obj) == 1:
+            old_timestamp = u_obj[2]
+            current_xp = u_obj[3]
+
+        if old_timestamp + timeout < timestamp:
+            XP.add_xp_to_user(author, guild, current_xp + xp_reward, timestamp)
+
+        # TODO: send message on level up.
         # card = "card here"
-        msg = "Inprogress!"
-        await ctx.channel.send(msg)
-
-    async def __local_check(self, ctx):
-        """A local check which applies to all commands in this cog."""
-        if not ctx.guild:
-            raise commands.NoPrivateMessage
-        return True
+        # msg = "Inprogress!"
+        # await ctx.channel.send(msg)
 
 
 def setup(bot):
