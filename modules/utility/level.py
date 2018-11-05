@@ -30,6 +30,8 @@ class Level:
         author = ctx.author.id
         guild = ctx.guild.id
 
+        xp.XP.setup()
+        xp.XP.test_data(guild, author)
         uxp = xp.XP.xp_by_user(author, guild)
 
         print(uxp)
