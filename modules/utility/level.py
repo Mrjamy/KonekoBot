@@ -20,6 +20,7 @@ import random
 import time
 from KonekoBot import bot as koneko
 from services.database.cursors.xp import XP
+from discord.ext import commands
 
 
 class Level:
@@ -55,6 +56,26 @@ class Level:
         # card = "card here"
         # msg = "Inprogress!"
         # await ctx.channel.send(msg)
+
+    @commands.command()
+    async def xp(self, ctx):
+        # TODO: add description.
+        author = ctx.author.id
+        guild = ctx.guild.id
+        u_obj = XP.get_xp(author, guild)
+        # TODO: add card.
+        if u_obj is not None:
+            msg = "Your xp is {0}!".format(u_obj[3])
+        else:
+            msg = "You dont have any xp yet, start earning xp by typing."
+        await ctx.channel.send(msg)
+
+    @commands.command()
+    async def leaderboard(self, ctx):
+        # TODO: add description.
+        # TODO: implement leaderboard.
+        msg = "Inprogress!"
+        await ctx.channel.send(msg)
 
 
 def setup(bot):
