@@ -1,7 +1,7 @@
 from discord.ext import commands
 from sys import argv
 
-prefix = "!"
+prefix = "/"
 startup_extensions = [
     "general.welcome",
     "general.goodbye",
