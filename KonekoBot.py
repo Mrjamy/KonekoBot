@@ -6,7 +6,7 @@ startup_extensions = [
     "general.welcome",
     "general.goodbye",
     "general.general",
-    "general.response",
+    # "general.response",
     "music.music",
     "utility.level"
 ]
