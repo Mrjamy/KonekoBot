@@ -1,3 +1,4 @@
+import time
 import services.database.connection as conn
 
 
@@ -23,3 +24,22 @@ class XP:
                     guild INTEGER
                 );
                 """)
+
+    @staticmethod
+    def test_data(guild, user):
+        connection = conn.create_connection("services/database/xp.db")
+        cur = connection.cursor()
+
+        ts = time.time()
+
+        sql = "SELECT * FROM xp WHERE guild=? AND user=?"
+        cur.execute(sql, [guild, user])
+        data = cur.fetchall()
+        # if object does not exist, create it
+        if len(data) == 0:
+            sql = "INSERT INTO xp (user, timestamp, xp, guild) VALUES (?, ?, ?, ?)"
+            cur.execute(sql, [user, ts, 100, guild])
+        # if stored object exist and we need update it
+        else:
+            sql = "UPDATE xp SET xp = ? WHERE guild = ? AND user = ?"
+            cur.execute(sql, [100, guild, user])
