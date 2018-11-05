@@ -1,4 +1,4 @@
-from KonekoBot import bot as core
+from KonekoBot import bot as koneko
 
 
 class Welcome:
@@ -6,7 +6,7 @@ class Welcome:
         self.bot = bot
 
     # Function called after member joins.
-    @core.event
+    @koneko.event
     async def on_member_join(self, member):
         guild = member.guild
         msg = 'Welcome to the {1.name} Discord server, {0.mention}, enjoy your stay.'
