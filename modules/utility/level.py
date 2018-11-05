@@ -39,7 +39,7 @@ class Level:
         old_timestamp = timestamp
         current_xp = 0
 
-        if len(u_obj) == 1:
+        if u_obj is not None:
             old_timestamp = u_obj[2]
             current_xp = u_obj[3]
 
