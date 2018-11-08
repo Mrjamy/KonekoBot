@@ -22,5 +22,5 @@ async def on_ready():
 
 if __name__ == '__main__':
     for extension in startup_extensions:
-        bot.load_extension("modules." + extension)
+        bot.load_extension("src.modules." + extension)
     bot.run(argv[1])
