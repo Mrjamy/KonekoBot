@@ -8,7 +8,6 @@ startup_extensions = [
     "general.general",
     # "general.response",
     "music.music",
-    # "utility.level"
 ]
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
