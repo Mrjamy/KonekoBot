@@ -5,6 +5,7 @@ class Welcome:
     def __init__(self, bot):
         self.bot = bot
 
+    # TODO: check if the bot has permissions before invoke.
     # Function called after member joins.
     @koneko.event
     async def on_member_join(self, member):
