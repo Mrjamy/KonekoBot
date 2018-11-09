@@ -3,11 +3,17 @@ from sys import argv
 
 prefix = "/"
 startup_extensions = [
-    "general.welcome",
-    "general.goodbye",
+    # "games.pokemon",
+    # "games.rps",
     "general.general",
+    # "general.goodbye",
     # "general.response",
+    # "general.welcome",
+    # "help.commands",
+    # "help.help",
     "music.music",
+    # "nsfw.nsfw",
+    # "utility.stats",
 ]
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
