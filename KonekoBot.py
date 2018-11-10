@@ -17,20 +17,20 @@ startup_extensions = [
     # "utility.stats",
 ]
 
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
-bot.pm_help = False
+KonekoBot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
+KonekoBot.pm_help = False
 
 
 # Function called when the bot is ready.
-@bot.event
+@KonekoBot.event
 async def on_ready():
     game = prefix + "help for help"
     activity = discord.Game(name=game)
-    await bot.change_presence(status=discord.Status.online, activity=activity)
+    await KonekoBot.change_presence(status=discord.Status.online, activity=activity)
     # Bot logged in.
-    print('Logged in as {0.user}'.format(bot))
+    print('Logged in as {0.user}'.format(KonekoBot))
 
 if __name__ == '__main__':
     for extension in startup_extensions:
-        bot.load_extension("src.modules." + extension)
-    bot.run(argv[1])
+        KonekoBot.load_extension("src.modules." + extension)
+    KonekoBot.run(argv[1])
