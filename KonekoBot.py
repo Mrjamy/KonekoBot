@@ -40,4 +40,5 @@ async def on_ready():
 if __name__ == '__main__':
     for extension in startup_extensions:
         KonekoBot.load_extension("src.modules." + extension)
+    KonekoBot.load_extension("src.core.handling")
     KonekoBot.run(argv[1])
