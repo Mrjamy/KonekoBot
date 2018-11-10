@@ -32,14 +32,12 @@ class CommandErrorHandler:
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                return await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+                return await ctx.author.send(f'{KonekoBot.prefix}{ctx.command} can not be used in Private Messages.')
             except:
                 pass
 
-        # For this error example we check to see where it came from...
         elif isinstance(error, commands.BadArgument):
-            if ctx.command.qualified_name == 'tag list':  # Check if the command being invoked is 'tag list'
-                return await ctx.send('I could not find that member. Please try again.')
+            return await ctx.send(f'Refer to.{KonekoBot.prefix}help {ctx.command}')
 
         elif isinstance(error, commands.BotMissingPermissions):
             missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
