@@ -10,7 +10,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 prefix = "/"
-startup_extensions = [
+toggle_extensions = [
     # "games.pokemon",
     # "games.rps",
     "general.general",
@@ -23,6 +23,11 @@ startup_extensions = [
     # "nsfw.nsfw",
     # "utility.prefix",
     # "utility.stats",
+]
+
+core_extensions = [
+    "src.core.CommandErrorHandler",
+    # "src.modules.utility.CommandToggle",
 ]
 
 KonekoBot = commands.Bot(command_prefix=commands.when_mentioned_or(prefix))
@@ -39,7 +44,8 @@ async def on_ready():
     print('Logged in as {0.user}'.format(KonekoBot))
 
 if __name__ == '__main__':
-    for extension in startup_extensions:
+    for extension in toggle_extensions:
         KonekoBot.load_extension("src.modules." + extension)
-    KonekoBot.load_extension("src.core.CommandErrorHandler")
+    for extension in core_extensions:
+        KonekoBot.load_extension(extension)
     KonekoBot.run(argv[1])
