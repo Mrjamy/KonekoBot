@@ -1,4 +1,4 @@
-from KonekoBot import bot as koneko
+from KonekoBot import KonekoBot
 
 
 class Goodbye:
@@ -7,7 +7,7 @@ class Goodbye:
 
     # TODO: check if the bot has permissions before invoke.
     # Function called after member joins.
-    @koneko.event
+    @KonekoBot.event
     async def on_member_remove(self, member):
         guild = member.guild
         msg = 'Goodbye {0.mention}'
