@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 from sys import argv
 
@@ -23,6 +24,9 @@ bot.pm_help = False
 # Function called when the bot is ready.
 @bot.event
 async def on_ready():
+    game = prefix + "help for help"
+    activity = discord.Game(name=game)
+    await bot.change_presence(status=discord.Status.online, activity=activity)
     # Bot logged in.
     print('Logged in as {0.user}'.format(bot))
 
