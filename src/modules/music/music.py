@@ -297,6 +297,7 @@ class Music:
         vc.resume()
         await ctx.send(f'**`{ctx.author}`**: Resumed the song!')
 
+    # TODO: implement a required role to skip songs (DJ) | bot_owner
     @commands.command(name='skip')
     async def skip_(self, ctx):
         """Skip the song."""
@@ -354,6 +355,7 @@ class Music:
         player.np = await ctx.send(f'**Now Playing:** `{vc.source.title}` '
                                    f'requested by `{vc.source.requester}`')
 
+    # TODO: implement a required role to skip songs (DJ) | bot_owner
     @commands.command(name='volume', aliases=['vol'])
     async def change_volume(self, ctx, *, vol: float):
         """Change the player volume.
@@ -378,6 +380,7 @@ class Music:
         player.volume = vol / 100
         await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
 
+    # TODO: implement a required role to skip songs (DJ) | bot_owner
     @commands.command(name='stop')
     async def stop_(self, ctx):
         """Stop the currently playing song and destroy the player.
