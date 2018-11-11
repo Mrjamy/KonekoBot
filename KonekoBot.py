@@ -11,6 +11,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 toggle_extensions = [
+    "gambling.gambling",
     # "games.pokemon",
     # "games.rps",
     "general.general",
