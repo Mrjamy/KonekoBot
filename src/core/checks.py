@@ -48,7 +48,8 @@ def is_nsfw_channel():
 
 def has_permissions(**permissions):
     def predicate(ctx):
-        if all(getattr(ctx.channel.permissions_for(ctx.author), name, None) == value for name, value in permissions.items()):
+        if all(getattr(ctx.channel.permissions_for(ctx.author), name, None) == value for name, value in
+                permissions.items()):
             return True
         else:
             print("user tried invoking w/o perms")
