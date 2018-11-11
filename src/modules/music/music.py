@@ -3,8 +3,6 @@ from discord.ext import commands
 
 import asyncio
 import itertools
-import sys
-import traceback
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
@@ -182,26 +180,6 @@ class Music:
             del self.players[guild.id]
         except KeyError:
             pass
-
-    async def __local_check(self, ctx):
-        """A local check which applies to all commands in this cog."""
-        if not ctx.guild:
-            raise commands.NoPrivateMessage
-        return True
-
-    async def __error(self, ctx, error):
-        """A local error handler for all errors arising from commands in this cog."""
-        if isinstance(error, commands.NoPrivateMessage):
-            try:
-                return await ctx.send('This command can not be used in Private Messages.')
-            except discord.HTTPException:
-                pass
-        elif isinstance(error, InvalidVoiceChannel):
-            await ctx.send('Error connecting to Voice Channel. '
-                           'Please make sure you are in a valid channel or provide me with one')
-
-        print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
     def get_player(self, ctx):
         """Retrieve the guild player, or generate one."""
