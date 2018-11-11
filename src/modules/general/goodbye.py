@@ -5,14 +5,13 @@ class Goodbye:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: check if the bot has permissions before invoke.
     # Function called after member joins.
     @KonekoBot.event
     async def on_member_remove(self, member):
         guild = member.guild
-        msg = 'Goodbye {0.mention}'
+        message = 'Goodbye {0.mention}'
         if guild.system_channel is not None:
-            await guild.system_channel.send(msg.format(member))
+            await guild.system_channel.send(message.format(member))
 
 
 def setup(bot):

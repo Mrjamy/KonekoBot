@@ -7,13 +7,13 @@ class Response:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(pass_context=True)
     async def say(self, ctx, *message):
         profanity.load_words(predefined)
-        msg = " ".join(message)
-        if profanity.contains_profanity(msg.lower()):
-            msg = "I don't think i should be saying that."
-        await ctx.channel.send(msg)
+        message = " ".join(message)
+        if profanity.contains_profanity(message.lower()):
+            message = "I don't think i should be saying that."
+        await ctx.channel.send(message)
 
 
 def setup(bot):
