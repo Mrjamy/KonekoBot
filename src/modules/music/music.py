@@ -3,8 +3,6 @@ from discord.ext import commands
 
 import asyncio
 import itertools
-import sys
-import traceback
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
@@ -68,6 +66,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if 'entries' in data:
             # take first item from a playlist
             data = data['entries'][0]
+            # TODO: add support for full playlists (terminating once max queue size has been reached)            
 
         await ctx.send(f'```ini\n[Added {data["title"]} to the Queue.]\n```', delete_after=15)
 
@@ -182,26 +181,6 @@ class Music:
         except KeyError:
             pass
 
-    async def __local_check(self, ctx):
-        """A local check which applies to all commands in this cog."""
-        if not ctx.guild:
-            raise commands.NoPrivateMessage
-        return True
-
-    async def __error(self, ctx, error):
-        """A local error handler for all errors arising from commands in this cog."""
-        if isinstance(error, commands.NoPrivateMessage):
-            try:
-                return await ctx.send('This command can not be used in Private Messages.')
-            except discord.HTTPException:
-                pass
-        elif isinstance(error, InvalidVoiceChannel):
-            await ctx.send('Error connecting to Voice Channel. '
-                           'Please make sure you are in a valid channel or provide me with one')
-
-        print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
-
     def get_player(self, ctx):
         """Retrieve the guild player, or generate one."""
         try:
@@ -296,6 +275,7 @@ class Music:
         vc.resume()
         await ctx.send(f'**`{ctx.author}`**: Resumed the song!')
 
+    # TODO: implement a required role to skip songs (DJ) | bot_owner
     @commands.command(name='skip')
     async def skip_(self, ctx):
         """Skip the song."""
@@ -353,6 +333,7 @@ class Music:
         player.np = await ctx.send(f'**Now Playing:** `{vc.source.title}` '
                                    f'requested by `{vc.source.requester}`')
 
+    # TODO: implement a required role to skip songs (DJ) | bot_owner
     @commands.command(name='volume', aliases=['vol'])
     async def change_volume(self, ctx, *, vol: float):
         """Change the player volume.
@@ -377,6 +358,7 @@ class Music:
         player.volume = vol / 100
         await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
 
+    # TODO: implement a required role to skip songs (DJ) | bot_owner
     @commands.command(name='stop')
     async def stop_(self, ctx):
         """Stop the currently playing song and destroy the player.
