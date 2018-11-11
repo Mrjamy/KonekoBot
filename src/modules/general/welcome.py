@@ -1,12 +1,13 @@
-from core import bot as core
+from KonekoBot import KonekoBot
 
 
 class Welcome:
     def __init__(self, bot):
         self.bot = bot
 
+    # TODO: check if the bot has permissions before invoke.
     # Function called after member joins.
-    @core.event
+    @KonekoBot.event
     async def on_member_join(self, member):
         guild = member.guild
         msg = 'Welcome to the {1.name} Discord server, {0.mention}, enjoy your stay.'
