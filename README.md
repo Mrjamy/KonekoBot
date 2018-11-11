@@ -48,7 +48,7 @@ Explain what these tests test and why
 ```
 
 ## Deployment
-Use the following link to invte the public bot to your server
+Use the following link to invite the public bot to your server
 ```
 https://discordapp.com/api/oauth2/authorize?client_id=502913609458909194&permissions=36825344&scope=bot
 ```
