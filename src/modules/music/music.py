@@ -191,7 +191,8 @@ class Music:
 
         return player
 
-    @commands.command(name='connect', aliases=['join'])
+    @commands.guild_only()
+    @commands.command(name='connect', aliases=['join'], pass_context=True)
     async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
         """Connect to voice.
         Parameters
@@ -224,7 +225,8 @@ class Music:
 
         await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
-    @commands.command(name='play', aliases=['sing'])
+    @commands.guild_only()
+    @commands.command(name='play', aliases=['sing'], pass_context=True)
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
         This command attempts to join a valid voice channel if the bot is not already in one.
@@ -249,7 +251,8 @@ class Music:
 
         await player.queue.put(source)
 
-    @commands.command(name='pause')
+    @commands.guild_only()
+    @commands.command(name='pause', pass_context=True)
     async def pause_(self, ctx):
         """Pause the currently playing song."""
         vc = ctx.voice_client
@@ -262,7 +265,8 @@ class Music:
         vc.pause()
         await ctx.send(f'**`{ctx.author}`**: Paused the song!')
 
-    @commands.command(name='resume')
+    @commands.guild_only()
+    @commands.command(name='resume', pass_context=True)
     async def resume_(self, ctx):
         """Resume the currently paused song."""
         vc = ctx.voice_client
@@ -276,7 +280,8 @@ class Music:
         await ctx.send(f'**`{ctx.author}`**: Resumed the song!')
 
     # TODO: implement a required role to skip songs (DJ) | bot_owner
-    @commands.command(name='skip')
+    @commands.guild_only()
+    @commands.command(name='skip', pass_context=True)
     async def skip_(self, ctx):
         """Skip the song."""
         vc = ctx.voice_client
@@ -292,7 +297,8 @@ class Music:
         vc.stop()
         await ctx.send(f'**`{ctx.author}`**: Skipped the song!')
 
-    @commands.command(name='queue', aliases=['q', 'playlist'])
+    @commands.guild_only()
+    @commands.command(name='queue', aliases=['q', 'playlist'], pass_context=True)
     async def queue_info(self, ctx):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
@@ -312,7 +318,8 @@ class Music:
 
         await ctx.send(embed=embed)
 
-    @commands.command(name='now_playing', aliases=['np', 'current', 'currentsong', 'playing'])
+    @commands.guild_only()
+    @commands.command(name='now_playing', aliases=['np', 'current', 'currentsong', 'playing'], pass_context=True)
     async def now_playing_(self, ctx):
         """Display information about the currently playing song."""
         vc = ctx.voice_client
@@ -334,7 +341,8 @@ class Music:
                                    f'requested by `{vc.source.requester}`')
 
     # TODO: implement a required role to skip songs (DJ) | bot_owner
-    @commands.command(name='volume', aliases=['vol'])
+    @commands.guild_only()
+    @commands.command(name='volume', aliases=['vol'], pass_context=True)
     async def change_volume(self, ctx, *, vol: float):
         """Change the player volume.
         Parameters
@@ -359,7 +367,8 @@ class Music:
         await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
 
     # TODO: implement a required role to skip songs (DJ) | bot_owner
-    @commands.command(name='stop')
+    @commands.guild_only()
+    @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):
         """Stop the currently playing song and destroy the player.
         !Warning!
