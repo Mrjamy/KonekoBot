@@ -16,6 +16,12 @@ class Gambling:
         roll = random.randint(1, max_roll)
         await ctx.channel.send("Rolled " + str(roll))
 
+    @commands.command(pass_context=True)
+    async def choice(self, ctx, *choices):
+        """Choose from the given options"""
+        result = random.choice(choices)
+        await ctx.channel.send(result)
+
 
 def setup(bot):
     bot.add_cog(Gambling(bot))
