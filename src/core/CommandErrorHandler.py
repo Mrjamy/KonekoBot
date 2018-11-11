@@ -8,6 +8,7 @@ class CommandErrorHandler:
     def __init__(self, bot):
         self.bot = bot
 
+    @KonekoBot.event
     async def on_command_error(self, ctx, error):
         """The event triggered when an error is raised while invoking a command.
         ctx   : Context
@@ -28,16 +29,19 @@ class CommandErrorHandler:
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            return await ctx.send(f'{KonekoBot.prefix}{ctx.command} has been disabled.')
+            await ctx.send(f'{KonekoBot.prefix}{ctx.command} has been disabled.')
+            return
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                return await ctx.author.send(f'{KonekoBot.prefix}{ctx.command} can not be used in Private Messages.')
+                await ctx.channel.send(f'{ctx.command} can not be used in Private Messages.')
             except:
                 pass
+            return
 
         elif isinstance(error, commands.BadArgument):
-            return await ctx.send(f'Refer to.{KonekoBot.prefix}help {ctx.command}')
+            await ctx.send(f'Refer to.{KonekoBot.prefix}help {ctx.command}')
+            return
 
         elif isinstance(error, commands.BotMissingPermissions):
             missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
@@ -45,7 +49,8 @@ class CommandErrorHandler:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            return await ctx.send(f'I need the **{fmt}** permission(s) to run this command.')
+            await ctx.send(f'I need the **{fmt}** permission(s) to run this command.')
+            return
 
         if isinstance(error, commands.MissingPermissions):
             missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
@@ -53,7 +58,8 @@ class CommandErrorHandler:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            return await ctx.send(f'You need the **{fmt}** permission(s) to use this command.')
+            await ctx.send(f'You need the **{fmt}** permission(s) to use this command.')
+            return
 
         # All other Errors not returned come here... And we can just print the default TraceBack.
         print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
