@@ -25,7 +25,7 @@ class General:
         # Send it to the user
         await ctx.channel.send(latency)
 
-    # Command hug, listen t0 /hug
+    # Command hug, listen to /hug
     @commands.command(aliasses=["pong"], pass_context=True)
     async def hug(self, ctx):
         """Hug!"""
