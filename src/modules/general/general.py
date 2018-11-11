@@ -2,31 +2,36 @@ from discord.ext import commands
 
 
 class General:
+    """Music related commands."""
+
+    __slots__ = 'bot'
+
     def __init__(self, bot):
         self.bot = bot
 
-    # Command hello, listen to !hello
-    @commands.command()
-    async def hello(self, message):
+    # Command hello, listen to /hello
+    @commands.command(pass_context=True)
+    async def hello(self, ctx):
         """Hello!"""
-        msg = 'Hello {0.author.mention}'.format(message)
-        await message.channel.send(msg)
+        message = 'Hello {0.author.mention}'.format(ctx)
+        await ctx.channel.send(message)
 
-    # Command ping, listen to !ping
-    @commands.command(pass_context=True, description='Get the latency of the bot.')
+    # Command ping, listen to /ping
+    @commands.command(pass_context=True)
     async def ping(self, ctx):
         """Get the latency of the bot."""
         # Get the latency of the bot
-        latency = str(round(self.bot.latency * 1000)) + " ms"  # Included in the Discord.py library
+        latency = str(round(self.bot.latency * 1000)) + " ms"
         # Send it to the user
-        await ctx.send(latency)
+        await ctx.channel.send(latency)
 
-    @commands.command()
-    async def hug(self, message):
+    # Command hug, listen t0 /hug
+    @commands.command(aliasses=["pong"], pass_context=True)
+    async def hug(self, ctx):
         """Hug!"""
         # TODO: add support for passing a user as parameter.
-        msg = 'Hugs {0.author.mention}'.format(message)
-        await message.channel.send(msg)
+        message = 'Hugs {0.author.mention}'.format(ctx)
+        await ctx.channel.send(message)
 
 
 def setup(bot):

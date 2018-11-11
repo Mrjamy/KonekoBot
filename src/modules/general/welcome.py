@@ -5,14 +5,13 @@ class Welcome:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: check if the bot has permissions before invoke.
     # Function called after member joins.
     @KonekoBot.event
     async def on_member_join(self, member):
         guild = member.guild
-        msg = 'Welcome to the {1.name} Discord server, {0.mention}, enjoy your stay.'
+        message = 'Welcome to the {1.name} Discord server, {0.mention}, enjoy your stay.'
         if guild.system_channel is not None:
-            await guild.system_channel.send(msg.format(member, member.guild))
+            await guild.system_channel.send(message.format(member, member.guild))
 
 
 def setup(bot):
