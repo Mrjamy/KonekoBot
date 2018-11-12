@@ -6,9 +6,9 @@ Make sure apt-get is updated
 ```
 $ sudo apt update
 ```
-- Python 3.5
+- Python 3.6
 ```
-$ sudo apt install python3.5
+$ sudo apt install python3.6
 ```
 - pip
 ```
