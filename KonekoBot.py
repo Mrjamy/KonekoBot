@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
+
 import discord
 import logging
 from discord.ext import commands
-from sys import argv
 import src.core.config as config
 
 logger = logging.getLogger('discord')
@@ -11,8 +12,9 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 toggle_extensions = [
+    "gambling.gambling",
     # "games.pokemon",
-    # "games.rps",
+    "games.rps",
     "general.general",
     # "general.goodbye",
     # "general.response",
@@ -30,9 +32,13 @@ core_extensions = [
     # "src.modules.utility.CommandToggle",
 ]
 
+options = config.get_args()
+
 KonekoBot = commands.Bot(
-    command_prefix=commands.when_mentioned_or(config.prefix),
-    pm_help=config.pm_help,
+    # Customizable when running the bot using the "-c" or "--command-prefix" option.
+    command_prefix=commands.when_mentioned_or(options.command_prefix),
+    # Customizable when running the bot using the "-p" or "--pm-help" option.
+    pm_help=options.pm_help,
     owner_id=config.owner_id,
 )
 
@@ -40,7 +46,7 @@ KonekoBot = commands.Bot(
 # Function called when the bot is ready.
 @KonekoBot.event
 async def on_ready():
-    game = config.prefix + "help for help"
+    game = options.command_prefix + "help for help"
     activity = discord.Game(name=game)
     await KonekoBot.change_presence(status=discord.Status.online, activity=activity)
     # Bot logged in.
@@ -52,4 +58,4 @@ if __name__ == '__main__':
         KonekoBot.load_extension("src.modules." + extension)
     for extension in core_extensions:
         KonekoBot.load_extension(extension)
-    KonekoBot.run(argv[1])
+    KonekoBot.run(options.token)

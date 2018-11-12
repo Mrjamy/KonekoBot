@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install -r requirements.txt
+script:
+  - python -m compileall ./KonekoBot.py
+  - python -m compileall ./src/core
+  - python -m compileall ./src/modules
+
+#  - python ./KonekoBot.py -t <token>
+# TODO: add a flag to shutdown after Koneko ran successful
+cache: pip
