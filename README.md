@@ -1,4 +1,4 @@
-![intro](https://rei.animecharactersdatabase.com/uploads/chars/8629-1241916474.png)
+![intro](https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/KonekoIntro.png)
 
 # Koneko - A multi purpose Discord bot
 
