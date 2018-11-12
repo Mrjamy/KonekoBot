@@ -15,7 +15,7 @@ logger.addHandler(handler)
 toggle_extensions = [
     "gambling.gambling",
     # "games.pokemon",
-    # "games.rps",
+    "games.rps",
     "general.general",
     # "general.goodbye",
     # "general.response",
