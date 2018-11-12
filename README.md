@@ -1,70 +1,29 @@
-# DiscordBot
-A discord bot written in python 3.5 on a linux based system.
+![intro](https://rei.animecharactersdatabase.com/uploads/chars/8629-1241916474.png)
 
-## Getting Started
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+# Koneko - A multi purpose Discord bot
 
-### Prerequisites
-Make sure apt-get is updated
-```
-$ sudo apt update
-```
-- Python 3.5
-```
-$ sudo apt install python3.5
-```
-- pip
-```
-$ sudo apt install python3-pip
-```
-- discord.py
-```
-$ pip3 install -U -r requirements.txt
-```
+#### *Music, games, fun commands and much more!*
 
-### Installing
-To start you need a working copy of this repo
-```
-$ git clone https://github.com/jmuilwijk/DiscordBot.git
-```
-Run the bot.
-```
-$ python KonekoBot.py -t TOKEN
-```
-## Running the tests
-Explain how to run the automated tests for this system
+[<img src="https://img.shields.io/badge/discord-py-blue.svg">](https://github.com/Rapptz/discord.py)  [![Build Status](https://api.travis-ci.org/jmuilwijk/KonekoBot.svg)](https://travis-ci.org/jmuilwijk/KonekoBot)
 
-### Break down into end to end tests
-Explain what these tests test and why
+**Koneko** is a multipurpose discord bot with all kinds of commands!
 
-```python
-# TODO : add tests.
-```
+The default set of modules includes and is not limited to:
+* Music features (YouTube, queues)
+* Games (Rock paper scissors)
+* And much more planned in the future.
 
-### And coding style tests
-Explain what these tests test and why
-```python
-# TODO : add tests.
-```
+## Installation
 
-## Deployment
-Use the following link to invite the public bot to your server
-```
-https://discordapp.com/api/oauth2/authorize?client_id=502913609458909194&permissions=36825344&scope=bot
-```
+The installation process is straightforward; all major platforms are supported: 
+* [Windows](link-to-windows-install) - Coming soon.
+* [Linux](link-to-linux-install) - Coming soon.
+* [macOS](link-to-maxOS-install) - Coming soon. 
 
-## Built With
-```python
-# TODO : add auto builds.
-```
+## About me
 
-## Versioning
-For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-**Jamy Muilwijk** - [jmuilwijk](https://github.com/jmuilwijk/)
-
-See also the list of [contributors](https://github.com/jmuilwijk/DiscordBot/contributors) who participated in this project.
+I am still in beta and new commands are being added on a daily base! 
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
