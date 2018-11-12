@@ -29,7 +29,7 @@ $ git clone https://github.com/jmuilwijk/DiscordBot.git
 ```
 Run the bot.
 ```
-$ python core.py TOKEN
+$ python KonekoBot.py -t TOKEN
 ```
 ## Running the tests
 Explain how to run the automated tests for this system

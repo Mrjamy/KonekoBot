@@ -29,7 +29,7 @@ class CommandErrorHandler:
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            await ctx.send(f'{KonekoBot.prefix}{ctx.command} has been disabled.')
+            await ctx.send(f'{KonekoBot.options.command_prefix}{ctx.command} has been disabled.')
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
@@ -40,7 +40,7 @@ class CommandErrorHandler:
             return
 
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f'Refer to.{KonekoBot.prefix}help {ctx.command}')
+            await ctx.send(f'Refer to.{KonekoBot.options.command_prefix}help {ctx.command}')
             return
 
         elif isinstance(error, commands.BotMissingPermissions):
