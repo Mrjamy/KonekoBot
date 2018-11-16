@@ -27,7 +27,7 @@ toggle_extensions = [
     # "help.help",
     "music.music",
     # "nsfw.nsfw",
-    "utility.utility",
+    # "utility.utility",
     # "utility.stats",
 ]
 
