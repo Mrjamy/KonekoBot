@@ -61,15 +61,16 @@ class KonekoBot(commands.Bot):
 
 def initialize(bot_class=KonekoBot):
     bot = bot_class()
+    
     # Function called when the bot is ready.
-
     @bot.event
     async def on_ready():
         game = bot.settings.prefix + "help for help"
         activity = discord.Game(name=game)
         await bot.change_presence(status=discord.Status.online, activity=activity)
         # Bot logged in.
-        print('Logged in as {0.user}'.format(bot))
+        print(f'Logged in as {bot.user}')
+        print(f'I am in {len(bot.guilds)} guilds.')
 
     @bot.event
     async def on_command_error(ctx, error):
