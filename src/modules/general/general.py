@@ -30,6 +30,7 @@ class General:
     @commands.command(aliasses=["pong"], pass_context=True)
     async def hug(self, ctx, user: discord.User=None):
         """Hug!"""
+        # TODO: Exceptions need to be caught.
         message = f'*Hugs* {ctx.author.mention}'
         if user:
             message = f'*Hugs* {user.mention}'
