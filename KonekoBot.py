@@ -4,10 +4,10 @@ import discord
 import logging
 from discord.ext import commands
 from src.core.config import Settings
-import datetime
 import asyncio
 import sys
 import traceback
+import time
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.ERROR)
@@ -27,7 +27,7 @@ toggle_extensions = [
     # "help.help",
     "music.music",
     # "nsfw.nsfw",
-    # "utility.utility",
+    "utility.utility",
     # "utility.stats",
 ]
 
@@ -40,7 +40,7 @@ class KonekoBot(commands.Bot):
     __slots__ = ('uptime', '_shutdown_mode', 'settings')
 
     def __init__(self, *args, **kwargs):
-        self.uptime = datetime.datetime.utcnow()
+        self.uptime = time.time()
         self._shutdown_mode = None
         self.settings = Settings()
         self._dry_run = None
@@ -143,7 +143,7 @@ def main(bot):
         bot._shutdown_mode = True
         exit(0)
 
-    bot.uptime = datetime.datetime.utcnow()
+    bot.uptime = time.time()
     print("Logging into Discord...")
     bot.run(bot.settings.token)
 
