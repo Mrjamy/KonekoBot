@@ -23,6 +23,7 @@ toggle_extensions = [
     # "general.welcome",
     # "help.commands",
     # "help.help",
+    # "moderation.moderation",
     "music.music",
     # "nsfw.nsfw",
     "utility.utility",
