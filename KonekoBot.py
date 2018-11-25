@@ -102,9 +102,9 @@ if __name__ == '__main__':
         loop.run_until_complete(bot.close())
     finally:
         loop.close()
-        if bot._shutdown_mode is True:
+        if bot._shutdown_mode:
             exit(0)
-        elif bot._shutdown_mode is False:
+        elif not bot._shutdown_mode:
             exit(26)  # Restart
         else:
             exit(1)
