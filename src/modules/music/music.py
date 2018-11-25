@@ -6,6 +6,7 @@ import itertools
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
+import src.core.checks as checks
 
 
 ytdlopts = {
@@ -275,7 +276,7 @@ class Music:
         vc.resume()
         await ctx.send(f'**`{ctx.author}`**: Resumed the song!')
 
-    # TODO: implement a required role to skip songs (DJ) | bot_owner
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='skip', pass_context=True)
     async def skip_(self, ctx):
@@ -336,7 +337,7 @@ class Music:
         player.np = await ctx.send(f'**Now Playing:** `{vc.source.title}` '
                                    f'requested by `{vc.source.requester}`')
 
-    # TODO: implement a required role to skip songs (DJ) | bot_owner
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='volume', aliases=['vol'], pass_context=True)
     async def change_volume(self, ctx, *, vol: float):
@@ -362,7 +363,7 @@ class Music:
         player.volume = vol / 100
         await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
 
-    # TODO: implement a required role to skip songs (DJ) | bot_owner
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):
