@@ -193,20 +193,14 @@ class Music:
 
     @commands.guild_only()
     @commands.command(name='connect', aliases=['join'], pass_context=True)
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
-        """Connect to voice.
-        Parameters
-        ------------
-        channel: discord.VoiceChannel [Optional]
-            The channel to connect to. If a channel is not specified, an attempt to join the voice channel you are in
-            will be made.
-        This command also handles moving the bot to different channels.
-        """
-        if not channel:
-            try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
+    async def connect_(self, ctx):
+        """Connect to voice."""
+
+        try:
+            channel = ctx.author.voice.channel
+        except AttributeError:
+            await ctx.send(InvalidVoiceChannel('No channel to join. Make sure you are connected to a voice channel.'))
+            return
 
         vc = ctx.voice_client
 
@@ -216,12 +210,14 @@ class Music:
             try:
                 await vc.move_to(channel)
             except asyncio.TimeoutError:
-                raise VoiceConnectionError(f'Moving to channel: <{channel}> timed out.')
+                await ctx.send(VoiceConnectionError(f'Moving to channel: <{channel}> timed out.'))
+                return
         else:
             try:
                 await channel.connect()
             except asyncio.TimeoutError:
-                raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
+                await ctx.send(VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.'))
+                return
 
         await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
