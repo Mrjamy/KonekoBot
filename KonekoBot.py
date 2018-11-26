@@ -3,7 +3,9 @@
 import discord
 import logging
 from discord.ext import commands
-import src.core.config as config
+from src.core.config import Settings
+import asyncio
+import time
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.ERROR)
@@ -21,41 +23,88 @@ toggle_extensions = [
     # "general.welcome",
     # "help.commands",
     # "help.help",
+    # "moderation.moderation",
     "music.music",
     # "nsfw.nsfw",
-    # "utility.prefix",
+    "utility.utility",
     # "utility.stats",
 ]
 
 core_extensions = [
-    "src.core.CommandErrorHandler",
-    # "src.modules.utility.CommandToggle",
+    "src.core.ErrorHandler",
 ]
 
-options = config.get_args()
 
-KonekoBot = commands.Bot(
-    # Customizable when running the bot using the "-c" or "--command-prefix" option.
-    command_prefix=commands.when_mentioned_or(options.command_prefix),
-    # Customizable when running the bot using the "-p" or "--pm-help" option.
-    pm_help=options.pm_help,
-    owner_id=config.owner_id,
-)
+class KonekoBot(commands.Bot):
+    __slots__ = ('uptime', '_shutdown_mode', 'settings')
+
+    def __init__(self, *args, **kwargs):
+        self.uptime = time.time()
+        self._shutdown_mode = None
+        self.settings = Settings()
+        self._dry_run = None
+
+        super().__init__(*args,
+                         command_prefix=commands.when_mentioned_or(self.settings.prefix),
+                         owner_id=self.settings.owner_id,
+                         pm_help=self.settings.pm_help,
+                         **kwargs)
+
+    async def shutdown(self, *, restart=False):
+        """Gracefully quits Red with exit code 0
+        If restart is True, the exit code will be 26 instead
+        The launcher automatically restarts Red when that happens"""
+        self._shutdown_mode = not restart
+        await self.close()
 
 
-# Function called when the bot is ready.
-@KonekoBot.event
-async def on_ready():
-    game = options.command_prefix + "help for help"
-    activity = discord.Game(name=game)
-    await KonekoBot.change_presence(status=discord.Status.online, activity=activity)
-    # Bot logged in.
-    print(KonekoBot.owner_id)
-    print('Logged in as {0.user}'.format(KonekoBot))
+def initialize(bot_class=KonekoBot):
+    bot = bot_class()
+    
+    # Function called when the bot is ready.
+    @bot.event
+    async def on_ready():
+        game = bot.settings.prefix + "help for help"
+        activity = discord.Game(name=game)
+        await bot.change_presence(status=discord.Status.online, activity=activity)
+        # Bot logged in.
+        print(f'Logged in as {bot.user}')
+        print(f'I am in {len(bot.guilds)} guilds.')
+
+    return bot
+
+
+def main(bot):
+    for extension in toggle_extensions:
+        bot.load_extension("src.modules." + extension)
+    for extension in core_extensions:
+        bot.load_extension(extension)
+
+    if bot._dry_run:
+        print("Quitting: dry run")
+        bot._shutdown_mode = True
+        exit(0)
+
+    bot.uptime = time.time()
+    print("Logging into Discord...")
+    bot.run(bot.settings.token)
+
 
 if __name__ == '__main__':
-    for extension in toggle_extensions:
-        KonekoBot.load_extension("src.modules." + extension)
-    for extension in core_extensions:
-        KonekoBot.load_extension(extension)
-    KonekoBot.run(options.token)
+    bot = initialize()
+
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_until_complete(main(bot))
+    except discord.LoginFailure:
+        print("Could not login.")
+    except Exception as e:
+        loop.run_until_complete(bot.close())
+    finally:
+        loop.close()
+        if bot._shutdown_mode:
+            exit(0)
+        elif not bot._shutdown_mode:
+            exit(26)  # Restart
+        else:
+            exit(1)

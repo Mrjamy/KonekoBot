@@ -6,6 +6,7 @@ import itertools
 from async_timeout import timeout
 from functools import partial
 from youtube_dl import YoutubeDL
+import src.core.checks as checks
 
 
 ytdlopts = {
@@ -193,20 +194,14 @@ class Music:
 
     @commands.guild_only()
     @commands.command(name='connect', aliases=['join'], pass_context=True)
-    async def connect_(self, ctx, *, channel: discord.VoiceChannel=None):
-        """Connect to voice.
-        Parameters
-        ------------
-        channel: discord.VoiceChannel [Optional]
-            The channel to connect to. If a channel is not specified, an attempt to join the voice channel you are in
-            will be made.
-        This command also handles moving the bot to different channels.
-        """
-        if not channel:
-            try:
-                channel = ctx.author.voice.channel
-            except AttributeError:
-                raise InvalidVoiceChannel('No channel to join. Please either specify a valid channel or join one.')
+    async def connect_(self, ctx):
+        """Connect to voice."""
+
+        try:
+            channel = ctx.author.voice.channel
+        except AttributeError:
+            await ctx.send(InvalidVoiceChannel('No channel to join. Make sure you are connected to a voice channel.'))
+            return
 
         vc = ctx.voice_client
 
@@ -216,12 +211,14 @@ class Music:
             try:
                 await vc.move_to(channel)
             except asyncio.TimeoutError:
-                raise VoiceConnectionError(f'Moving to channel: <{channel}> timed out.')
+                await ctx.send(VoiceConnectionError(f'Moving to channel: <{channel}> timed out.'))
+                return
         else:
             try:
                 await channel.connect()
             except asyncio.TimeoutError:
-                raise VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.')
+                await ctx.send(VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.'))
+                return
 
         await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
@@ -279,7 +276,7 @@ class Music:
         vc.resume()
         await ctx.send(f'**`{ctx.author}`**: Resumed the song!')
 
-    # TODO: implement a required role to skip songs (DJ) | bot_owner
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='skip', pass_context=True)
     async def skip_(self, ctx):
@@ -340,10 +337,10 @@ class Music:
         player.np = await ctx.send(f'**Now Playing:** `{vc.source.title}` '
                                    f'requested by `{vc.source.requester}`')
 
-    # TODO: implement a required role to skip songs (DJ) | bot_owner
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='volume', aliases=['vol'], pass_context=True)
-    async def change_volume(self, ctx, *, vol: float):
+    async def change_volume(self, ctx, *, volume: float):
         """Change the player volume.
         Parameters
         ------------
@@ -355,18 +352,18 @@ class Music:
         if not vc or not vc.is_connected():
             return await ctx.send('I am not currently connected to voice!', delete_after=20)
 
-        if not 0 < vol < 101:
+        if not 0 < volume < 101:
             return await ctx.send('Please enter a value between 1 and 100.')
 
         player = self.get_player(ctx)
 
         if vc.source:
-            vc.source.volume = vol / 100
+            vc.source.volume = volume / 100
 
-        player.volume = vol / 100
-        await ctx.send(f'**`{ctx.author}`**: Set the volume to **{vol}%**')
+        player.volume = volume / 100
+        await ctx.send(f'**`{ctx.author}`**: Set the volume to **{volume}%**')
 
-    # TODO: implement a required role to skip songs (DJ) | bot_owner
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):

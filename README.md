@@ -1,4 +1,4 @@
-![intro](https://rei.animecharactersdatabase.com/uploads/chars/8629-1241916474.png)
+![intro](https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/KonekoIntro.png)
 
 # Koneko - A multi purpose Discord bot
 
@@ -17,7 +17,7 @@ The default set of modules includes and is not limited to:
 
 The installation process is straightforward; all major platforms are supported: 
 * [Windows](link-to-windows-install) - Coming soon.
-* [Linux](https://github.com/jmuilwijk/KonekoBot/docs/installing-linux.md)
+* [Linux](docs/installing-linux.md)
 * [macOS](link-to-maxOS-install) - Coming soon. 
 
 ## About me
@@ -26,4 +26,4 @@ I am still in beta and new commands are being added on a daily base!
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

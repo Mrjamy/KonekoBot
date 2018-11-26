@@ -1,14 +1,14 @@
-from discord.ext import commands
-from KonekoBot import KonekoBot
 import sys
 import traceback
+from discord.ext import commands
 
 
-class CommandErrorHandler:
+class ErrorHandler:
+    __slots__ = 'bot'
+
     def __init__(self, bot):
         self.bot = bot
 
-    @KonekoBot.event
     async def on_command_error(self, ctx, error):
         """The event triggered when an error is raised while invoking a command.
         ctx   : Context
@@ -29,18 +29,18 @@ class CommandErrorHandler:
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            await ctx.send(f'{KonekoBot.options.command_prefix}{ctx.command} has been disabled.')
+            await ctx.send(f'{self.bot.settings.prefix}{ctx.command} has been disabled.')
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                await ctx.channel.send(f'{ctx.command} can not be used in Private Messages.')
+                await ctx.channel.send(f'{self.bot.settings.prefix}{ctx.command} can not be used in Private Messages.')
             except:
                 pass
             return
 
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f'Refer to.{KonekoBot.options.command_prefix}help {ctx.command}')
+            await ctx.send(f'Refer to.{self.bot.settings.prefix}help {ctx.command}')
             return
 
         elif isinstance(error, commands.BotMissingPermissions):
@@ -67,4 +67,4 @@ class CommandErrorHandler:
 
 
 def setup(bot):
-    bot.add_cog(CommandErrorHandler(bot))
+    bot.add_cog(ErrorHandler(bot))
