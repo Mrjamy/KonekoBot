@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 
@@ -13,7 +14,7 @@ class General:
     @commands.command(pass_context=True)
     async def hello(self, ctx):
         """Hello!"""
-        message = 'Hello {0.author.mention}'.format(ctx)
+        message = f'Hello {ctx.author.mention}'
         await ctx.channel.send(message)
 
     # Command ping, listen to /ping
@@ -27,10 +28,12 @@ class General:
 
     # Command hug, listen to /hug
     @commands.command(aliasses=["pong"], pass_context=True)
-    async def hug(self, ctx):
+    async def hug(self, ctx, user: discord.User=None):
         """Hug!"""
-        # TODO: add support for passing a user as parameter.
-        message = '*Hugs* {0.author.mention}'.format(ctx)
+        # TODO: Exceptions need to be caught.
+        message = f'*Hugs* {ctx.author.mention}'
+        if user:
+            message = f'*Hugs* {user.mention}'
         await ctx.channel.send(message)
 
 

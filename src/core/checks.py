@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-import src.core.config as config
+from src.core.config import Settings
 
 
 class OwnerOnly(commands.CommandError):
@@ -11,17 +11,22 @@ class DevOnly(commands.CommandError):
     pass
 
 
+class DjOnly(commands.CommandError):
+    pass
+
+
 class NotNsfwChannel(commands.CommandError):
     pass
 
 
 class NoPermission(commands.CommandError):
+    print("user tried invoking w/o perms")
     pass
 
 
 def is_owner():
     def predicate(ctx):
-        if ctx.author.id == config.owner_id:
+        if ctx.author.id == Settings.owner_id:
             return True
         else:
             raise OwnerOnly
@@ -30,7 +35,9 @@ def is_owner():
 
 def is_dev():
     def predicate(ctx):
-        if ctx.author.id in config.dev_ids or ctx.author.id == config.owner_id:
+        if ctx.author.id in Settings.dev_ids:
+            return True
+        elif is_owner():
             return True
         else:
             raise DevOnly
@@ -52,6 +59,20 @@ def has_permissions(**permissions):
                 permissions.items()):
             return True
         else:
-            print("user tried invoking w/o perms")
             raise NoPermission
     return commands.check(predicate)
+
+
+def is_dj():
+    def predicate(ctx):
+        if "dj" in [role.name.lower() for role in ctx.author.roles]:
+            return True
+        elif is_owner():
+            return True
+        else:
+            # TODO: Add option to set the DJ role to any existing role.
+            # TODO: Store this setting in a database.
+            ctx.send("This command requires you to have the role DJ")
+            raise DjOnly(ctx)
+    return commands.check(predicate)
+
