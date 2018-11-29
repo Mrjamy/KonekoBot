@@ -1,10 +1,9 @@
 import discord
 import random
 from discord.ext import commands
-import textwrap
+
 
 # TODO: add a dungeon/dnd based game.
-
 # TODO: add command /dungeon <arguments>
 """
 explore
