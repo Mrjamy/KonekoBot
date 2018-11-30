@@ -25,6 +25,11 @@ class Dungeon:
     async def roll(self, ctx, max_roll: int = 6, die: int = 1):
         """Rolls a dice."""
 
+        if die is 0:
+            die = 1
+        if max_roll is 0:
+            max_roll = 1
+
         embed = discord.Embed(title=f'{ctx.author} rolled {die} Dice - {max_roll}',
                               color=discord.Color.dark_purple())
         rolls = ''
