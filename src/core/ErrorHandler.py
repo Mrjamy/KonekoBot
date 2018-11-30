@@ -36,7 +36,7 @@ class ErrorHandler:
         elif isinstance(error, commands.NoPrivateMessage):
             try:
                 await ctx.channel.send(f'{self.bot.settings.prefix}{ctx.command} can not be used in Private Messages.')
-            except:
+            except (discord.Forbidden, discord.HTTPException):
                 pass
             return
 
