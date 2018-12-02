@@ -20,9 +20,9 @@ class Dungeon:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: update the /roll command to /roll <dices>d<max_roll>
+    # TODO: update the /roll command to /roll <dice>d<sides>
     @commands.command(pass_context=True)
-    async def roll(self, ctx, max_roll: int = 6, die: int = 1):
+    async def roll(self, ctx, die: int = 1, sides: int = 6):
         """Rolls a die."""
 
         # The amount of dice need to be within 1 - 20
@@ -38,16 +38,16 @@ class Dungeon:
             dice = "Dice"
 
         # max needs to be at least higher then 0
-        if max_roll not in range(1, 20 + 1):
+        if sides not in range(1, 20 + 1):
             await ctx.channel.send(f'*Sigh* no.')
             return
 
-        embed = discord.Embed(title=f'{ctx.author} rolled {die} {dice} - {max_roll}',
+        embed = discord.Embed(title=f'{ctx.author} rolled {die} {dice} - {sides}',
                               color=discord.Color.dark_purple())
         rolls = ''
         total = 0
         for x in range(0, die):
-            roll = random.randint(1, max_roll)
+            roll = random.randint(1, sides)
             total += roll
             rolls += f'{str(roll)} '
 
