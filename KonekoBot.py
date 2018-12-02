@@ -22,7 +22,6 @@ toggle_extensions = [
     # "general.goodbye",
     # "general.response",
     # "general.welcome",
-    # "help.commands",
     # "help.help",
     # "moderation.moderation",
     "music.music",
