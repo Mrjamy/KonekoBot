@@ -16,7 +16,7 @@ The default set of modules includes and is not limited to:
 ## Installation
 
 The installation process is straightforward; all major platforms are supported: 
-* [Windows](link-to-windows-install) - Coming soon.
+* [Windows](docs/installing-windows.md)
 * [Linux](docs/installing-linux.md)
 * [macOS](link-to-maxOS-install) - Coming soon. 
 
