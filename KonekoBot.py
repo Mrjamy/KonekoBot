@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
-import discord
+import asyncio
 import logging
+import time
+import re
+import discord
 from discord.ext import commands
 from src.core.config import Settings
-import asyncio
-import time
 
 logger = logging.getLogger('discord')
 logger.setLevel(logging.ERROR)
