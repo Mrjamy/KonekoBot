@@ -1,6 +1,6 @@
 import sys
 import traceback
-
+import discord
 from discord.ext import commands
 
 
@@ -65,6 +65,14 @@ class ErrorHandler:
         # All other Errors not returned come here... And we can just print the default TraceBack.
         print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+
+    # TODO: properly intercept system errors
+    async def on_error(self, ctx, event, *args, **kwargs):
+        # TODO: catch discord.HTTPException
+        # TODO: catch discord.Forbidden
+        # TODO: catch discord.LoginFailure
+        # TODO: catch generic errors
+        return
 
 
 def setup(bot):
