@@ -52,27 +52,27 @@ class KonekoBot(commands.Bot):
                          **kwargs)
 
     async def shutdown(self, *, restart=False):
-        """Gracefully quits Red with exit code 0
-        If restart is True, the exit code will be 26 instead
-        The launcher automatically restarts Red when that happens"""
+        """Gracefully quits Koneko with exit code 0
+        If restart is True, the exit code will be 26 instead"""
+        # TODO: Koneko needs to restarted through a launcher.
         self._shutdown_mode = not restart
         await self.close()
 
 
 def initialize(bot_class=KonekoBot):
-    bot = bot_class()
+    koneko = bot_class()
     
     # Function called when the bot is ready.
-    @bot.event
+    @koneko.event
     async def on_ready():
-        game = bot.settings.prefix + "help for help"
+        game = koneko.settings.prefix + "help for help"
         activity = discord.Game(name=game)
-        await bot.change_presence(status=discord.Status.online, activity=activity)
+        await koneko.change_presence(status=discord.Status.online, activity=activity)
         # Bot logged in.
-        print(f'Logged in as {bot.user}')
-        print(f'I am in {len(bot.guilds)} guilds.')
+        print(f'Logged in as {koneko.user}')
+        print(f'I am in {len(koneko.guilds)} guilds.')
 
-    return bot
+    return koneko
 
 
 def main(bot):
