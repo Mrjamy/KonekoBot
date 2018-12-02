@@ -71,6 +71,7 @@ class ErrorHandler:
         # TODO: catch discord.HTTPException
         # TODO: catch discord.Forbidden
         # TODO: catch discord.LoginFailure
+        # TODO: catch discord.NotFound
         # TODO: catch generic errors
         return
 
