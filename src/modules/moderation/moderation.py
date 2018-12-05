@@ -17,3 +17,5 @@
 
 # TODO: add command /iam <role>
 # TODO: add command /iamnot <role>
+
+# TODO: add function decorators with required permissions.
