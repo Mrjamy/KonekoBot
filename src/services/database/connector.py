@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from src.services.models import Base, Prefix
+from src.services.database.models import Base, Prefix
 
 engine = create_engine('sqlite:///event-bot.db', echo=False)
 Session = sessionmaker(bind=engine)

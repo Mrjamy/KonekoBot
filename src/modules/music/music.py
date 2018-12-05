@@ -1,10 +1,9 @@
-import discord
-from discord.ext import commands
-
 import asyncio
 import itertools
 from async_timeout import timeout
 from functools import partial
+import discord
+from discord.ext import commands
 from youtube_dl import YoutubeDL
 import src.core.checks as checks
 
