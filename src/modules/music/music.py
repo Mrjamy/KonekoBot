@@ -192,7 +192,7 @@ class Music:
         return player
 
     @commands.guild_only()
-    @commands.bot_has_permissions(CONNECT=True)
+    @commands.bot_has_permissions(connect=True)
     @commands.command(name='connect', aliases=['join'], pass_context=True)
     async def connect_(self, ctx):
         """Connect to voice."""
@@ -223,7 +223,7 @@ class Music:
         await ctx.send(f'Connected to: **{channel}**', delete_after=20)
 
     @commands.guild_only()
-    @commands.bot_has_permissions(CONNECT=True, SPEAK=True)
+    @commands.bot_has_permissions(connect=True, SPEAK=True)
     @commands.command(name='play', aliases=['sing'], pass_context=True)
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
