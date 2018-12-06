@@ -30,18 +30,18 @@ class ErrorHandler:
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            await ctx.send(f'{self.bot.settings.prefix}{ctx.command} has been disabled.')
+            await ctx.send(f'`{ctx.prefix}{ctx.command}` has been disabled.')
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                await ctx.channel.send(f'{self.bot.settings.prefix}{ctx.command} can not be used in Private Messages.')
+                await ctx.channel.send(f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.')
             except (discord.Forbidden, discord.HTTPException):
                 pass
             return
 
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f'Refer to.{self.bot.settings.prefix}help {ctx.command}')
+            await ctx.send(f'Refer to `{ctx.prefix}help {ctx.command}`')
             return
 
         elif isinstance(error, commands.BotMissingPermissions):
