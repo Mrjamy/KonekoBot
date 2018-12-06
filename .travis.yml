@@ -21,6 +21,6 @@ script:
   - python -m compileall ./src/modules
   - python -m compileall ./src/services
 
-  - python ./KonekoBot.py -t $TOKEN -d 1
+  - python KonekoBot.py -t "TOKEN" -d 1
 
 cache: pip
