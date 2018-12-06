@@ -22,7 +22,6 @@ class Settings:
         self.dry_run = bool(int(options.boot_only))
         self.owner_id = 180640710217826304
         self.dev_ids = [self.owner_id]
-        # TODO: load from config file.
         self.toggle_extensions = [
             "gambling.gambling",
             # "games.pokemon",
@@ -39,7 +38,6 @@ class Settings:
             "utility.utility",
             # "utility.stats",
         ]
-        # TODO: load from config file.
         self.core_extensions = [
             "src.core.ErrorHandler",
         ]
