@@ -20,7 +20,6 @@ class NotNsfwChannel(commands.CommandError):
 
 
 class NoPermission(commands.CommandError):
-    print("user tried invoking w/o perms")
     pass
 
 
