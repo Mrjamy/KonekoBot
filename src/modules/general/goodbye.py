@@ -5,7 +5,6 @@ class Goodbye:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: needs repair.
     # Function called after member joins.
     @KonekoBot.event
     async def on_member_remove(self, member):
