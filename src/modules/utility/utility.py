@@ -20,6 +20,7 @@ class Utility:
 
         await ctx.channel.send(f"Don't kill me!")
 
+    @commands.bot_has_permissions(embed_links=True)
     @commands.command(pass_context=True)
     async def stats(self, ctx):
         """Returns current statistics of the bot."""
