@@ -247,6 +247,7 @@ class Music:
 
         await player.queue.put(source)
 
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='pause', pass_context=True)
     async def pause_(self, ctx):
@@ -261,6 +262,7 @@ class Music:
         vc.pause()
         await ctx.send(f'**`{ctx.author}`**: Paused the song!')
 
+    @checks.is_dj()
     @commands.guild_only()
     @commands.command(name='resume', pass_context=True)
     async def resume_(self, ctx):

@@ -14,7 +14,10 @@ class Gambling:
     async def choice(self, ctx, *choices):
         """Choose from the given options split by \",\" """
         result = random.choice(" ".join(choices).split(","))
-        await ctx.channel.send(result)
+        if len(result) > 0:
+            await ctx.channel.send(result)
+        else:
+            await ctx.channel.send(f"I am unable to choose, please refer to `{ctx.prefix}help`")
 
 
 def setup(bot):
