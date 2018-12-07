@@ -17,7 +17,7 @@ settings = Settings()
 loop = asyncio.get_event_loop()
 
 
-KonekoBot = commands.Bot(
+KonekoBot = commands.AutoShardedBot(
     # Customizable when running the bot using the "-c" or "--command-prefix" option.
     command_prefix=commands.when_mentioned_or(settings.prefix),
     # Customizable when running the bot using the "-p" or "--pm-help" option.
