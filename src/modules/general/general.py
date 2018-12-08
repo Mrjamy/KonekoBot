@@ -18,7 +18,7 @@ class General:
         await ctx.channel.send(message)
 
     # Command ping, listen to /ping
-    @commands.command(pass_context=True)
+    @commands.command(aliases=["pong"], pass_context=True)
     async def ping(self, ctx):
         """Get the latency of the bot."""
         # Get the latency of the bot
@@ -27,14 +27,36 @@ class General:
         await ctx.channel.send(latency)
 
     # Command hug, listen to /hug
-    @commands.command(aliasses=["pong"], pass_context=True)
-    async def hug(self, ctx, user: discord.User=None):
+    @commands.command(pass_context=True)
+    async def hug(self, ctx):
         """Hug!"""
-        # TODO: Exceptions need to be caught.
-        message = f'*Hugs* {ctx.author.mention}'
-        if user:
-            message = f'*Hugs* {user.mention}'
+        if len(ctx.message.mentions) >= 1:
+            mentions = ' '.join([f'{user.mention}' for user in ctx.message.mentions])
+            message = f'*Hugs* {mentions}'
+        else:
+            message = f'*Hugs {ctx.author.mention}'
         await ctx.channel.send(message)
+
+    @hug.error
+    async def hug_error(self, ctx, *args):
+        """hug error handler"""
+        await ctx.channel.send("I could not perform this task :sob:")
+
+    # Command pat, listen to /pat
+    @commands.command(aliases=["headpat"], pass_context=True)
+    async def pat(self, ctx):
+        """Pat!"""
+        if len(ctx.message.mentions) >= 1:
+            mentions = ' '.join([f'{user.mention}' for user in ctx.message.mentions])
+            message = f'*Gives {mentions} a pat on the head*'
+        else:
+            message = f'*Gives {ctx.author.mention} a pat on the head*'
+        await ctx.channel.send(message)
+
+    @pat.error
+    async def pat_error(self, ctx, *args):
+        """pat error handler"""
+        await ctx.channel.send("I could not perform this task :sob:")
 
 
 def setup(bot):
