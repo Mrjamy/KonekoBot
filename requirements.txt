@@ -3,3 +3,4 @@ profanity
 youtube_dl
 async_timeout
 sqlalchemy
+py-rolldice
