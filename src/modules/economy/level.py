@@ -1,6 +1,8 @@
 import json
 import os
 import time
+import random
+from discord.ext import commands
 from KonekoBot import KonekoBot
 
 
@@ -16,6 +18,17 @@ class Level:
         # TODO: move users.json to src/core/data/
         self.data = os.path.join(dir, 'users.json')
 
+    @commands.guild_only()
+    @commands.command(pass_context=True)
+    async def level(self, ctx):
+        with open(self.data, 'r') as f:
+            users = json.load(f)
+
+        key = f'{ctx.author.id} - {ctx.guild.id}'
+        if key not in users:
+            await ctx.channel.send('You don\'t have a level yet, try saying something!')
+        await ctx.channel.send(f'You are level {users[key]["level"]}')
+
     @KonekoBot.event
     async def on_member_join(self, member):
         with open(self.data, 'r') as f:
@@ -25,7 +38,7 @@ class Level:
         await self.add_user(users, guild, member)
 
         with open(self.data, 'w') as f:
-            json.dump(users, f, indent=4)
+            json.dump(users, f, indent=4, sort_keys=True)
 
     @KonekoBot.event
     async def on_message(self, ctx):
@@ -41,10 +54,10 @@ class Level:
         user = str(ctx.author.id)
         await self.add_user(users, guild, user)
         await self.add_experience(users, guild, user)
-        await self.level_up(users, guild, user, ctx)
+        await self.level_up(users, guild, ctx.author, ctx)
 
         with open(self.data, 'w') as f:
-            json.dump(users, f, indent=4)
+            json.dump(users, f, indent=4, sort_keys=True)
 
     # TODO: remove the user's entry from the json file.
     @KonekoBot.event
@@ -62,11 +75,11 @@ class Level:
     async def add_experience(self, users, guild, user):
         if not await self._cooldown(users, guild, user):
             key = f'{user} - {guild}'
-            users[key]['experience'] += 5
+            users[key]['experience'] += random.randint(5, 10)
             users[key]['last_message'] = time.time()
 
     async def level_up(self, users, guild, user, ctx):
-        key = f'{user} - {guild}'
+        key = f'{user.id} - {guild}'
         experience = users[key]['experience']
         lvl_start = users[key]['level']
         lvl_end = int(experience ** (1/4))
