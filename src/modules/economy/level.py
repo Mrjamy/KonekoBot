@@ -25,9 +25,11 @@ class Level:
             users = json.load(f)
 
         key = f'{ctx.author.id} - {ctx.guild.id}'
-        if key not in users:
+        try:
+            if key in users:
+                await ctx.channel.send(f'You are level {users[key]["level"]}')
+        except KeyError:
             await ctx.channel.send('You don\'t have a level yet, try saying something!')
-        await ctx.channel.send(f'You are level {users[key]["level"]}')
 
     @KonekoBot.event
     async def on_member_join(self, member):
