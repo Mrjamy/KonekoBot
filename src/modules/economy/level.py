@@ -21,7 +21,7 @@ class Level:
     # TODO: add option for mentioning a user.
     # TODO: send a fancy card then responding.
     @commands.guild_only()
-    @commands.command(aliases=['xp', 'experience'], pass_context=True)
+    @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
     async def level(self, ctx, user=None):
         """Shows your xp stats. Specify the user to show that user's stats instead."""
         if user is not None:
