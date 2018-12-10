@@ -27,15 +27,18 @@
 ### General
 
 > /hello
->> """Hello!"""  
+>> A simple greeting!
 
 > /ping
->> """Get the latency of the bot."""  
+>> Get the latency of the bot.
 
 > /hug
 >> arguments: [@mention] - optional  
->> """Hug!"""  
+>> Hug!
 
 > /pat
 >> arguments: [@mention] - optional  
->> """Pat!"""  
+>> Pat!
+
+
+### Road work ahead, will be added asap! feel free to contribute ^-^
