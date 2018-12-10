@@ -18,8 +18,8 @@
 
 > /roll  
 >> arguments: [die] - optional  
->> Rolls a die.  
-  
+>> Rolls a die. 
+
 > /rps  
 >> arguments: <rock|paper|scissors> - required  
 >> Play rock paper scissors.  
