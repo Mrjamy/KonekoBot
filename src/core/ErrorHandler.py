@@ -30,18 +30,24 @@ class ErrorHandler:
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            await ctx.send(f'`{ctx.prefix}{ctx.command}` has been disabled.')
+            embed = discord.Embed(title=f'`{ctx.prefix}{ctx.command}` has been disabled.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                await ctx.channel.send(f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.')
+                embed = discord.Embed(title=f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.',
+                                      color=discord.Color.red())
+                await ctx.channel.send(embed=embed)
             except (discord.Forbidden, discord.HTTPException):
                 pass
             return
 
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f'Refer to `{ctx.prefix}help {ctx.command}`')
+            embed = discord.Embed(title=f'Refer to `{ctx.prefix}help {ctx.command}`',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         elif isinstance(error, commands.BotMissingPermissions):
@@ -50,7 +56,9 @@ class ErrorHandler:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            await ctx.send(f'I need the **{fmt}** permission(s) to run this command.')
+            embed = discord.Embed(title=f'I need the **{fmt}** permission(s) to run this command.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         if isinstance(error, commands.MissingPermissions):
@@ -59,7 +67,9 @@ class ErrorHandler:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            await ctx.send(f'You need the **{fmt}** permission(s) to use this command.')
+            embed = discord.Embed(title=f'You need the **{fmt}** permission(s) to use this command.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         # All other Errors not returned come here... And we can just print the default TraceBack.
