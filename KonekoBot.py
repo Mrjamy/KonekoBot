@@ -17,6 +17,7 @@ settings = Settings()
 loop = asyncio.get_event_loop()
 
 
+# Create an AutoSharded bot.
 KonekoBot = commands.AutoShardedBot(
     # Customizable when running the bot using the "-c" or "--command-prefix" option.
     command_prefix=commands.when_mentioned_or(settings.prefix),
@@ -32,6 +33,7 @@ KonekoBot.dry_run = settings.dry_run
 # Function called when the bot is ready.
 @KonekoBot.event
 async def on_ready():
+    """KonekoBot on_ready event."""
     game = settings.prefix + "help for help"
     activity = discord.Game(name=game)
     await KonekoBot.change_presence(status=discord.Status.online, activity=activity)
@@ -40,12 +42,16 @@ async def on_ready():
     print(f'I am in {len(KonekoBot.guilds)} guilds.')
 
 
+# TODO: add event on_command for a command counter.
+
+
 if __name__ == '__main__':
     for extension in settings.toggle_extensions:
         KonekoBot.load_extension("src.modules." + extension)
     for extension in settings.core_extensions:
         KonekoBot.load_extension(extension)
 
+    # Dry run option for travis.
     if KonekoBot.dry_run is True:
         print("Quitting: dry run")
         close = loop.create_task(KonekoBot.close())

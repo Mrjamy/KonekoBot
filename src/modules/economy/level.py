@@ -39,6 +39,7 @@ class Level:
 
     @KonekoBot.event
     async def on_member_join(self, member):
+        """Stores the user in the database whenever a new user joins."""
         with open(self.data, 'r') as f:
             users = json.load(f)
 
@@ -50,6 +51,7 @@ class Level:
 
     @KonekoBot.event
     async def on_message(self, ctx):
+        """Whenever a user sends a message award them with a small amount of exp."""
         if ctx.author.bot:
             return
         if not ctx.guild:

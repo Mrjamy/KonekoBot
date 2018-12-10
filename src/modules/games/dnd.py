@@ -20,11 +20,10 @@ class Dungeon:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: update the /roll command to /roll <dice>d<sides>
     @commands.bot_has_permissions(embed_links=True)
     @commands.command(pass_context=True)
     async def roll(self, ctx, *, die: str = 'd20'):
-        """Rolls a die."""
+        """Rolls a die with standard dice notations."""
 
         dicebag = DiceBag(die)
 

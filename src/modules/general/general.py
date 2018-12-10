@@ -13,7 +13,8 @@ class General:
     # Command hello, listen to /hello
     @commands.command(pass_context=True)
     async def hello(self, ctx):
-        """Hello!"""
+        """A simple greeting!"""
+        # TODO: add more greet strings.
         message = f'Hello {ctx.author.mention}'
         await ctx.channel.send(message)
 
