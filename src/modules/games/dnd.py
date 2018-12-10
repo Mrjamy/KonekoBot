@@ -40,7 +40,9 @@ class Dungeon:
     @roll.error
     async def on_roll_error(self, ctx, error):
         """Roll error handler"""
-        await ctx.channel.send('I don\'t think this is a valid dice roll :upside_down:')
+        embed = discord.Embed(title=f'I don\'t think this is a valid dice roll :upside_down:',
+                              color=discord.Color.red())
+        await ctx.channel.send(embed=embed)
 
 
 def setup(bot):
