@@ -36,8 +36,8 @@ class Level:
         with open(self.data, 'r') as f:
             users = json.load(f)
 
-        guild = member.guild
-        await self.add_user(users, guild, member)
+        guild = member.guild.id
+        await self.add_user(users, guild, member.id)
 
         with open(self.data, 'w') as f:
             json.dump(users, f, indent=4, sort_keys=True)
