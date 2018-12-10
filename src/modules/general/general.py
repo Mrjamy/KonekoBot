@@ -40,15 +40,19 @@ class General:
     @hug.error
     async def hug_error(self, ctx, *args):
         """hug error handler"""
-        print(args)
-        embed = discord.Embed(title=f'I could not perform this task :sob:',
-                              color=discord.Color.red())
-        await ctx.channel.send(embed=embed)
+
+        if ctx.message.channel.permissions_for(ctx.me).embed_links:
+            embed = discord.Embed(title=f'I could not perform this task :sob:',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.channel.send(f'I could not perform this task :sob:')
 
     # Command pat, listen to /pat
     @commands.command(aliases=["headpat"], pass_context=True)
     async def pat(self, ctx):
         """Pat!"""
+
         if len(ctx.message.mentions) >= 1:
             mentions = ' '.join([f'{user.mention}' for user in ctx.message.mentions])
             message = f'*Gives {mentions} a pat on the head*'
@@ -59,10 +63,13 @@ class General:
     @pat.error
     async def pat_error(self, ctx, *args):
         """pat error handler"""
-        print(args)
-        embed = discord.Embed(title=f'I could not perform this task :sob:',
-                              color=discord.Color.red())
-        await ctx.channel.send(embed=embed)
+
+        if ctx.message.channel.permissions_for(ctx.me).embed_links:
+            embed = discord.Embed(title=f'I could not perform this task :sob:',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.channel.send(f'I could not perform this task :sob:')
 
 
 def setup(bot):
