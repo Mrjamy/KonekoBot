@@ -9,20 +9,27 @@
 **Koneko** is a multipurpose discord bot with all kinds of commands!
 
 The default set of modules includes and is not limited to:
-* Music features (YouTube, queues)
-* Games (Rock paper scissors)
-* And much more planned in the future.
+* Music features (YouTube, queues).
+* Leveling system.
+* And much more planned in the future.  
+
+For a full list of all the commands refer to the [command list](docs/commands.md)
 
 ## Installation
 
 The installation process is straightforward; all major platforms are supported: 
 * [Windows](docs/installing-windows.md)
 * [Linux](docs/installing-linux.md)
-* [macOS](link-to-maxOS-install) - Coming soon. 
+* [macOS](docs/installing-macos.md) - Coming soon. 
 
 ## About me
 
 I am still in beta and new commands are being added on a daily base! 
+
+
+## Questions?
+
+Feel free to join my [support server](https://discord.gg/RxFxPns)
 
 ## License
 
