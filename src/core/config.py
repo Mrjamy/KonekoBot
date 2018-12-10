@@ -31,7 +31,6 @@ class Settings:
             "games.rps",
             "general.general",
             # "general.goodbye",
-            # "general.response",
             # "general.welcome",
             # "help.help",
             # "moderation.moderation",
