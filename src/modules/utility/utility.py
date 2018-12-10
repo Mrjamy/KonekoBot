@@ -33,7 +33,7 @@ class Utility:
         uptime = f"{d.day-1:d}d {d.hour}h {d.minute}m {d.second}s"
         guilds = str(len(self.bot.guilds))
 
-        embed = discord.Embed(title="Koneko's Statistics", description="", color=0x00ff00)
+        embed = discord.Embed(title="Koneko's Statistics", description="", color=discord.Color.dark_purple())
         embed.add_field(name="Uptime", value=uptime, inline=True)
         embed.add_field(name="Guilds", value=guilds, inline=True)
 
