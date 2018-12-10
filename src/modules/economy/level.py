@@ -18,9 +18,15 @@ class Level:
         # TODO: move users.json to src/core/data/
         self.data = os.path.join(dir, 'users.json')
 
+    # TODO: add option for mentioning a user.
+    # TODO: send a fancy card then responding.
     @commands.guild_only()
-    @commands.command(pass_context=True)
-    async def level(self, ctx):
+    @commands.command(aliases=['xp', 'experience'], pass_context=True)
+    async def level(self, ctx, user=None):
+        """Shows your xp stats. Specify the user to show that user's stats instead."""
+        if user is not None:
+            await ctx.channel.send('The user parameter is not yet supported, hold tight!')
+
         with open(self.data, 'r') as f:
             users = json.load(f)
 
