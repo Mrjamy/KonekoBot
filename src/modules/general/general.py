@@ -40,7 +40,10 @@ class General:
     @hug.error
     async def hug_error(self, ctx, *args):
         """hug error handler"""
-        await ctx.channel.send("I could not perform this task :sob:")
+        print(args)
+        embed = discord.Embed(title=f'I could not perform this task :sob:',
+                              color=discord.Color.red())
+        await ctx.channel.send(embed=embed)
 
     # Command pat, listen to /pat
     @commands.command(aliases=["headpat"], pass_context=True)
@@ -56,7 +59,10 @@ class General:
     @pat.error
     async def pat_error(self, ctx, *args):
         """pat error handler"""
-        await ctx.channel.send("I could not perform this task :sob:")
+        print(args)
+        embed = discord.Embed(title=f'I could not perform this task :sob:',
+                              color=discord.Color.red())
+        await ctx.channel.send(embed=embed)
 
 
 def setup(bot):
