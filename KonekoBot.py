@@ -19,6 +19,7 @@ KonekoBot = commands.AutoShardedBot(
 )
 
 KonekoBot.uptime = time.time()
+KonekoBot.command_count = 0
 KonekoBot.dry_run = settings.dry_run
 
 
@@ -32,6 +33,11 @@ async def on_ready():
     # Bot logged in.
     print(f'Logged in as {KonekoBot.user}')
     print(f'I am in {len(KonekoBot.guilds)} guilds.')
+
+
+@KonekoBot.event
+async def on_command(ctx):
+    KonekoBot.command_count += 1
 
 
 # TODO: add event on_command for a command counter.
