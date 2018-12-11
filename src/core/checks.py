@@ -2,6 +2,8 @@ import discord
 from discord.ext import commands
 from src.core.config import Settings
 
+settings = Settings()
+
 
 class OwnerOnly(commands.CommandError):
     pass
@@ -25,7 +27,7 @@ class NoPermission(commands.CommandError):
 
 def is_owner():
     def predicate(ctx):
-        if ctx.author.id == Settings.owner_id:
+        if ctx.author.id == settings.owner_id:
             return True
         else:
             raise OwnerOnly
@@ -34,7 +36,7 @@ def is_owner():
 
 def is_dev():
     def predicate(ctx):
-        if ctx.author.id in Settings.dev_ids:
+        if ctx.author.id in settings.dev_ids:
             return True
         elif is_owner():
             return True
