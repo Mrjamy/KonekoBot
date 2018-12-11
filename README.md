@@ -1,4 +1,4 @@
-![intro](https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/KonekoIntro.png)
+![intro](https://raw.githubusercontent.com/jmuilwijk/KonekoBot/master/src/core/images/KonekoIntro.png)
 
 # Koneko - A multi purpose Discord bot
 
