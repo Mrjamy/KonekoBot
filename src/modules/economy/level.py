@@ -31,9 +31,13 @@ class Level:
             users = json.load(f)
 
         key = f'{ctx.author.id} - {ctx.guild.id}'
+
+        up = (users[key]['level'] + 1) ** 4
+        xp = users[key]['experience']
+
         try:
             if key in users:
-                await ctx.channel.send(f'You are level {users[key]["level"]}')
+                await ctx.channel.send(f'You are level {users[key]["level"]}, {xp}/{up} xp')
         except KeyError:
             await ctx.channel.send('You don\'t have a level yet, try saying something!')
 
@@ -107,3 +111,8 @@ class Level:
 
 def setup(bot):
     bot.add_cog(Level(bot))
+
+#     y = x ^ (1/4)
+#     y < 5
+
+625
