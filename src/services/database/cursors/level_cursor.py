@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from src.services.database.models.level_model import Level
 
-db = 'db/file.db'
+db = 'sqlite:///db/file.db'
 
 engine = create_engine(db)
 Session = sessionmaker()

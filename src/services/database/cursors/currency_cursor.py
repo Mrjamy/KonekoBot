@@ -7,7 +7,7 @@ class NotEnoughCurrency:
     pass
 
 
-db = 'db/file.db'
+db = 'sqlite:///db/file.db'
 
 engine = create_engine(db)
 Session = sessionmaker()
