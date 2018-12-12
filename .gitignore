@@ -108,3 +108,5 @@ venv.bak/
 *.db
 
 src/modules/economy/users\.json
+
+*.sqlite
