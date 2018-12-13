@@ -1,57 +1,62 @@
-import json
-import os
-import time
 import random
+import discord
+from datetime import datetime
 from discord.ext import commands
 from KonekoBot import KonekoBot
+from src.services.database.models import level_model as model
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import SQLAlchemyError
 
 
 class Level:
     """Leveling module."""
 
-    __slots__ = ['bot', 'data']
+    __slots__ = ['bot', 'data', 'engine', 'session']
 
     def __init__(self, bot):
-        dir = os.path.dirname(__file__)
+        db_uri = 'sqlite:///src/core/data/level.sqlite'
 
         self.bot = bot
-        # TODO: move users.json to src/core/data/
-        self.data = os.path.join(dir, 'users.json')
+        self.engine = create_engine(db_uri)
+        Session = sessionmaker()
+        Session.configure(bind=self.engine)
+        self.session = Session()
 
-    # TODO: add option for mentioning a user.
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
-    async def level(self, ctx, user=None):
+    async def level(self, ctx):
         """Shows your xp stats. Specify the user to show that user's stats instead."""
-        if user is not None:
-            await ctx.channel.send('The user parameter is not yet supported, hold tight!')
 
-        with open(self.data, 'r') as f:
-            users = json.load(f)
+        if len(ctx.message.mentions) == 1:
+            if ctx.author.bot:
+                embed = discord.Embed(title=f'This user is a bot.',
+                                      color=discord.Color.red())
+                await ctx.channel.send(embed=embed)
+                return
+            user = ctx.message.mentions[0]
+        else:
+            user = ctx.author
 
-        key = f'{ctx.author.id} - {ctx.guild.id}'
+        level = self.session.query(model.Level)\
+            .filter(
+                model.Level.snowflake == user.id,
+                model.Level.guild == ctx.guild.id
+            )\
+            .first()
+        if level is None:
+            level = await self.add_user(ctx.guild.id, ctx.author.id)
 
-        up = (users[key]['level'] + 1) ** 4
-        xp = users[key]['experience']
-
-        try:
-            if key in users:
-                await ctx.channel.send(f'You are level {users[key]["level"]}, {xp}/{up} xp')
-        except KeyError:
-            await ctx.channel.send('You don\'t have a level yet, try saying something!')
+        up = (level.level + 1) ** 4
+        embed = discord.Embed(title=f'`{user.name}` is level {level.level}, {level.experience}/{up} xp',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed)
 
     @KonekoBot.event
     async def on_member_join(self, member):
         """Stores the user in the database whenever a new user joins."""
-        with open(self.data, 'r') as f:
-            users = json.load(f)
-
-        guild = member.guild.id
-        await self.add_user(users, guild, member.id)
-
-        with open(self.data, 'w') as f:
-            json.dump(users, f, indent=4, sort_keys=True)
+        await self.add_user(member.guild.id, member.id)
 
     @KonekoBot.event
     async def on_message(self, ctx):
@@ -61,52 +66,70 @@ class Level:
         if not ctx.guild:
             return
 
-        with open(self.data, 'r') as f:
-            users = json.load(f)
+        level = self.session.query(model.Level)\
+            .filter(
+                model.Level.snowflake == ctx.author.id,
+                model.Level.guild == ctx.guild.id
+            )\
+            .first()
+        if level is None:
+            level = await self.add_user(ctx.guild.id, ctx.author.id)
 
-        guild = str(ctx.guild.id)
-        user = str(ctx.author.id)
-        await self.add_user(users, guild, user)
-        await self.add_experience(users, guild, user)
-        await self.level_up(users, guild, ctx.author, ctx)
+        level = await self.add_experience(level)
 
-        with open(self.data, 'w') as f:
-            json.dump(users, f, indent=4, sort_keys=True)
+        await self.level_up(level, ctx)
 
-    # TODO: remove the user's entry from the json file.
+    # TODO: remove the user's entry from the database
     @KonekoBot.event
     async def on_member_leave(self):
         return
 
-    async def add_user(self, users, guild, user):
-        key = f'{user} - {guild}'
-        if key not in users:
-            users[key] = {}
-            users[key]['experience'] = 0
-            users[key]['last_message'] = time.time()
-            users[key]['level'] = 1
+    async def add_user(self, guild, user):
 
-    async def add_experience(self, users, guild, user):
-        if not await self._cooldown(users, guild, user):
-            key = f'{user} - {guild}'
-            users[key]['experience'] += random.randint(5, 10)
-            users[key]['last_message'] = time.time()
+        level = model.Level()
+        level.snowflake = user
+        level.guild = guild
 
-    async def level_up(self, users, guild, user, ctx):
-        key = f'{user.id} - {guild}'
-        experience = users[key]['experience']
-        lvl_start = users[key]['level']
+        try:
+            self.session.add(level)
+            self.session.commit()
+        except SQLAlchemyError as e:
+            print(e)
+            return
+        return level
+
+    async def add_experience(self, user):
+        if not await self._cooldown(user):
+            user.experience += random.randint(5, 10)
+            user.last_message = datetime.now()
+            try:
+                self.session.commit()
+            except SQLAlchemyError as e:
+                print(e)
+                return
+            return user
+        return user
+
+    async def level_up(self, user, ctx):
+        experience = user.experience
+        lvl_start = user.level
         lvl_end = int(experience ** (1/4))
 
         if lvl_start < lvl_end:
-            await ctx.channel.send(f'{user.mention} has leveled up to level {lvl_end}')
-            users[key]['level'] = lvl_end
+            embed = discord.Embed(title=f'`{ctx.author.mention}` has leveled up to level {lvl_end}',
+                                  color=discord.Color.dark_purple())
+            await ctx.channel.send(embed=embed)
+            user.level = lvl_end
 
-    async def _cooldown(self, users, guild, user):
-        key = f'{user} - {guild}'
-        last = users[key]['last_message']
+        try:
+            self.session.commit()
+        except SQLAlchemyError as e:
+            print(e)
+            return
+        return user
 
-        return (round(time.time() - last)) < 30
+    async def _cooldown(self, user):
+        return (datetime.now() - user.last_message).total_seconds() < 30
 
 
 def setup(bot):
