@@ -7,7 +7,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.sqlite import INTEGER, TEXT, TIMESTAMP
 
 
-db_uri = 'sqlite:///level.sqlite'
+db_uri = 'sqlite:///src/core/data/level.sqlite'
 engine = create_engine(db_uri)
 
 Base = declarative_base()

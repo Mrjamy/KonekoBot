@@ -6,7 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.sqlite import INTEGER, TEXT
 
 
-db_uri = 'sqlite:///currency.sqlite'
+db_uri = 'sqlite:///src/core/data/currency.sqlite'
 engine = create_engine(db_uri)
 
 Base = declarative_base()
