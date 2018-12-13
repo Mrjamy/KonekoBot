@@ -68,7 +68,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
             data = data['entries'][0]
             # TODO: add support for full playlists (terminating once max queue size has been reached)            
 
-        embed = discord.Embed(title=f'```ini\n[Added {data["title"]} to the Queue.]\n```',
+        embed = discord.Embed(title=f'```[Added {data["title"]} to the Queue.]\n```',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed, delete_after=20)
 
