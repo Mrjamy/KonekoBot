@@ -338,7 +338,9 @@ class Music:
 
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
-
+        
+        # TODO: add indexing for queued songs.
+        # TODO: nice formatting.         
         fmt = '\n'.join(f'**`{_["title"]}`**' for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt,
                               color=discord.Color.darker_grey())
