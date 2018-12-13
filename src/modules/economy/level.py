@@ -111,8 +111,3 @@ class Level:
 
 def setup(bot):
     bot.add_cog(Level(bot))
-
-#     y = x ^ (1/4)
-#     y < 5
-
-625
