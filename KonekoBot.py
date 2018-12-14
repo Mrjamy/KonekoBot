@@ -5,7 +5,7 @@ import time
 import discord
 from discord.ext import commands
 from src.core.config import Settings
-import src.core.setup
+from src.core.setup import Setup
 
 settings = Settings()
 loop = asyncio.get_event_loop()
@@ -45,6 +45,8 @@ async def on_command(ctx):
 
 
 if __name__ == '__main__':
+    Setup().setup()
+
     for extension in settings.toggle_extensions:
         KonekoBot.load_extension("src.modules." + extension)
     for extension in settings.core_extensions:
