@@ -2,6 +2,7 @@ import sys
 import traceback
 import discord
 from discord.ext import commands
+from src.core.checks import DjOnly
 
 
 class ErrorHandler:
@@ -68,6 +69,12 @@ class ErrorHandler:
             else:
                 fmt = ' and '.join(missing)
             embed = discord.Embed(title=f'You need the **{fmt}** permission(s) to use this command.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, DjOnly):
+            embed = discord.Embed(title=f'This command requires you to have a role called DJ',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return

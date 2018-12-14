@@ -5,7 +5,7 @@ from functools import partial
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
-import src.core.checks as checks
+from src.core.checks import Checks
 
 
 ytdlopts = {
@@ -259,7 +259,7 @@ class Music:
 
         await player.queue.put(source)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
     @commands.guild_only()
     @commands.command(name='pause', pass_context=True)
     async def pause_(self, ctx):
@@ -278,7 +278,7 @@ class Music:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed, delete_after=20)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
     @commands.guild_only()
     @commands.command(name='resume', pass_context=True)
     async def resume_(self, ctx):
@@ -297,7 +297,7 @@ class Music:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed, delete_after=20)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
     @commands.guild_only()
     @commands.command(name='skip', pass_context=True)
     async def skip_(self, ctx):
@@ -374,7 +374,7 @@ class Music:
                               color=discord.Color.green())
         player.np = await ctx.channel.send(embed=embed, delete_after=20)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
     @commands.guild_only()
     @commands.command(name='volume', aliases=['vol'], pass_context=True)
     async def change_volume(self, ctx, *, volume: float):
@@ -406,7 +406,7 @@ class Music:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
     @commands.guild_only()
     @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):

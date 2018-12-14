@@ -2,7 +2,7 @@ import time
 from datetime import datetime, timedelta
 import discord
 from discord.ext import commands
-import src.core.checks as check
+from src.core.checks import Checks
 
 
 class Utility:
@@ -13,7 +13,7 @@ class Utility:
     def __init__(self, bot):
         self.bot = bot
 
-    @check.is_owner()
+    @Checks.is_owner()
     @commands.command(pass_context=True, hidden=True)
     async def shutdown(self, ctx):
         """Shuts the bot down."""
