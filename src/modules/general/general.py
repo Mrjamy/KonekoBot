@@ -27,6 +27,7 @@ class General:
         # Send it to the user
         await ctx.channel.send(latency)
 
+    # TODO: add param user = None for help mapping
     # Command hug, listen to /hug
     @commands.command(pass_context=True)
     async def hug(self, ctx):
@@ -49,6 +50,7 @@ class General:
         else:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
+    # TODO: add param user = None for help mapping
     # Command pat, listen to /pat
     @commands.command(aliases=["headpat"], pass_context=True)
     async def pat(self, ctx):
