@@ -22,7 +22,9 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - cd src/core/data
+  - cd src
+  - cd core
+  - cd data
   - printf '' > level.sqlite
   - printf '' > currency.sqlite
   - cd
