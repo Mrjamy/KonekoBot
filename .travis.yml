@@ -9,6 +9,7 @@ addons:
 
 stages:
   - lint
+  - test
   - run
 
 python:
@@ -21,7 +22,7 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - cat > test.txt
+  - printf '' > file.txt
   - touch sample.txt
   - touch src/core/data/level.sqlite
   - touch src/core/data/currency.sqlite
