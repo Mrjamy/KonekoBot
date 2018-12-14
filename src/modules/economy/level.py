@@ -23,6 +23,7 @@ class Level:
         Session.configure(bind=self.engine)
         self.session = Session()
 
+    # TODO: add param user = None for help mapping
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
