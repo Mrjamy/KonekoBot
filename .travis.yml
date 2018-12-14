@@ -18,13 +18,16 @@ python:
   - 3.7-dev   # 3.7 development branch
   - 3.8-dev   # 3.8 development branch
 
+before_install:
+  - ls $HOME
+
 install:
   - pip install -r requirements.txt
 
 before_script:
   - ls $HOME
-  - printf '' > $HOME/src/core/data/level.sqlite
-  - printf '' > $HOME/src/core/data/currency.sqlite
+  - printf '' > $HOME/KonekoBot/src/core/data/level.sqlite
+  - printf '' > $HOME/KonekoBot/src/core/data/currency.sqlite
 
 jobs:
   include:
