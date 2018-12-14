@@ -5,7 +5,6 @@ import time
 import discord
 from discord.ext import commands
 from src.core.config import Settings
-import src.core.setup
 
 settings = Settings()
 loop = asyncio.get_event_loop()
