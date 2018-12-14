@@ -7,36 +7,29 @@ addons:
     sources:
     packages:
 
-stages:
-  - compile
-#  - test
-  - deploy
-
 python:
   - 3.6       # 3.6 stable/release
   - 3.6-dev   # 3.6 development branch
   - 3.7-dev   # 3.7 development branch
   - 3.8-dev   # 3.8 development branch
 
-before_script:
-  - touch src/core/data/level.sqlite
-  - touch src/core/data/currency.sqlite
-
 install:
   - pip install -r requirements.txt
-jobs:
-  include:
-    - stage: compile
-      script:
-        - python -m compileall ./KonekoBot.py
-        - python -m compileall ./src/core
-        - python -m compileall ./src/modules
-        - python -m compileall ./src/services
-# TODO: add unit tests
-#    - stage: test
-#      script:
-    - stage: deploy
-      script:
-        - python KonekoBot.py -t "TOKEN" -d 1
+
+before_script:
+  - cd src/core
+  - mkdir data
+  - cd data
+  - printf '' > level.sqlite
+  - printf '' > currency.sqlite
+  - cd ../../..
+
+script:
+  - python -m compileall ./KonekoBot.py
+  - python -m compileall ./src/core
+  - python -m compileall ./src/modules
+  - python -m compileall ./src/services
+
+  - python KonekoBot.py -t "TOKEN" -d 1
 
 cache: pip
