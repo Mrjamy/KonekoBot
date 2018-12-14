@@ -22,10 +22,8 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - printf '' > file.txt
-  - touch sample.txt
-  - touch src/core/data/level.sqlite
-  - touch src/core/data/currency.sqlite
+  - printf '' > src/core/data/level.sqlite
+  - printf '' > src/core/data/currency.sqlite
 
 jobs:
   include:
