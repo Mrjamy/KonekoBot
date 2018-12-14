@@ -22,7 +22,7 @@ before_script:
   - cd data
   - printf '' > level.sqlite
   - printf '' > currency.sqlite
-  - cd
+  - cd ../../..
 
 script:
   - python -m compileall ./KonekoBot.py
