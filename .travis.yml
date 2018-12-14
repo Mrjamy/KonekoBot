@@ -8,8 +8,8 @@ addons:
     packages:
 
 stages:
-  - compile
-  - deploy
+  - lint
+  - run
 
 python:
   - 3.6       # 3.6 stable/release
@@ -17,23 +17,26 @@ python:
   - 3.7-dev   # 3.7 development branch
   - 3.8-dev   # 3.8 development branch
 
+install:
+  - pip install -r requirements.txt
+
 before_script:
+  - cat > test.txt
   - touch sample.txt
   - touch src/core/data/level.sqlite
   - touch src/core/data/currency.sqlite
 
-install:
-  - pip install -r requirements.txt
 jobs:
   include:
-    - stage: compile
+    - stage: lint
+      sudo: false
+      cache: false
       script:
         - python -m compileall ./KonekoBot.py
         - python -m compileall ./src/core
         - python -m compileall ./src/modules
         - python -m compileall ./src/services
-    # TODO: add unit tests
-    - stage: deploy
+    - stage: run
       script:
         - python KonekoBot.py -t "TOKEN" -d 1
 
