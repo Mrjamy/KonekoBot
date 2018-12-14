@@ -7,19 +7,11 @@ addons:
     sources:
     packages:
 
-stages:
-  - lint
-  - test
-  - run
-
 python:
   - 3.6       # 3.6 stable/release
   - 3.6-dev   # 3.6 development branch
   - 3.7-dev   # 3.7 development branch
   - 3.8-dev   # 3.8 development branch
-
-before_install:
-  - echo $HOME
 
 install:
   - pip install -r requirements.txt
@@ -32,18 +24,12 @@ before_script:
   - printf '' > currency.sqlite
   - cd
 
-jobs:
-  include:
-    - stage: lint
-      sudo: false
-      cache: false
-      script:
-        - python -m compileall ./KonekoBot.py
-        - python -m compileall ./src/core
-        - python -m compileall ./src/modules
-        - python -m compileall ./src/services
-    - stage: run
-      script:
-        - python KonekoBot.py -t "TOKEN" -d 1
+script:
+  - python -m compileall ./KonekoBot.py
+  - python -m compileall ./src/core
+  - python -m compileall ./src/modules
+  - python -m compileall ./src/services
+
+  - python KonekoBot.py -t "TOKEN" -d 1
 
 cache: pip
