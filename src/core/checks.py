@@ -25,6 +25,10 @@ class NoPermission(commands.CommandError):
     pass
 
 
+class NotInVoiceChannel(commands.CommandError):
+    pass
+
+
 class Checks:
     @staticmethod
     def is_owner():
@@ -77,5 +81,15 @@ class Checks:
                 # TODO: Store this setting in a database.
                 # ctx.send("This command requires you to have the role DJ")
                 raise DjOnly()
+        return commands.check(predicate)
+
+    @staticmethod
+    def is_connected_voice():
+        def predicate(ctx):
+            if hasattr(ctx.author.voice, 'channel'):
+                return True
+            else:
+                raise NotInVoiceChannel()
+
         return commands.check(predicate)
 

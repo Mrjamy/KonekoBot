@@ -5,6 +5,9 @@ from functools import partial
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
+
+# TODO: Fully implement checks.
+# TODO: Customizable role for is_dj() check.
 from src.core.checks import Checks
 
 
@@ -66,7 +69,7 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if 'entries' in data:
             # take first item from a playlist
             data = data['entries'][0]
-            # TODO: add support for full playlists (terminating once max queue size has been reached)            
+            # TODO: add support for full playlists (terminating once max queue size has been reached)
 
         embed = discord.Embed(title=f'```[Added {data["title"]} to the Queue.]\n```',
                               color=discord.Color.green())
@@ -195,19 +198,13 @@ class Music:
 
         return player
 
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='connect', aliases=['join'], pass_context=True)
     async def connect_(self, ctx):
         """Connect to voice."""
 
-        try:
-            channel = ctx.author.voice.channel
-        except AttributeError:
-            embed = discord.Embed(title='No channel to join. Make sure you are connected to a voice channel.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
-            return
-
+        channel = ctx.author.voice.channel
         vc = ctx.voice_client
 
         if vc:
@@ -233,6 +230,7 @@ class Music:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed, delete_after=20)
 
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='play', aliases=['sing'], pass_context=True)
     async def play_(self, ctx, *, search: str):
@@ -260,6 +258,7 @@ class Music:
         await player.queue.put(source)
 
     # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='pause', pass_context=True)
     async def pause_(self, ctx):
@@ -279,6 +278,7 @@ class Music:
         await ctx.channel.send(embed=embed, delete_after=20)
 
     # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='resume', pass_context=True)
     async def resume_(self, ctx):
@@ -298,6 +298,7 @@ class Music:
         await ctx.channel.send(embed=embed, delete_after=20)
 
     # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='skip', pass_context=True)
     async def skip_(self, ctx):
@@ -375,6 +376,7 @@ class Music:
         player.np = await ctx.channel.send(embed=embed, delete_after=20)
 
     # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='volume', aliases=['vol'], pass_context=True)
     async def change_volume(self, ctx, *, volume: float):
@@ -407,6 +409,7 @@ class Music:
         await ctx.channel.send(embed=embed)
 
     # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):
