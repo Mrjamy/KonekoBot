@@ -2,7 +2,10 @@ import sys
 import traceback
 import discord
 from discord.ext import commands
-from src.core.checks import DjOnly
+from src.core.checks import (
+    DjOnly,
+    NotInVoiceChannel
+)
 
 
 class ErrorHandler:
@@ -74,7 +77,13 @@ class ErrorHandler:
             return
 
         if isinstance(error, DjOnly):
-            embed = discord.Embed(title=f'This command requires you to have a role called DJ',
+            embed = discord.Embed(title=f'This command requires you to have a role called DJ.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, NotInVoiceChannel):
+            embed = discord.Embed(title=f'This command requires you to be in a voice channel.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
