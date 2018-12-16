@@ -1,4 +1,5 @@
 import random
+from src.core.checks import Checks
 from discord.ext import commands
 
 
@@ -10,6 +11,7 @@ class Gambling:
     def __init__(self, bot):
         self.bot = bot
 
+    @Checks.is_dev()
     @commands.command(pass_context=True)
     async def choice(self, ctx, *choices):
         """Choose from the given options split by \",\" """

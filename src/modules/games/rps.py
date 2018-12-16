@@ -12,13 +12,15 @@ class Games:
 
     @commands.command(pass_context=True)
     async def rps(self, ctx, choice: str):
-        """Play rock paper scissors."""
+        """Play a game of rock paper scissors."""
         choice = choice.lower()
         options = [
             "rock",
             "paper",
             "scissors",
         ]
+
+        # TODO: update the rps responses.
         if choice not in options:
             await ctx.channel.send("Please choose from: rock, paper, scissors")
             return
@@ -44,6 +46,7 @@ class Games:
         else:
             message = "Oops something went wrong"
 
+        # TODO: send green/gray/red embed depending on the outcome.
         await ctx.channel.send(message)
 
 

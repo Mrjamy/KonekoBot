@@ -21,15 +21,16 @@ class Settings:
         self.prefix = options.command_prefix
         self.dry_run = bool(int(options.boot_only))
         self.owner_id = 180640710217826304
-        self.dev_ids = [self.owner_id]
+        self.dev_ids = [self.owner_id, ]
         self.toggle_extensions = [
+            "economy.currency",
+            "economy.level",
             "gambling.gambling",
             # "games.pokemon",
             "games.dnd",
             "games.rps",
             "general.general",
             # "general.goodbye",
-            # "general.response",
             # "general.welcome",
             # "help.help",
             # "moderation.moderation",

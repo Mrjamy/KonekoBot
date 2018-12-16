@@ -1,23 +1,17 @@
 #!/usr/bin/env python3
 
 import asyncio
-import logging
 import time
 import discord
 from discord.ext import commands
 from src.core.config import Settings
-
-logger = logging.getLogger('discord')
-logger.setLevel(logging.ERROR)
-handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
-handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
-logger.addHandler(handler)
+from src.core.setup import Setup
 
 settings = Settings()
 loop = asyncio.get_event_loop()
 
-
-KonekoBot = commands.Bot(
+# Create an AutoSharded bot.
+KonekoBot = commands.AutoShardedBot(
     # Customizable when running the bot using the "-c" or "--command-prefix" option.
     command_prefix=commands.when_mentioned_or(settings.prefix),
     # Customizable when running the bot using the "-p" or "--pm-help" option.
@@ -26,12 +20,14 @@ KonekoBot = commands.Bot(
 )
 
 KonekoBot.uptime = time.time()
+KonekoBot.command_count = 0
 KonekoBot.dry_run = settings.dry_run
 
 
 # Function called when the bot is ready.
 @KonekoBot.event
 async def on_ready():
+    """KonekoBot on_ready event."""
     game = settings.prefix + "help for help"
     activity = discord.Game(name=game)
     await KonekoBot.change_presence(status=discord.Status.online, activity=activity)
@@ -40,12 +36,23 @@ async def on_ready():
     print(f'I am in {len(KonekoBot.guilds)} guilds.')
 
 
+@KonekoBot.event
+async def on_command(ctx):
+    KonekoBot.command_count += 1
+
+
+# TODO: add event on_command for a command counter.
+
+
 if __name__ == '__main__':
+    Setup().setup()
+
     for extension in settings.toggle_extensions:
         KonekoBot.load_extension("src.modules." + extension)
     for extension in settings.core_extensions:
         KonekoBot.load_extension(extension)
 
+    # Dry run option for travis.
     if KonekoBot.dry_run is True:
         print("Quitting: dry run")
         close = loop.create_task(KonekoBot.close())

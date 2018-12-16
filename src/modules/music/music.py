@@ -5,7 +5,10 @@ from functools import partial
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
-import src.core.checks as checks
+
+# TODO: Fully implement checks.
+# TODO: Customizable role for is_dj() check.
+from src.core.checks import Checks
 
 
 ytdlopts = {
@@ -66,9 +69,11 @@ class YTDLSource(discord.PCMVolumeTransformer):
         if 'entries' in data:
             # take first item from a playlist
             data = data['entries'][0]
-            # TODO: add support for full playlists (terminating once max queue size has been reached)            
+            # TODO: add support for full playlists (terminating once max queue size has been reached)
 
-        await ctx.send(f'```ini\n[Added {data["title"]} to the Queue.]\n```', delete_after=15)
+        embed = discord.Embed(title=f'```[Added {data["title"]} to the Queue.]\n```',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed, delete_after=20)
 
         if download:
             source = ytdl.prepare_filename(data)
@@ -134,16 +139,18 @@ class MusicPlayer:
                 try:
                     source = await YTDLSource.regather_stream(source, loop=self.bot.loop)
                 except Exception as e:
-                    await self._channel.send(f'There was an error processing your song.\n'
-                                             f'```css\n[{e}]\n```')
+                    embed = discord.Embed(title=f'There was an error processing your song.\n ```css\n[{e}]\n```',
+                                          color=discord.Color.red())
+                    await self._channel.send(embed=embed)
                     continue
 
             source.volume = self.volume
             self.current = source
 
             self._guild.voice_client.play(source, after=lambda _: self.bot.loop.call_soon_threadsafe(self.next.set))
-            self.np = await self._channel.send(f'**Now Playing:** `{source.title}` requested by '
-                                               f'`{source.requester}`')
+            embed = discord.Embed(title=f'**Now Playing:** `{source.title}` requested by `{source.requester}`',
+                                  color=discord.Color.green())
+            self.np = await self._channel.send(embed=embed)
             await self.next.wait()
 
             # Make sure the FFmpeg process is cleaned up.
@@ -191,17 +198,13 @@ class Music:
 
         return player
 
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='connect', aliases=['join'], pass_context=True)
     async def connect_(self, ctx):
         """Connect to voice."""
 
-        try:
-            channel = ctx.author.voice.channel
-        except AttributeError:
-            await ctx.send(InvalidVoiceChannel('No channel to join. Make sure you are connected to a voice channel.'))
-            return
-
+        channel = ctx.author.voice.channel
         vc = ctx.voice_client
 
         if vc:
@@ -210,17 +213,24 @@ class Music:
             try:
                 await vc.move_to(channel)
             except asyncio.TimeoutError:
-                await ctx.send(VoiceConnectionError(f'Moving to channel: <{channel}> timed out.'))
+                embed = discord.Embed(title=f'Moving to channel: <{channel}> timed out.',
+                                      color=discord.Color.red())
+                await ctx.channel.send(embed=embed)
                 return
         else:
             try:
                 await channel.connect()
             except asyncio.TimeoutError:
-                await ctx.send(VoiceConnectionError(f'Connecting to channel: <{channel}> timed out.'))
+                embed = discord.Embed(title=f'Connecting to channel: <{channel}> timed out.',
+                                      color=discord.Color.red())
+                await ctx.channel.send(embed=embed)
                 return
 
-        await ctx.send(f'Connected to: **{channel}**', delete_after=20)
+        embed = discord.Embed(title=f'Connected to: **{channel}**',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed, delete_after=20)
 
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='play', aliases=['sing'], pass_context=True)
     async def play_(self, ctx, *, search: str):
@@ -247,7 +257,8 @@ class Music:
 
         await player.queue.put(source)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='pause', pass_context=True)
     async def pause_(self, ctx):
@@ -255,14 +266,19 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_playing():
-            return await ctx.send('I am not currently playing anything!', delete_after=20)
+            embed = discord.Embed(title='I am not currently playing anything!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
         elif vc.is_paused():
             return
 
         vc.pause()
-        await ctx.send(f'**`{ctx.author}`**: Paused the song!')
+        embed = discord.Embed(title=f'**`{ctx.author}`**: Paused the song!',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed, delete_after=20)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='resume', pass_context=True)
     async def resume_(self, ctx):
@@ -270,14 +286,19 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently playing anything!', delete_after=20)
+            embed = discord.Embed(title='I am not currently playing anything!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
         elif not vc.is_paused():
             return
 
         vc.resume()
-        await ctx.send(f'**`{ctx.author}`**: Resumed the song!')
+        embed = discord.Embed(title=f'**`{ctx.author}`**: Resumed the song!',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed, delete_after=20)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='skip', pass_context=True)
     async def skip_(self, ctx):
@@ -285,7 +306,9 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently playing anything!', delete_after=20)
+            embed = discord.Embed(title='I am not currently playing anything!',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed, delete_after=20)
 
         if vc.is_paused():
             pass
@@ -293,7 +316,9 @@ class Music:
             return
 
         vc.stop()
-        await ctx.send(f'**`{ctx.author}`**: Skipped the song!')
+        embed = discord.Embed(title=f'**`{ctx.author}`**: Skipped the song!',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
     @commands.command(name='queue', aliases=['q', 'playlist'], pass_context=True)
@@ -302,19 +327,25 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently connected to voice!', delete_after=20)
+            embed = discord.Embed(title='I am not currently connected to voice!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed)
 
         player = self.get_player(ctx)
         if player.queue.empty():
-            return await ctx.send('There are currently no more queued songs.')
+            embed = discord.Embed(title='There are currently no more queued songs.',
+                                  color=discord.Color.darker_grey())
+            return await ctx.channel.send(embed=embed)
 
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
-
+        
+        # TODO: add indexing for queued songs.
+        # TODO: nice formatting.         
         fmt = '\n'.join(f'**`{_["title"]}`**' for _ in upcoming)
-        embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt)
-
-        await ctx.send(embed=embed)
+        embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt,
+                              color=discord.Color.darker_grey())
+        return await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
     @commands.command(name='now_playing', aliases=['np', 'current', 'currentsong', 'playing'], pass_context=True)
@@ -323,11 +354,15 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently connected to voice!', delete_after=20)
+            embed = discord.Embed(title='I am not currently connected to voice!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
 
         player = self.get_player(ctx)
         if not player.current:
-            return await ctx.send('I am not currently playing anything!')
+            embed = discord.Embed(title='I am not currently playing anything!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
 
         try:
             # Remove our previous now_playing message.
@@ -335,10 +370,13 @@ class Music:
         except discord.HTTPException:
             pass
 
-        player.np = await ctx.send(f'**Now Playing:** `{vc.source.title}` '
-                                   f'requested by `{vc.source.requester}`')
+        embed = discord.Embed(title=f'**Now Playing:** `{vc.source.title}` '
+                              f'requested by `{vc.source.requester}`',
+                              color=discord.Color.green())
+        player.np = await ctx.channel.send(embed=embed, delete_after=20)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='volume', aliases=['vol'], pass_context=True)
     async def change_volume(self, ctx, *, volume: float):
@@ -351,10 +389,14 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently connected to voice!', delete_after=20)
+            embed = discord.Embed(title='I am not currently connected to voice!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
 
         if not 0 < volume < 101:
-            return await ctx.send('Please enter a value between 1 and 100.')
+            embed = discord.Embed(title='Please enter a value between 1 and 100.',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
 
         player = self.get_player(ctx)
 
@@ -362,9 +404,12 @@ class Music:
             vc.source.volume = volume / 100
 
         player.volume = volume / 100
-        await ctx.send(f'**`{ctx.author}`**: Set the volume to **{volume}%**')
+        embed = discord.Embed(title=f'**`{ctx.author}`**: Set the volume to **{volume}%**',
+                              color=discord.Color.green())
+        await ctx.channel.send(embed=embed)
 
-    @checks.is_dj()
+    # @Checks.is_dj()
+    @Checks.is_connected_voice()
     @commands.guild_only()
     @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):
@@ -375,7 +420,9 @@ class Music:
         vc = ctx.voice_client
 
         if not vc or not vc.is_connected():
-            return await ctx.send('I am not currently playing anything!', delete_after=20)
+            embed = discord.Embed(title='I am not currently playing anything!',
+                                  color=discord.Color.red())
+            return await ctx.channel.send(embed=embed, delete_after=20)
 
         await self.cleanup(ctx.guild)
 
