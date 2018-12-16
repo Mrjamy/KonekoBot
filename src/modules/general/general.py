@@ -27,10 +27,9 @@ class General:
         # Send it to the user
         await ctx.channel.send(latency)
 
-    # TODO: add param user = None for help mapping
     # Command hug, listen to /hug
     @commands.command(pass_context=True)
-    async def hug(self, ctx):
+    async def hug(self, ctx, user=None):
         """Hug!"""
         if len(ctx.message.mentions) >= 1:
             mentions = ' '.join([f'{user.mention}' for user in ctx.message.mentions])
@@ -50,10 +49,9 @@ class General:
         else:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
-    # TODO: add param user = None for help mapping
     # Command pat, listen to /pat
     @commands.command(aliases=["headpat"], pass_context=True)
-    async def pat(self, ctx):
+    async def pat(self, ctx, user=None):
         """Pat!"""
 
         if len(ctx.message.mentions) >= 1:
