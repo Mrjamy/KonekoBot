@@ -413,7 +413,7 @@ class Music:
     @commands.guild_only()
     @commands.command(name='stop', pass_context=True)
     async def stop_(self, ctx):
-        """Stop the currently playing song and destroy the player.
+        """Stop the currently playing song.
         !Warning!
             This will destroy the player assigned to your guild, also deleting any queued songs and settings.
         """
