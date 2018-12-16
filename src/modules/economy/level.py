@@ -27,8 +27,8 @@ class Level:
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
-    async def level(self, ctx):
-        """Shows your xp stats. Specify the user to show that user's stats instead."""
+    async def level(self, ctx, user=None):
+        """Shows your xp stats."""
 
         if len(ctx.message.mentions) == 1:
             if ctx.author.bot:
