@@ -6,6 +6,8 @@ from src.core.checks import (
     DjOnly,
     NotInVoiceChannel
 )
+from datetime import datetime, timedelta
+from src.modules.economy.currency import NotEnoughBalance
 
 
 class ErrorHandler:
@@ -84,6 +86,24 @@ class ErrorHandler:
 
         if isinstance(error, NotInVoiceChannel):
             embed = discord.Embed(title=f'This command requires you to be in a voice channel.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, NotEnoughBalance):
+            embed = discord.Embed(title=f'You can\'t. afford this right now.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, commands.CommandOnCooldown):
+            seconds = round(error.retry_after)
+
+            sec = timedelta(seconds=seconds)
+            d = datetime(1, 1, 1) + sec
+
+            cooldown = f"{d.hour}h {d.minute}m {d.second}s"
+            embed = discord.Embed(title=f'You can\'t do this right now try again in {cooldown}.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return

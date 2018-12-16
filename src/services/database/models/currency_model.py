@@ -3,7 +3,7 @@ from sqlalchemy import (
     create_engine
 )
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.dialects.sqlite import INTEGER, TEXT
+from sqlalchemy.dialects.sqlite import INTEGER
 
 
 db_uri = 'sqlite:///src/core/data/currency.sqlite'
@@ -18,7 +18,7 @@ class Currency(Base):
     id = Column(INTEGER, nullable=False, primary_key=True)
     snowflake = Column(INTEGER, nullable=False)
     guild = Column(INTEGER, nullable=False)
-    amount = Column(TEXT, nullable=False)
+    amount = Column(INTEGER, nullable=False)
 
 
 Base.metadata.create_all(engine)
