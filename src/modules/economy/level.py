@@ -12,7 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 class Level:
     """Leveling module."""
 
-    __slots__ = ['bot', 'data', 'engine', 'session']
+    __slots__ = ['bot', 'engine', 'session']
 
     def __init__(self, bot):
         db_uri = 'sqlite:///src/core/data/level.sqlite'
