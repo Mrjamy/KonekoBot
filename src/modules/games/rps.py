@@ -1,4 +1,5 @@
 import random
+import discord
 from discord.ext import commands
 
 
@@ -13,41 +14,52 @@ class Games:
     @commands.command(pass_context=True)
     async def rps(self, ctx, choice: str):
         """Play a game of rock paper scissors."""
-        choice = choice.lower()
+        player = choice.lower()
         options = [
             "rock",
             "paper",
             "scissors",
         ]
 
-        # TODO: update the rps responses.
-        if choice not in options:
-            await ctx.channel.send("Please choose from: rock, paper, scissors")
+        if player not in options:
+            embed = discord.Embed(title='Please choose from: rock, paper, scissors',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
-        bot_choice = random.choice(options)
 
-        if choice == bot_choice:
+        bot = random.choice(options)
+
+        if player == bot:
+            color = discord.Color.dark_grey()
             message = "Tie!"
-        elif choice == "rock":
-            if bot_choice == "Paper":
-                message = f"You lose!{bot_choice} covers {choice}"
+        elif player == "rock":
+            if bot == "paper":
+                color = discord.Color.red()
+                message = f"You lose! {bot} covers {player}"
             else:
-                message = f"You win! {choice} smashes {bot_choice}"
-        elif choice == "paper":
-            if bot_choice == "Scissors":
-                message = f"You lose! {bot_choice} cut {choice}"
+                color = discord.Color.green()
+                message = f"You win! {player} smashes {bot}"
+        elif player == "paper":
+            if bot == "Scissors":
+                color = discord.Color.red()
+                message = f"You lose! {bot} cut {player}"
             else:
-                message = f"You win! {choice} covers {bot_choice}"
-        elif choice == "scissors":
-            if bot_choice == "Rock":
-                message = f"You lose... {bot_choice} smashes {choice}"
+                color = discord.Color.green()
+                message = f"You win! {player} covers {bot}"
+        elif player == "scissors":
+            if bot == "rock":
+                color = discord.Color.red()
+                message = f"You lose! {bot} smashes {player}"
             else:
-                message = f"You win! {choice} cut {bot_choice}"
+                color = discord.Color.green()
+                message = f"You win! {player} cut {bot}"
         else:
+            color = discord.Color.red()
             message = "Oops something went wrong"
 
-        # TODO: send green/gray/red embed depending on the outcome.
-        await ctx.channel.send(message)
+        embed = discord.Embed(title=message,
+                              color=color)
+        await ctx.channel.send(embed=embed)
 
 
 def setup(bot):
