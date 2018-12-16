@@ -1,5 +1,3 @@
-# TODO: give the currency a name.
-
 import discord
 from src.core.checks import Checks
 from discord.ext import commands
