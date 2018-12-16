@@ -74,6 +74,11 @@ class General:
         else:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
+    # TODO: add command /lewd
+    # TODO: add command /kiss <user>
+    # TODO: add command /slap <user>
+    # TODO: add command /beer <user>
+
 
 def setup(bot):
     bot.add_cog(General(bot))

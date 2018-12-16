@@ -22,6 +22,8 @@ class Gambling:
         else:
             await ctx.channel.send(f"I am unable to choose, please refer to `{ctx.prefix}help`")
 
+    # TODO: add command /coinflip
+
 
 def setup(bot):
     bot.add_cog(Gambling(bot))
