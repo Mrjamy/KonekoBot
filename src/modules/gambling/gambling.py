@@ -12,6 +12,7 @@ class Gambling:
         self.bot = bot
 
     @Checks.is_dev()
+    @commands.guild_only()
     @commands.command(pass_context=True)
     async def choice(self, ctx, *choices):
         """Choose from the given options split by \",\" """
