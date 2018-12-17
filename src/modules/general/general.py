@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from src.services.random.text_generator import TextGenerator
 
 
 class General:
@@ -14,8 +15,10 @@ class General:
     @commands.command(pass_context=True)
     async def hello(self, ctx):
         """A simple greeting!"""
-        # TODO: add more greet strings.
-        message = f'Hello {ctx.author.mention}'
+
+        r = TextGenerator().greet()
+
+        message = f'{r} {ctx.author.mention}'
         await ctx.channel.send(message)
 
     # Command ping, listen to /ping
