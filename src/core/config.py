@@ -24,7 +24,6 @@ class Settings:
         self.dev_ids = [self.owner_id, ]
         self.toggle_extensions = [
             "economy.currency",
-            "economy.level",
             "gambling.gambling",
             # "games.pokemon",
             "games.dnd",
@@ -33,6 +32,7 @@ class Settings:
             # "general.goodbye",
             # "general.welcome",
             # "help.help",
+            "leveling.level",
             # "moderation.moderation",
             "music.music",
             # "nsfw.nsfw",

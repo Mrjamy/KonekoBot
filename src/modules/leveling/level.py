@@ -54,6 +54,36 @@ class Level:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
+    @commands.guild_only()
+    @commands.command(asliases=[], pass_context=True)
+    async def scoreboard(self, ctx):
+        levels = self.session.query(model.Level) \
+            .filter(
+                model.Level.guild == ctx.guild.id
+            ) \
+            .order_by(
+                model.Level.experience.desc()
+            ) \
+            .limit(10) \
+            .all()
+
+        count = 1
+
+        embed = discord.Embed(title=f'{ctx.guild.name}\'s scoreboard,',
+                              color=discord.Color.green())
+
+        for user in levels:
+            u = ctx.guild.get_member(int(user.snowflake))
+            up = (user.level + 1) ** 4
+            embed.add_field(
+                name=f'#{count} {u.name}',
+                value=f'Level {user.level}, {user.experience}/{up} xp',
+                inline=False
+            )
+            count += 1
+
+        await ctx.channel.send(embed=embed)
+
     @KonekoBot.event
     async def on_member_join(self, member):
         """Stores the user in the database whenever a new user joins."""
