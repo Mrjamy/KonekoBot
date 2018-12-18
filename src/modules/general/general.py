@@ -40,9 +40,11 @@ class General:
 
         if len(ctx.message.mentions) >= 1:
             mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-            message = f'*Hugs {mentions}*'
+            message = f'*{ctx.message.author.name} Hugs {mentions}*'
         else:
             message = f'*Hugs {ctx.author.name}*'
+            image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
+                    r'src/core/images/lonely/selfhug.gif'
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
@@ -70,9 +72,11 @@ class General:
 
         if len(ctx.message.mentions) >= 1:
             mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-            message = f'*Gives {mentions} a pat on the head*'
+            message = f'*{ctx.message.author.name} Gives {mentions} a pat on the head*'
         else:
             message = f'*Gives {ctx.author.name} a pat on the head*'
+            image = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
+                    rf'src/core/images/lonely/selfpat.gif'
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
