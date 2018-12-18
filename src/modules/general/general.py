@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from src.services.random.text_generator import TextGenerator
+from src.services.random.image_generator import ImageGenerator
 
 
 class General:
@@ -34,12 +35,20 @@ class General:
     @commands.command(pass_context=True)
     async def hug(self, ctx, user=None):
         """Hug!"""
+
+        image = ImageGenerator().hug()
+
         if len(ctx.message.mentions) >= 1:
-            mentions = ' '.join([f'{user.mention}' for user in ctx.message.mentions])
-            message = f'*Hugs* {mentions}'
+            mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+            message = f'*Hugs {mentions}*'
         else:
-            message = f'*Hugs {ctx.author.mention}'
-        await ctx.channel.send(message)
+            message = f'*Hugs {ctx.author.name}*'
+
+        embed = discord.Embed(title=message,
+                              color=discord.Color.dark_purple())
+        embed.set_image(url=image)
+
+        await ctx.channel.send(embed=embed)
 
     @hug.error
     async def hug_error(self, ctx, *args):
@@ -57,14 +66,21 @@ class General:
     async def pat(self, ctx, user=None):
         """Pat!"""
 
+        image = ImageGenerator().pat()
+
         if len(ctx.message.mentions) >= 1:
-            mentions = ' '.join([f'{user.mention}' for user in ctx.message.mentions])
+            mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
             message = f'*Gives {mentions} a pat on the head*'
         else:
-            message = f'*Gives {ctx.author.mention} a pat on the head*'
-        await ctx.channel.send(message)
+            message = f'*Gives {ctx.author.name} a pat on the head*'
 
-    @pat.error
+        embed = discord.Embed(title=message,
+                              color=discord.Color.dark_purple())
+        embed.set_image(url=image)
+
+        await ctx.channel.send(embed=embed)
+
+    # @pat.error
     async def pat_error(self, ctx, *args):
         """pat error handler"""
 
