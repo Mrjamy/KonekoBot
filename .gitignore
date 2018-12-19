@@ -106,3 +106,7 @@ venv.bak/
 \.idea/
 
 *.db
+
+src/modules/economy/users\.json
+
+*.sqlite

@@ -2,6 +2,12 @@ import sys
 import traceback
 import discord
 from discord.ext import commands
+from src.core.checks import (
+    DjOnly,
+    NotInVoiceChannel
+)
+from datetime import datetime, timedelta
+from src.modules.economy.currency import NotEnoughBalance
 
 
 class ErrorHandler:
@@ -30,18 +36,24 @@ class ErrorHandler:
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            await ctx.send(f'{self.bot.settings.prefix}{ctx.command} has been disabled.')
+            embed = discord.Embed(title=f'`{ctx.prefix}{ctx.command}` has been disabled.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                await ctx.channel.send(f'{self.bot.settings.prefix}{ctx.command} can not be used in Private Messages.')
+                embed = discord.Embed(title=f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.',
+                                      color=discord.Color.red())
+                await ctx.channel.send(embed=embed)
             except (discord.Forbidden, discord.HTTPException):
                 pass
             return
 
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f'Refer to.{self.bot.settings.prefix}help {ctx.command}')
+            embed = discord.Embed(title=f'Refer to `{ctx.prefix}help {ctx.command}`',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         elif isinstance(error, commands.BotMissingPermissions):
@@ -50,7 +62,9 @@ class ErrorHandler:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            await ctx.send(f'I need the **{fmt}** permission(s) to run this command.')
+            embed = discord.Embed(title=f'I need the **{fmt}** permission(s) to run this command.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         if isinstance(error, commands.MissingPermissions):
@@ -59,7 +73,39 @@ class ErrorHandler:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            await ctx.send(f'You need the **{fmt}** permission(s) to use this command.')
+            embed = discord.Embed(title=f'You need the **{fmt}** permission(s) to use this command.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, DjOnly):
+            embed = discord.Embed(title=f'This command requires you to have a role called DJ.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, NotInVoiceChannel):
+            embed = discord.Embed(title=f'This command requires you to be in a voice channel.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, NotEnoughBalance):
+            embed = discord.Embed(title=f'You can\'t. afford this right now.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
+
+        if isinstance(error, commands.CommandOnCooldown):
+            seconds = round(error.retry_after)
+
+            sec = timedelta(seconds=seconds)
+            d = datetime(1, 1, 1) + sec
+
+            cooldown = f"{d.hour}h {d.minute}m {d.second}s"
+            embed = discord.Embed(title=f'You can\'t do this right now try again in {cooldown}.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
             return
 
         # All other Errors not returned come here... And we can just print the default TraceBack.

@@ -1,5 +1,5 @@
-import random
 import discord
+from rolldice import *
 from discord.ext import commands
 
 
@@ -20,39 +20,27 @@ class Dungeon:
     def __init__(self, bot):
         self.bot = bot
 
-    # TODO: update the /roll command to /roll <dice>d<sides>
+    @commands.bot_has_permissions(embed_links=True)
     @commands.command(pass_context=True)
-    async def roll(self, ctx, die: int = 1, sides: int = 6):
-        """Rolls a die."""
+    async def roll(self, ctx, *, die: str = 'd20'):
+        """Rolls a die with standard dice notations."""
 
-        # The amount of dice need to be within 1 - 20
-        if die not in range(1, 20 + 1):
-            await ctx.channel.send(f'Do you really need that many dice?')
-            return
+        dicebag = DiceBag(die)
 
-        # Singular die.
-        if die == 1:
-            dice = "Die"
-        # Plural dice.
-        else:
-            dice = "Dice"
+        result, explanation = dicebag.roll_dice()
 
-        # max needs to be at least higher then 0
-        if sides not in range(1, 20 + 1):
-            await ctx.channel.send(f'*Sigh* no.')
-            return
-
-        embed = discord.Embed(title=f'{ctx.author} rolled {die} {dice} - {sides}',
+        embed = discord.Embed(title=f'{ctx.author} rolled {die}',
                               color=discord.Color.dark_purple())
-        rolls = ''
-        total = 0
-        for x in range(0, die):
-            roll = random.randint(1, sides)
-            total += roll
-            rolls += f'{str(roll)} '
 
-        embed.add_field(name='Rolls', value=rolls, inline=False)
-        embed.add_field(name='Total', value=total, inline=False)
+        embed.add_field(name='**Total**', value=result, inline=False)
+        embed.add_field(name='**Rolled**', value=explanation, inline=False)
+        await ctx.channel.send(embed=embed)
+
+    @roll.error
+    async def on_roll_error(self, ctx, error):
+        """Roll error handler"""
+        embed = discord.Embed(title=f'I don\'t think this is a valid dice roll :upside_down:',
+                              color=discord.Color.red())
         await ctx.channel.send(embed=embed)
 
 
