@@ -12,7 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 class Level:
     """Leveling module."""
 
-    __slots__ = ['bot', 'data', 'engine', 'session']
+    __slots__ = ['bot', 'engine', 'session']
 
     def __init__(self, bot):
         db_uri = 'sqlite:///src/core/data/level.sqlite'
@@ -27,8 +27,8 @@ class Level:
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
-    async def level(self, ctx):
-        """Shows your xp stats. Specify the user to show that user's stats instead."""
+    async def level(self, ctx, user=None):
+        """Shows your xp stats."""
 
         if len(ctx.message.mentions) == 1:
             if ctx.author.bot:
@@ -52,6 +52,36 @@ class Level:
         up = (level.level + 1) ** 4
         embed = discord.Embed(title=f'`{user.name}` is level {level.level}, {level.experience}/{up} xp',
                               color=discord.Color.green())
+        await ctx.channel.send(embed=embed)
+
+    @commands.guild_only()
+    @commands.command(asliases=[], pass_context=True)
+    async def scoreboard(self, ctx):
+        levels = self.session.query(model.Level) \
+            .filter(
+                model.Level.guild == ctx.guild.id
+            ) \
+            .order_by(
+                model.Level.experience.desc()
+            ) \
+            .limit(10) \
+            .all()
+
+        count = 1
+
+        embed = discord.Embed(title=f'{ctx.guild.name}\'s scoreboard,',
+                              color=discord.Color.green())
+
+        for user in levels:
+            u = ctx.guild.get_member(int(user.snowflake))
+            up = (user.level + 1) ** 4
+            embed.add_field(
+                name=f'#{count} {u.name}',
+                value=f'Level {user.level}, {user.experience}/{up} xp',
+                inline=False
+            )
+            count += 1
+
         await ctx.channel.send(embed=embed)
 
     @KonekoBot.event
