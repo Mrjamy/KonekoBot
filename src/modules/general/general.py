@@ -1,5 +1,7 @@
 import discord
 from discord.ext import commands
+from src.services.random.text_generator import TextGenerator
+from src.services.random.image_generator import ImageGenerator
 
 
 class General:
@@ -13,12 +15,15 @@ class General:
     # Command hello, listen to /hello
     @commands.command(pass_context=True)
     async def hello(self, ctx):
-        """Hello!"""
-        message = f'Hello {ctx.author.mention}'
+        """A simple greeting!"""
+
+        r = TextGenerator().greet()
+
+        message = f'{r} {ctx.author.mention}'
         await ctx.channel.send(message)
 
     # Command ping, listen to /ping
-    @commands.command(pass_context=True)
+    @commands.command(aliases=["pong"], pass_context=True)
     async def ping(self, ctx):
         """Get the latency of the bot."""
         # Get the latency of the bot
@@ -27,14 +32,73 @@ class General:
         await ctx.channel.send(latency)
 
     # Command hug, listen to /hug
-    @commands.command(aliasses=["pong"], pass_context=True)
-    async def hug(self, ctx, user: discord.User=None):
+    @commands.command(pass_context=True)
+    async def hug(self, ctx, user=None):
         """Hug!"""
-        # TODO: Exceptions need to be caught.
-        message = f'*Hugs* {ctx.author.mention}'
-        if user:
-            message = f'*Hugs* {user.mention}'
-        await ctx.channel.send(message)
+
+        image = ImageGenerator().hug()
+
+        if len(ctx.message.mentions) >= 1:
+            mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+            message = f'*{ctx.message.author.name} Hugs {mentions}*'
+        else:
+            message = f'*Hugs {ctx.author.name}*'
+            image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
+                    r'src/core/images/lonely/selfhug.gif'
+
+        embed = discord.Embed(title=message,
+                              color=discord.Color.dark_purple())
+        embed.set_image(url=image)
+
+        await ctx.channel.send(embed=embed)
+
+    @hug.error
+    async def hug_error(self, ctx, *args):
+        """hug error handler"""
+
+        if ctx.message.channel.permissions_for(ctx.me).embed_links:
+            embed = discord.Embed(title=f'I could not perform this task :sob:',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.channel.send(f'I could not perform this task :sob:')
+
+    # Command pat, listen to /pat
+    @commands.command(aliases=["headpat"], pass_context=True)
+    async def pat(self, ctx, user=None):
+        """Pat!"""
+
+        image = ImageGenerator().pat()
+
+        if len(ctx.message.mentions) >= 1:
+            mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+            message = f'*{ctx.message.author.name} Gives {mentions} a pat on the head*'
+        else:
+            message = f'*Gives {ctx.author.name} a pat on the head*'
+            image = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
+                    rf'src/core/images/lonely/selfpat.gif'
+
+        embed = discord.Embed(title=message,
+                              color=discord.Color.dark_purple())
+        embed.set_image(url=image)
+
+        await ctx.channel.send(embed=embed)
+
+    # @pat.error
+    async def pat_error(self, ctx, *args):
+        """pat error handler"""
+
+        if ctx.message.channel.permissions_for(ctx.me).embed_links:
+            embed = discord.Embed(title=f'I could not perform this task :sob:',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.channel.send(f'I could not perform this task :sob:')
+
+    # TODO: add command /lewd
+    # TODO: add command /kiss <user>
+    # TODO: add command /slap <user>
+    # TODO: add command /beer <user>
 
 
 def setup(bot):
