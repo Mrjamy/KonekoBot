@@ -92,7 +92,7 @@ class Currency:
 
     @Checks.is_owner()
     @commands.guild_only()
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def give(self, ctx, user, amount: int):
         """Give a certain amount of currency to a user."""
 
@@ -124,7 +124,7 @@ class Currency:
 
     @Checks.is_owner()
     @commands.guild_only()
-    @commands.command(pass_context=True)
+    @commands.command(pass_context=True, hidden=True)
     async def take(self, ctx, user, amount: int):
         """Take a certain amount of currency from a user."""
 
