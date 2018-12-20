@@ -38,6 +38,7 @@ class General:
 
         image = ImageGenerator(tag='hug').to_image()
 
+        # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
                 message = f'*Hugs {ctx.message.author.name} back :heart:*'
@@ -75,6 +76,7 @@ class General:
 
         image = ImageGenerator(tag='pat').to_image()
 
+        # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
                 message = f'*:blush: pats {ctx.message.author.name}*'
@@ -112,6 +114,7 @@ class General:
 
         image = ImageGenerator(tag='kiss').to_image()
 
+        # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
                 message = f'*Kisses {ctx.message.author.name} back :heart:*'
@@ -147,6 +150,7 @@ class General:
 
         image = ImageGenerator(tag='slap').to_image()
 
+        # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
                 message = f'*Get\'s slightly angry.*'
