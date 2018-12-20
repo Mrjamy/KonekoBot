@@ -39,8 +39,11 @@ class General:
         image = ImageGenerator().hug()
 
         if len(ctx.message.mentions) >= 1:
-            mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-            message = f'*{ctx.message.author.name} Hugs {mentions}*'
+            if any(u.id == 502913609458909194 for u in ctx.message.mentions):
+                message = f'*Hugs {ctx.message.author.name} back :heart:*'
+            else:
+                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+                message = f'*{ctx.message.author.name} Hugs {mentions}*'
         else:
             message = f'*Hugs {ctx.author.name}*'
             image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
@@ -71,8 +74,11 @@ class General:
         image = ImageGenerator().pat()
 
         if len(ctx.message.mentions) >= 1:
-            mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-            message = f'*{ctx.message.author.name} Gives {mentions} a pat on the head*'
+            if any(u.id == 502913609458909194 for u in ctx.message.mentions):
+                message = f'*:blush: pats {ctx.message.author.name}*'
+            else:
+                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+                message = f'*{ctx.message.author.name} Gives {mentions} a pat on the head*'
         else:
             message = f'*Gives {ctx.author.name} a pat on the head*'
             image = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
