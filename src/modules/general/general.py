@@ -95,8 +95,42 @@ class General:
         else:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
+    # Command hug, listen to /hug
+    @commands.command(pass_context=True)
+    async def kiss(self, ctx, user=None):
+        """Hug!"""
+
+        image = ImageGenerator().kiss()
+
+        if len(ctx.message.mentions) >= 1:
+            if any(u.id == 502913609458909194 for u in ctx.message.mentions):
+                message = f'*Kisses {ctx.message.author.name} back :heart:*'
+            else:
+                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+                message = f'*{ctx.message.author.name} Kisses {mentions}*'
+        else:
+            message = f'*Kisses {ctx.author.name}*'
+            image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
+                    r'src/core/images/lonely/selfkiss.gif'
+
+        embed = discord.Embed(title=message,
+                              color=discord.Color.dark_purple())
+        embed.set_image(url=image)
+
+        await ctx.channel.send(embed=embed)
+
+    @kiss.error
+    async def kiss_error(self, ctx, *args):
+        """hug error handler"""
+
+        if ctx.message.channel.permissions_for(ctx.me).embed_links:
+            embed = discord.Embed(title=f'I could not perform this task :sob:',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.channel.send(f'I could not perform this task :sob:')
+
     # TODO: add command /lewd
-    # TODO: add command /kiss <user>
     # TODO: add command /slap <user>
     # TODO: add command /beer <user>
 
