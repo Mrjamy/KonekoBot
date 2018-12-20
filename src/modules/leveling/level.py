@@ -57,6 +57,7 @@ class Level:
     @commands.guild_only()
     @commands.command(asliases=[], pass_context=True)
     async def scoreboard(self, ctx):
+        """Shows the server's scoreboard."""
         levels = self.session.query(model.Level) \
             .filter(
                 model.Level.guild == ctx.guild.id
