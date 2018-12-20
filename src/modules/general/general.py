@@ -17,7 +17,7 @@ class General:
     async def hello(self, ctx):
         """A simple greeting!"""
 
-        r = TextGenerator().greet()
+        r = TextGenerator('greet_phrases').to_str()
 
         message = f'{r} {ctx.author.mention}'
         await ctx.channel.send(message)
