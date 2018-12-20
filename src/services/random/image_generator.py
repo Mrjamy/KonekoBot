@@ -3,24 +3,25 @@ import random
 
 
 class ImageGenerator:
-    __slots__ = ['data_dir', 'tag']
+    __slots__ = ['local_dir', 'external_dir', 'tag']
 
     def __init__(self, tag: str):
         path = os.path.join(os.path.dirname(__file__), '..', '..')
 
-        self.data_dir = os.path.join(rf'{path}', 'core', 'images')
+        self.local_dir = os.path.join(rf'{path}', 'core', 'images')
+        self.external_dir = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/'
         self.tag = tag
 
     def to_image(self):
         return self.__image(self.tag)
 
     def __image(self, query: str):
-        path = os.path.join(self.data_dir, query)
-        r_dir = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/{query}'
+        local_dir = os.path.join(self.local_dir, query)
+        remote_dir = rf'{self.external_dir}{query}'
 
-        random_filename = random.choice([
-            x for x in os.listdir(path)
-            if os.path.isfile(os.path.join(path, x))
+        filename = random.choice([
+            file for file in os.listdir(local_dir)
+            if os.path.isfile(os.path.join(local_dir, file))
         ])
 
-        return rf'{r_dir}/{random_filename}'
+        return rf'{remote_dir}/{filename}'
