@@ -1,3 +1,1 @@
-# TODO: add custom help command
-
-# TODO: add /h command (/help alias)\
+# TODO: move help command here.

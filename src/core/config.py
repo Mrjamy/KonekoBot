@@ -31,7 +31,6 @@ class Settings:
             "general.general",
             # "general.goodbye",
             # "general.welcome",
-            # "help.help",
             "leveling.level",
             # "moderation.moderation",
             "music.music",
