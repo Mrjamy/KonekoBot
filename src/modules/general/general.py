@@ -33,8 +33,8 @@ class General:
 
     # Command hug, listen to /hug
     @commands.command(pass_context=True)
-    async def hug(self, ctx, user=None):
-        """Hug!"""
+    async def hug(self, ctx):
+        """Mention a user to hug them!"""
 
         image = ImageGenerator(tag='hug').to_image()
 
@@ -59,6 +59,8 @@ class General:
     async def hug_error(self, ctx, *args):
         """hug error handler"""
 
+        print(args)
+
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
                                   color=discord.Color.red())
@@ -68,8 +70,8 @@ class General:
 
     # Command pat, listen to /pat
     @commands.command(aliases=["headpat"], pass_context=True)
-    async def pat(self, ctx, user=None):
-        """Pat!"""
+    async def pat(self, ctx):
+        """Mention a user to pat them!"""
 
         image = ImageGenerator(tag='pat').to_image()
 
@@ -90,9 +92,11 @@ class General:
 
         await ctx.channel.send(embed=embed)
 
-    # @pat.error
+    @pat.error
     async def pat_error(self, ctx, *args):
         """pat error handler"""
+
+        print(args)
 
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
@@ -103,8 +107,8 @@ class General:
 
     # Command kiss, listen to /kiss
     @commands.command(pass_context=True)
-    async def kiss(self, ctx, user=None):
-        """Kiss!"""
+    async def kiss(self, ctx):
+        """Mention a user to kiss them!"""
 
         image = ImageGenerator(tag='kiss').to_image()
 
@@ -127,6 +131,8 @@ class General:
     async def kiss_error(self, ctx, *args):
         """kiss error handler"""
 
+        print(args)
+
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
                                   color=discord.Color.red())
@@ -136,8 +142,8 @@ class General:
 
     # Command slap, listen to /slap
     @commands.command(pass_context=True)
-    async def slap(self, ctx, user=None):
-        """Slap!"""
+    async def slap(self, ctx):
+        """Mention a user to slap them!"""
 
         image = ImageGenerator(tag='slap').to_image()
 
@@ -161,6 +167,8 @@ class General:
     @kiss.error
     async def kiss_error(self, ctx, *args):
         """kiss error handler"""
+
+        print(args)
 
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
