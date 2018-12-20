@@ -18,6 +18,9 @@ class ImageGenerator:
     def kiss(self):
         return self.__image(query='kiss')
 
+    def slap(self):
+        return self.__image(query='slap')
+
     def __image(self, query: str):
         path = os.path.join(self.data_dir, query)
         r_dir = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/{query}'

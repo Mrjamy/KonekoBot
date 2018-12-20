@@ -101,10 +101,10 @@ class General:
         else:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
-    # Command hug, listen to /hug
+    # Command kiss, listen to /kiss
     @commands.command(pass_context=True)
     async def kiss(self, ctx, user=None):
-        """Hug!"""
+        """Kiss!"""
 
         image = ImageGenerator().kiss()
 
@@ -116,8 +116,6 @@ class General:
                 message = f'*{ctx.message.author.name} Kisses {mentions}*'
         else:
             message = f'*Kisses {ctx.author.name}*'
-            image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
-                    r'src/core/images/lonely/selfkiss.gif'
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
@@ -127,7 +125,42 @@ class General:
 
     @kiss.error
     async def kiss_error(self, ctx, *args):
-        """hug error handler"""
+        """kiss error handler"""
+
+        if ctx.message.channel.permissions_for(ctx.me).embed_links:
+            embed = discord.Embed(title=f'I could not perform this task :sob:',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+        else:
+            await ctx.channel.send(f'I could not perform this task :sob:')
+
+    # Command slap, listen to /slap
+    @commands.command(pass_context=True)
+    async def slap(self, ctx, user=None):
+        """Slap!"""
+
+        image = ImageGenerator().slap()
+
+        if len(ctx.message.mentions) >= 1:
+            if any(u.id == 502913609458909194 for u in ctx.message.mentions):
+                message = f'*Get\'s slightly angry.*'
+                image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
+                        r'src/core/images/notwork.png'
+            else:
+                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
+                message = f'*{ctx.message.author.name} Slaps {mentions}*'
+        else:
+            message = f'*Slaps {ctx.author.name}*'
+
+        embed = discord.Embed(title=message,
+                              color=discord.Color.dark_purple())
+        embed.set_image(url=image)
+
+        await ctx.channel.send(embed=embed)
+
+    @kiss.error
+    async def kiss_error(self, ctx, *args):
+        """kiss error handler"""
 
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
@@ -137,7 +170,6 @@ class General:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
     # TODO: add command /lewd
-    # TODO: add command /slap <user>
     # TODO: add command /beer <user>
 
 
