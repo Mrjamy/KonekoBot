@@ -36,7 +36,7 @@ class General:
     async def hug(self, ctx, user=None):
         """Hug!"""
 
-        image = ImageGenerator().hug()
+        image = ImageGenerator(tag='hug').to_image()
 
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
@@ -71,7 +71,7 @@ class General:
     async def pat(self, ctx, user=None):
         """Pat!"""
 
-        image = ImageGenerator().pat()
+        image = ImageGenerator(tag='pat').to_image()
 
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
@@ -106,7 +106,7 @@ class General:
     async def kiss(self, ctx, user=None):
         """Kiss!"""
 
-        image = ImageGenerator().kiss()
+        image = ImageGenerator(tag='kiss').to_image()
 
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
@@ -139,7 +139,7 @@ class General:
     async def slap(self, ctx, user=None):
         """Slap!"""
 
-        image = ImageGenerator().slap()
+        image = ImageGenerator(tag='slap').to_image()
 
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
