@@ -110,3 +110,5 @@ venv.bak/
 src/modules/economy/users\.json
 
 *.sqlite
+
+src/core/images/tmp/
