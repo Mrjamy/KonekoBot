@@ -3,23 +3,16 @@ import random
 
 
 class ImageGenerator:
-    __slots__ = 'data_dir'
+    __slots__ = ['data_dir', 'tag']
 
-    def __init__(self):
+    def __init__(self, tag: str):
         path = os.path.join(os.path.dirname(__file__), '..', '..')
+
         self.data_dir = os.path.join(rf'{path}', 'core', 'images')
+        self.tag = tag
 
-    def pat(self):
-        return self.__image(query='pat')
-
-    def hug(self):
-        return self.__image(query='hug')
-
-    def kiss(self):
-        return self.__image(query='kiss')
-
-    def slap(self):
-        return self.__image(query='slap')
+    def to_image(self):
+        return self.__image(self.tag)
 
     def __image(self, query: str):
         path = os.path.join(self.data_dir, query)
