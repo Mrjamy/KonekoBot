@@ -67,9 +67,6 @@ async def on_command(ctx):
     KonekoBot.command_count += 1
 
 
-# TODO: add event on_command for a command counter.
-
-
 if __name__ == '__main__':
     Setup().setup()
 
