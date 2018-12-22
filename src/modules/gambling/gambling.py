@@ -13,7 +13,7 @@ class Gambling:
 
     @Checks.is_dev()
     @commands.guild_only()
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def choice(self, ctx, *choices):
         """Choose from the given options split by \",\" """
         result = random.choice(" ".join(choices).split(","))

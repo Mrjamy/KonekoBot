@@ -260,7 +260,7 @@ class Music:
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='pause', pass_context=True)
+    @commands.command(name='pause', aliases=[], pass_context=True)
     async def pause_(self, ctx):
         """Pause the currently playing song."""
         vc = ctx.voice_client
@@ -280,7 +280,7 @@ class Music:
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='resume', pass_context=True)
+    @commands.command(name='resume', aliases=[], pass_context=True)
     async def resume_(self, ctx):
         """Resume the currently paused song."""
         vc = ctx.voice_client
@@ -300,7 +300,7 @@ class Music:
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='skip', pass_context=True)
+    @commands.command(name='skip', aliases=[], pass_context=True)
     async def skip_(self, ctx):
         """Skip the song."""
         vc = ctx.voice_client
@@ -411,7 +411,7 @@ class Music:
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='stop', pass_context=True)
+    @commands.command(name='stop', aliases=[], pass_context=True)
     async def stop_(self, ctx):
         """Stop the currently playing song.
         !Warning!

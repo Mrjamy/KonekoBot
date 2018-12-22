@@ -13,7 +13,7 @@ class General:
         self.bot = bot
 
     # Command hello, listen to /hello
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def hello(self, ctx):
         """A simple greeting!"""
 
@@ -32,7 +32,7 @@ class General:
         await ctx.channel.send(latency)
 
     # Command hug, listen to /hug
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def hug(self, ctx):
         """Mention a user to hug them!"""
 
@@ -108,7 +108,7 @@ class General:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
     # Command kiss, listen to /kiss
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def kiss(self, ctx):
         """Mention a user to kiss them!"""
 
@@ -144,7 +144,7 @@ class General:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
     # Command slap, listen to /slap
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def slap(self, ctx):
         """Mention a user to slap them!"""
 
