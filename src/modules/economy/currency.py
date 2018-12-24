@@ -49,7 +49,7 @@ class Currency:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
-    @commands.cooldown(1, 60 * 60 * 24, BucketType.member)
+    @commands.cooldown(1, 60 * 60 * 20, BucketType.member)
     @commands.guild_only()
     @commands.command(aliases=['login', 'daily'], pass_context=True)
     async def claim(self, ctx):
