@@ -147,9 +147,15 @@ class Level:
         lvl_end = int(experience ** (1/4))
 
         if lvl_start < lvl_end:
-            embed = discord.Embed(title=f'`{ctx.author.name}` has leveled up to level {lvl_end}',
-                                  color=discord.Color.dark_purple())
-            await ctx.channel.send(embed=embed)
+            try:
+                embed = discord.Embed(title=f'`{ctx.author.name}` has leveled up to level {lvl_end}',
+                                      color=discord.Color.dark_purple())
+                await ctx.channel.send(embed=embed)
+            except discord.errors.Forbidden:
+                try:
+                    await ctx.channel.send(f'`{ctx.author.name}` has leveled up to level {lvl_end}')
+                except discord.errors.Forbidden:
+                    pass
             user.level = lvl_end
 
         try:
