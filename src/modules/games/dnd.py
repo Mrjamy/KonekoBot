@@ -21,7 +21,7 @@ class Dungeon:
         self.bot = bot
 
     @commands.bot_has_permissions(embed_links=True)
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def roll(self, ctx, *, die: str = 'd20'):
         """Rolls a die with standard dice notations."""
 

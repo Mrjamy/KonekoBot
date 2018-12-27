@@ -1,6 +1,11 @@
 import random
+import discord
 from src.core.checks import Checks
 from discord.ext import commands
+import asyncio
+
+
+# TODO: add the option to place a bet of :neko: on the following commands
 
 
 class Gambling:
@@ -13,7 +18,7 @@ class Gambling:
 
     @Checks.is_dev()
     @commands.guild_only()
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def choice(self, ctx, *choices):
         """Choose from the given options split by \",\" """
         result = random.choice(" ".join(choices).split(","))
@@ -23,6 +28,38 @@ class Gambling:
             await ctx.channel.send(f"I am unable to choose, please refer to `{ctx.prefix}help`")
 
     # TODO: add command /coinflip
+    @commands.command(aliases=['flip', 'toss'], pass_context=True)
+    async def coinflip(self, ctx, choice: str = None):
+        """Tosses a coin."""
+        async def result():
+            await asyncio.sleep(5)
+            if choice in options:
+                if choice == flip:
+                    await ctx.channel.send(f'Congratulations {ctx.message.author.name}! '
+                                           f'you guessed right it was {flip}')
+                else:
+                    await ctx.channel.send(f'The coin landed on {flip}')
+            else:
+                await ctx.channel.send(f'The coin landed on {flip}')
+
+        if choice is not None:
+            choice = choice.lower()
+        options = [
+            "heads",
+            "tails",
+        ]
+        await ctx.channel.send('Tossing a coin in the air')
+
+        await ctx.trigger_typing()
+        flip = random.choice(options)
+
+        await result()
+
+    # TODO: add options to play blackjack.
+
+    # TODO: add options to play roulette.
+
+    # TODO: add options to play russian roulette.
 
 
 def setup(bot):

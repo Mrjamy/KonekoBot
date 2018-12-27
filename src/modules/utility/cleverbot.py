@@ -11,7 +11,7 @@ class CleverBot:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(pass_context=True)
+    @commands.group(aliases=[], pass_context=True)
     async def clever_bot(self, ctx):
 
         if ctx.invoked_subcommand is None:

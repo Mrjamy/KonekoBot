@@ -49,7 +49,7 @@ class Currency:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
-    @commands.cooldown(1, 60 * 60 * 24, BucketType.member)
+    @commands.cooldown(1, 60 * 60 * 20, BucketType.member)
     @commands.guild_only()
     @commands.command(aliases=['login', 'daily'], pass_context=True)
     async def claim(self, ctx):
@@ -70,7 +70,7 @@ class Currency:
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(pass_context=True)
+    @commands.command(aliases=[], pass_context=True)
     async def transfer(self, ctx, user, amount: int):
         """Transfers an amount of coins to a user."""
 
@@ -92,7 +92,7 @@ class Currency:
 
     @Checks.is_owner()
     @commands.guild_only()
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(aliases=[], pass_context=True, hidden=True)
     async def give(self, ctx, user, amount: int):
         """Give a certain amount of currency to a user."""
 
@@ -124,7 +124,7 @@ class Currency:
 
     @Checks.is_owner()
     @commands.guild_only()
-    @commands.command(pass_context=True, hidden=True)
+    @commands.command(aliases=[], pass_context=True, hidden=True)
     async def take(self, ctx, user, amount: int):
         """Take a certain amount of currency from a user."""
 
