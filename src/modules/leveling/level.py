@@ -23,7 +23,6 @@ class Level:
         Session.configure(bind=self.engine)
         self.session = Session()
 
-    # TODO: add param user = None for help mapping
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
@@ -55,8 +54,9 @@ class Level:
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(asliases=[], pass_context=True)
+    @commands.command(aliases=['score'], pass_context=True)
     async def scoreboard(self, ctx):
+        """Shows the server's scoreboard."""
         levels = self.session.query(model.Level) \
             .filter(
                 model.Level.guild == ctx.guild.id
@@ -147,9 +147,15 @@ class Level:
         lvl_end = int(experience ** (1/4))
 
         if lvl_start < lvl_end:
-            embed = discord.Embed(title=f'`{ctx.author.name}` has leveled up to level {lvl_end}',
-                                  color=discord.Color.dark_purple())
-            await ctx.channel.send(embed=embed)
+            try:
+                embed = discord.Embed(title=f'`{ctx.author.name}` has leveled up to level {lvl_end}',
+                                      color=discord.Color.dark_purple())
+                await ctx.channel.send(embed=embed)
+            except discord.errors.Forbidden:
+                try:
+                    await ctx.channel.send(f'`{ctx.author.name}` has leveled up to level {lvl_end}')
+                except discord.errors.Forbidden:
+                    pass
             user.level = lvl_end
 
         try:

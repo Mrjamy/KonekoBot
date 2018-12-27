@@ -41,6 +41,8 @@ class Utility:
 
         await ctx.channel.send(embed=embed)
 
+    # TODO: add command /remind <message>
+
 
 def setup(bot):
     bot.add_cog(Utility(bot))
