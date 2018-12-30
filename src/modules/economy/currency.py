@@ -6,6 +6,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 from src.helpers.database.models import currency_model as model
+from src.helpers.misc_helper import Name
 
 
 class NotEnoughBalance(Exception):
@@ -45,7 +46,7 @@ class Currency:
         if balance is None:
             balance = await self.add_user(ctx.guild.id, ctx.author.id)
 
-        embed = discord.Embed(title=f'`{user.name}` has {balance.amount} <:neko:521458388513849344>',
+        embed = discord.Embed(title=f'`{Name.nick_parser(user)}` has {balance.amount} <:neko:521458388513849344>',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -65,7 +66,7 @@ class Currency:
             currency = await self.add_user(ctx.guild.id, ctx.author.id)
 
         await self.add_currency(currency)
-        embed = discord.Embed(title=f'`{ctx.author.name}` claimed their daily login reward',
+        embed = discord.Embed(title=f'`{Name.nick_parser(ctx.message.author)}` claimed their daily login reward',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -85,8 +86,8 @@ class Currency:
         await self._take(ctx.author, ctx.guild, amount)
         await self._give(user, ctx.guild, amount)
 
-        embed = discord.Embed(title=f'{ctx.author.name} successfully transferred {amount} '
-                                    f'<:neko:521458388513849344> to {user.name}.',
+        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} successfully transferred {amount} '
+                                    f'<:neko:521458388513849344> to {Name.nick_parser(user)}.',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -106,7 +107,8 @@ class Currency:
 
         await self._give(user, ctx.guild, amount)
 
-        embed = discord.Embed(title=f'{ctx.author.name} gave {amount} <:neko:521458388513849344> to {user.name}',
+        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} gave {amount} <:neko:521458388513849344> '
+                                    f'to {Name.nick_parser(user)}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -138,7 +140,8 @@ class Currency:
 
         await self._take(user, ctx.guild, amount)
 
-        embed = discord.Embed(title=f'{ctx.author.name} took {amount} <:neko:521458388513849344> from {user.name}',
+        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} <:neko:521458388513849344> '
+                                    f'from {Name.nick_parser(user)}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
