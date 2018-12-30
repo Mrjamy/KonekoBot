@@ -1,8 +1,8 @@
 import random
-import discord
+import asyncio
 from src.core.checks import Checks
 from discord.ext import commands
-import asyncio
+from src.helpers.misc_helper import Name
 
 
 # TODO: add the option to place a bet of :neko: on the following commands
@@ -35,7 +35,7 @@ class Gambling:
             await asyncio.sleep(5)
             if choice in options:
                 if choice == flip:
-                    await ctx.channel.send(f'Congratulations {ctx.message.author.name}! '
+                    await ctx.channel.send(f'Congratulations {Name.nick_parser(ctx.message.author)}! '
                                            f'you guessed right it was {flip}')
                 else:
                     await ctx.channel.send(f'The coin landed on {flip}')

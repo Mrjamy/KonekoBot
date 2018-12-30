@@ -7,6 +7,7 @@ from src.helpers.database.models import level_model as model
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
+from src.helpers.misc_helper import Name
 
 
 class Level:
@@ -49,7 +50,7 @@ class Level:
             level = await self.add_user(ctx.guild.id, ctx.author.id)
 
         up = (level.level + 1) ** 4
-        embed = discord.Embed(title=f'`{user.name}` is level {level.level}, {level.experience}/{up} xp',
+        embed = discord.Embed(title=f'`{Name.nick_parser(user)}` is level {level.level}, {level.experience}/{up} xp',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -76,7 +77,7 @@ class Level:
             u = ctx.guild.get_member(int(user.snowflake))
             up = (user.level + 1) ** 4
             embed.add_field(
-                name=f'#{count} {u.name}',
+                name=f'#{count} {Name.nick_parser(u)}',
                 value=f'Level {user.level}, {user.experience}/{up} xp',
                 inline=False
             )
@@ -148,12 +149,14 @@ class Level:
 
         if lvl_start < lvl_end:
             try:
-                embed = discord.Embed(title=f'`{ctx.author.name}` has leveled up to level {lvl_end}',
+                embed = discord.Embed(title=f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
+                                            f'{lvl_end}',
                                       color=discord.Color.dark_purple())
                 await ctx.channel.send(embed=embed)
             except discord.errors.Forbidden:
                 try:
-                    await ctx.channel.send(f'`{ctx.author.name}` has leveled up to level {lvl_end}')
+                    await ctx.channel.send(f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
+                                           f'{lvl_end}')
                 except discord.errors.Forbidden:
                     pass
             user.level = lvl_end

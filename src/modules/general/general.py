@@ -20,7 +20,7 @@ class General:
 
         r = TextGenerator('greet_phrases').to_str()
 
-        message = f'{r} {ctx.author.mention}'
+        message = f'{r} {Name.nick_parser(ctx.message.author)}'
         await ctx.channel.send(message)
 
     # Command ping, listen to /ping
