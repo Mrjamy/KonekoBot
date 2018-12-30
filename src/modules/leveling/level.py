@@ -3,7 +3,7 @@ import discord
 from datetime import datetime
 from discord.ext import commands
 from KonekoBot import KonekoBot
-from src.services.database.models import level_model as model
+from src.helpers.database.models import level_model as model
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
