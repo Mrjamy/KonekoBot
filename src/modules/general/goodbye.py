@@ -12,9 +12,8 @@ class Goodbye:
         guild = member.guild
 
         # TODO: allow for custom messages.
-        message = 'Goodbye {0.mention}'
         if guild.system_channel is not None:
-            await guild.system_channel.send(message.format(member))
+            await guild.system_channel.send(f'Goodbye {member.mention}')
 
 
 def setup(bot):
