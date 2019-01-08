@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
-from src.services.random.text_generator import TextGenerator
-from src.services.random.image_generator import ImageGenerator
+from src.helpers.random.text_generator import TextGenerator
+from src.helpers.random.image_generator import ImageGenerator
+from src.helpers.misc_helper import Name
 
 
 class General:
@@ -19,7 +20,7 @@ class General:
 
         r = TextGenerator('greet_phrases').to_str()
 
-        message = f'{r} {ctx.author.mention}'
+        message = f'{r} {Name.nick_parser(ctx.message.author)}'
         await ctx.channel.send(message)
 
     # Command ping, listen to /ping
@@ -41,12 +42,12 @@ class General:
         # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
-                message = f'*Hugs {ctx.message.author.name} back :heart:*'
+                message = f'*Hugs {Name.nick_parser(ctx.message.author)} back :heart:*'
             else:
-                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-                message = f'*{ctx.message.author.name} Hugs {mentions}*'
+                mentions = ' '.join([f'{Name.nick_parser(user)}' for user in ctx.message.mentions])
+                message = f'*{Name.nick_parser(ctx.message.author)} Hugs {mentions}*'
         else:
-            message = f'*Hugs {ctx.author.name}*'
+            message = f'*Hugs {Name.nick_parser(ctx.message.author)}*'
             image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
                     r'src/core/images/lonely/selfhug.gif'
 
@@ -79,12 +80,12 @@ class General:
         # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
-                message = f'*:blush: pats {ctx.message.author.name}*'
+                message = f'*:blush: pats {Name.nick_parser(ctx.message.author)}*'
             else:
-                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-                message = f'*{ctx.message.author.name} Gives {mentions} a pat on the head*'
+                mentions = ' '.join([f'{Name.nick_parser(user)}' for user in ctx.message.mentions])
+                message = f'*{Name.nick_parser(ctx.message.author)} Gives {mentions} a pat on the head*'
         else:
-            message = f'*Gives {ctx.author.name} a pat on the head*'
+            message = f'*Gives {Name.nick_parser(ctx.message.author)} a pat on the head*'
             image = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
                     rf'src/core/images/lonely/selfpat.gif'
 
@@ -97,6 +98,8 @@ class General:
     @pat.error
     async def pat_error(self, ctx, *args):
         """pat error handler"""
+
+        # Throw a patception :sad_face:
 
         print(args)
 
@@ -117,12 +120,12 @@ class General:
         # TODO: add catch for self mentions
         if len(ctx.message.mentions) >= 1:
             if any(u.id == 502913609458909194 for u in ctx.message.mentions):
-                message = f'*Kisses {ctx.message.author.name} back :heart:*'
+                message = f'*Kisses {Name.nick_parser(ctx.message.author)} back :heart:*'
             else:
-                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-                message = f'*{ctx.message.author.name} Kisses {mentions}*'
+                mentions = ' '.join([f'{Name.nick_parser(user)}' for user in ctx.message.mentions])
+                message = f'*{Name.nick_parser(ctx.message.author)} Kisses {mentions}*'
         else:
-            message = f'*Kisses {ctx.author.name}*'
+            message = f'*Kisses {Name.nick_parser(ctx.message.author)}*'
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
@@ -157,10 +160,10 @@ class General:
                 image = r'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/' \
                         r'src/core/images/notwork.png'
             else:
-                mentions = ' '.join([f'{user.name}' for user in ctx.message.mentions])
-                message = f'*{ctx.message.author.name} Slaps {mentions}*'
+                mentions = ' '.join([f'{Name.nick_parser(user)}' for user in ctx.message.mentions])
+                message = f'*{Name.nick_parser(ctx.message.author)} Slaps {mentions}*'
         else:
-            message = f'*Slaps {ctx.author.name}*'
+            message = f'*Slaps {Name.nick_parser(ctx.message.author)}*'
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
