@@ -1,6 +1,7 @@
 import discord
 from rolldice import *
 from discord.ext import commands
+from src.helpers.misc_helper import Name
 
 
 # TODO: add a dungeon/dnd based game.
@@ -29,7 +30,7 @@ class Dungeon:
 
         result, explanation = dicebag.roll_dice()
 
-        embed = discord.Embed(title=f'{ctx.author} rolled {die}',
+        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} rolled {die}',
                               color=discord.Color.dark_purple())
 
         embed.add_field(name='**Total**', value=result, inline=False)
