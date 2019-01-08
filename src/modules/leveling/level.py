@@ -76,11 +76,14 @@ class Level:
         for user in levels:
             u = ctx.guild.get_member(int(user.snowflake))
             up = (user.level + 1) ** 4
-            embed.add_field(
-                name=f'#{count} {Name.nick_parser(u)}',
-                value=f'Level {user.level}, {user.experience}/{up} xp',
-                inline=False
-            )
+            try:
+                embed.add_field(
+                    name=f'#{count} {Name.nick_parser(u)}',
+                    value=f'Level {user.level}, {user.experience}/{up} xp',
+                    inline=False
+                )
+            except AttributeError:
+                pass
             count += 1
 
         await ctx.channel.send(embed=embed)
