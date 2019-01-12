@@ -56,8 +56,15 @@ class Level:
 
     @commands.guild_only()
     @commands.command(aliases=['score', 'levels'], pass_context=True)
-    async def scoreboard(self, ctx):
+    async def scoreboard(self, ctx, rank: int = 1):
         """Shows the server's scoreboard."""
+        rank -= 1
+        if rank <= 0:
+            rank = 0
+            count = 1
+        else:
+            count = rank + 1
+
         levels = self.session.query(model.Level) \
             .filter(
                 model.Level.guild == ctx.guild.id
@@ -66,25 +73,32 @@ class Level:
                 model.Level.experience.desc()
             ) \
             .limit(10) \
+            .offset(rank) \
             .all()
 
-        count = 1
-
-        embed = discord.Embed(title=f'{ctx.guild.name}\'s scoreboard,',
+        embed = discord.Embed(title=f'{ctx.guild.name}\'s scoreboard:',
                               color=discord.Color.green())
 
-        for user in levels:
-            u = ctx.guild.get_member(int(user.snowflake))
-            up = (user.level + 1) ** 4
-            try:
-                embed.add_field(
-                    name=f'#{count} {Name.nick_parser(u)}',
-                    value=f'Level {user.level}, {user.experience}/{up} xp',
-                    inline=False
-                )
-                count += 1
-            except AttributeError:
-                pass
+        if len(levels) >= 1:
+            for user in levels:
+                u = ctx.guild.get_member(int(user.snowflake))
+                up = (user.level + 1) ** 4
+                if user.experience > 0:
+                    try:
+                        embed.add_field(
+                            name=f'#{count} {Name.nick_parser(u)}',
+                            value=f'Level {user.level}, {user.experience}/{up} xp',
+                            inline=False
+                        )
+                        count += 1
+                    except AttributeError:
+                        pass
+        else:
+            embed.add_field(
+                name='Error: ',
+                value='No users found for this range',
+                inline=False
+            )
 
         await ctx.channel.send(embed=embed)
 
