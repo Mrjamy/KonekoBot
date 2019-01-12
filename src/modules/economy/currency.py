@@ -145,6 +145,39 @@ class Currency:
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
+    @commands.guild_only()
+    @commands.command(aliases=['fortune'], pass_context=True)
+    async def wealth(self, ctx):
+        """Shows the server's wealth in <:neko:521458388513849344>."""
+        wealth = self.session.query(model.Currency) \
+            .filter(
+            model.Currency.guild == ctx.guild.id
+        ) \
+            .order_by(
+            model.Currency.amount.desc()
+        ) \
+            .limit(10) \
+            .all()
+
+        count = 1
+
+        embed = discord.Embed(title=f'{ctx.guild.name}\'s wealth overview,',
+                              color=discord.Color.green())
+
+        for user in wealth:
+            u = ctx.guild.get_member(int(user.snowflake))
+            try:
+                embed.add_field(
+                    name=f'#{count} {Name.nick_parser(u)}',
+                    value=f'{user.amount} <:neko:521458388513849344>',
+                    inline=False
+                )
+                count += 1
+            except AttributeError:
+                pass
+
+        await ctx.channel.send(embed=embed)
+
     async def _take(self, user, guild, amount: int):
         currency = self.session.query(model.Currency) \
             .filter(
