@@ -55,7 +55,7 @@ class Level:
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(aliases=['score'], pass_context=True)
+    @commands.command(aliases=['score', 'levels'], pass_context=True)
     async def scoreboard(self, ctx):
         """Shows the server's scoreboard."""
         levels = self.session.query(model.Level) \
