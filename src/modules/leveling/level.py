@@ -82,9 +82,9 @@ class Level:
                     value=f'Level {user.level}, {user.experience}/{up} xp',
                     inline=False
                 )
+                count += 1
             except AttributeError:
                 pass
-            count += 1
 
         await ctx.channel.send(embed=embed)
 
