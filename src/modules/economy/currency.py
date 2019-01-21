@@ -5,7 +5,7 @@ from discord.ext.commands.cooldowns import BucketType
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
-from src.helpers.database.models import currency_model as model
+from src.helpers.database.tables import currency_table as model
 from src.helpers.misc_helper import Name
 
 
