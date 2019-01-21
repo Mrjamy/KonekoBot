@@ -2,6 +2,7 @@ import random
 import asyncio
 from src.core.checks import Checks
 from discord.ext import commands
+from src.modules.economy.currency import Currency
 from src.helpers.misc_helper import Name
 
 
