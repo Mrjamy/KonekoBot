@@ -2,7 +2,7 @@ import sys
 import traceback
 import discord
 from discord.ext import commands
-from src.core.checks import (
+from src.core.exceptions import (
     DjOnly,
     NotInVoiceChannel
 )
