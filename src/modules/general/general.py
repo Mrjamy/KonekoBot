@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 from src.helpers.random.text_generator import TextGenerator
 from src.helpers.random.image_generator import ImageGenerator
-from src.helpers.misc_helper import Name
+from src.helpers.user.nick_helper import Name
 
 
 class General:
