@@ -28,7 +28,7 @@ class Gambling:
         else:
             await ctx.channel.send(f"I am unable to choose, please refer to `{ctx.prefix}help`")
 
-    # TODO: add command /coinflip
+    @commands.guild_only()
     @commands.command(aliases=['flip', 'toss'], pass_context=True)
     async def coinflip(self, ctx, choice: str = None):
         """Tosses a coin."""
