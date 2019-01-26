@@ -7,7 +7,7 @@ from src.helpers.database.tables import level_table as model
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
-from src.helpers.misc_helper import Name
+from src.helpers.user.nick_helper import Name
 
 
 class Level:
