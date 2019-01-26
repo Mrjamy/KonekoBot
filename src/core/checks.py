@@ -1,32 +1,16 @@
 import discord
 from discord.ext import commands
 from src.core.config import Settings
+from src.core.exceptions import (
+    OwnerOnly,
+    DevOnly,
+    NotNsfwChannel,
+    NoPermission,
+    DjOnly,
+    NotInVoiceChannel
+)
 
 settings = Settings()
-
-
-class OwnerOnly(commands.CommandError):
-    pass
-
-
-class DevOnly(commands.CommandError):
-    pass
-
-
-class DjOnly(commands.CommandError):
-    pass
-
-
-class NotNsfwChannel(commands.CommandError):
-    pass
-
-
-class NoPermission(commands.CommandError):
-    pass
-
-
-class NotInVoiceChannel(commands.CommandError):
-    pass
 
 
 class Checks:
@@ -80,7 +64,7 @@ class Checks:
                 # TODO: Add option to set the DJ role to any existing role.
                 # TODO: Store this setting in a database.
                 # ctx.send("This command requires you to have the role DJ")
-                raise DjOnly()
+                raise DjOnly
         return commands.check(predicate)
 
     @staticmethod
@@ -89,7 +73,7 @@ class Checks:
             if hasattr(ctx.author.voice, 'channel'):
                 return True
             else:
-                raise NotInVoiceChannel()
+                raise NotInVoiceChannel
 
         return commands.check(predicate)
 
