@@ -7,7 +7,7 @@ from src.core.exceptions import (
     NotInVoiceChannel
 )
 from datetime import datetime, timedelta
-from src.modules.economy.currency import NotEnoughBalance
+from src.core.exceptions import NotEnoughBalance
 
 
 class ErrorHandler:
