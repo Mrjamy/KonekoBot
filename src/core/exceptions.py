@@ -23,3 +23,7 @@ class NoPermission(commands.CommandError):
 
 class NotInVoiceChannel(commands.CommandError):
     pass
+
+
+class NotEnoughBalance(Exception):
+    pass
