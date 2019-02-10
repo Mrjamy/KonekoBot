@@ -25,6 +25,7 @@ class Settings:
         self.toggle_extensions = [
             "economy.currency",
             "gambling.gambling",
+            "gambling.gamble",
             # "games.pokemon",
             "games.dnd",
             "games.rps",
