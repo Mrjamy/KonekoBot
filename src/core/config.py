@@ -11,7 +11,7 @@ class Settings:
 
         parser.add_option("-t", "--token", dest="token", default="TOKEN")
         parser.add_option("-p", "--pm-help", dest="pm_help", default=0)
-        parser.add_option("-c", "--command-prefix", dest="command_prefix", default="/")
+        parser.add_option("-c", "--command-prefix", dest="command_prefix", default="$")
         parser.add_option("-d", "--dry-run", dest="boot_only", default=0)
 
         (options, args) = parser.parse_args()
