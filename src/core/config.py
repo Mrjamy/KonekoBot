@@ -26,6 +26,7 @@ class Settings:
             "economy.currency",
             "gambling.gambling",
             "gambling.gamble",
+            "gambling.coinflip",
             # "games.pokemon",
             "games.dnd",
             "games.rps",

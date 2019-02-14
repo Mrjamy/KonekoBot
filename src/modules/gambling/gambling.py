@@ -2,7 +2,6 @@ import random
 import asyncio
 from src.core.checks import Checks
 from discord.ext import commands
-from src.helpers.user.nick_helper import Name
 
 
 # TODO: add the option to place a bet of :neko: on the following commands
@@ -26,34 +25,6 @@ class Gambling:
             await ctx.channel.send(result)
         else:
             await ctx.channel.send(f"I am unable to choose, please refer to `{ctx.prefix}help`")
-
-    @commands.guild_only()
-    @commands.command(aliases=['flip', 'toss'], pass_context=True)
-    async def coinflip(self, ctx, choice: str = None):
-        """Tosses a coin."""
-        async def result():
-            await asyncio.sleep(5)
-            if choice in options:
-                if choice == flip:
-                    await ctx.channel.send(f'Congratulations {Name.nick_parser(ctx.message.author)}! '
-                                           f'you guessed right it was {flip}')
-                else:
-                    await ctx.channel.send(f'The coin landed on {flip}')
-            else:
-                await ctx.channel.send(f'The coin landed on {flip}')
-
-        if choice is not None:
-            choice = choice.lower()
-        options = [
-            "heads",
-            "tails",
-        ]
-        await ctx.channel.send('Tossing a coin in the air')
-
-        await ctx.trigger_typing()
-        flip = random.choice(options)
-
-        await result()
 
     # TODO: add options to play blackjack.
 
