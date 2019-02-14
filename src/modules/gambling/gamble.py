@@ -5,7 +5,7 @@ from src.core.exceptions import NotEnoughBalance
 
 
 class Gambling:
-    """Class description."""
+    """Command gamble."""
 
     __slots__ = 'bot'
 
