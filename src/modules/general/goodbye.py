@@ -2,6 +2,10 @@ from KonekoBot import KonekoBot
 
 
 class Goodbye:
+    """Class called when an user leaves."""
+
+    __slots__ = 'bot'
+
     def __init__(self, bot):
         self.bot = bot
 

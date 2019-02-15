@@ -4,7 +4,7 @@ from discord.ext import commands
 
 
 class CleverBot:
-    """Cog description."""
+    """Cleverbot session."""
 
     __slots__ = 'bot'
 
