@@ -24,9 +24,9 @@ class Settings:
         self.dev_ids = [self.owner_id, ]
         self.toggle_extensions = [
             "economy.currency",
+            "gambling.coinflip",
             "gambling.gambling",
             "gambling.gamble",
-            "gambling.coinflip",
             # "games.pokemon",
             "games.dnd",
             "games.rps",
