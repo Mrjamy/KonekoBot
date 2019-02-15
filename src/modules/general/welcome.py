@@ -2,6 +2,10 @@ from KonekoBot import KonekoBot
 
 
 class Welcome:
+    """Class called when an user join."""
+
+    __slots__ = 'bot'
+
     def __init__(self, bot):
         self.bot = bot
 
