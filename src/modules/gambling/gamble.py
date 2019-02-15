@@ -13,7 +13,7 @@ class Gambling:
         self.bot = bot
 
     @commands.guild_only()
-    @commands.command(aliases=[], pass_context=True)
+    @commands.command(aliases=["bet"], pass_context=True)
     async def gamble(self, ctx, amount: int = 100):
         """Gambles an amount of :nekko:."""
 
