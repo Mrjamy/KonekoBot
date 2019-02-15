@@ -6,7 +6,7 @@ from src.helpers.user.nick_helper import Name
 
 
 class General:
-    """Music related commands."""
+    """General commands."""
 
     __slots__ = 'bot'
 
@@ -17,6 +17,7 @@ class General:
     @commands.command(aliases=[], pass_context=True)
     async def hello(self, ctx):
         """A simple greeting!"""
+        # Get a random greeting.
 
         r = TextGenerator('greet_phrases').to_str()
 

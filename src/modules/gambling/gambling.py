@@ -8,7 +8,7 @@ from discord.ext import commands
 
 
 class Gambling:
-    """Class description."""
+    """Gambling commands."""
 
     __slots__ = 'bot'
 
