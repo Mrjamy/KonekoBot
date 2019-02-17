@@ -5,6 +5,7 @@ from functools import partial
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
+from src.modules.music.exceptions import VoiceConnectionError, InvalidVoiceChannel
 
 # TODO: Fully implement checks.
 # TODO: Customizable role for is_dj() check.
@@ -31,14 +32,6 @@ ffmpegopts = {
 }
 
 ytdl = YoutubeDL(ytdlopts)
-
-
-class VoiceConnectionError(commands.CommandError):
-    """Custom Exception class for connection errors."""
-
-
-class InvalidVoiceChannel(VoiceConnectionError):
-    """Exception for cases of invalid Voice Channels."""
 
 
 class YTDLSource(discord.PCMVolumeTransformer):
@@ -339,9 +332,9 @@ class Music:
 
         # Grab up to 5 entries from the queue...
         upcoming = list(itertools.islice(player.queue._queue, 0, 5))
-        
+
         # TODO: add indexing for queued songs.
-        # TODO: nice formatting.         
+        # TODO: nice formatting.
         fmt = '\n'.join(f'**`{_["title"]}`**' for _ in upcoming)
         embed = discord.Embed(title=f'Upcoming - Next {len(upcoming)}', description=fmt,
                               color=discord.Color.darker_grey())
