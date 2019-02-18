@@ -172,9 +172,9 @@ class General:
 
         await ctx.channel.send(embed=embed)
 
-    @kiss.error
-    async def kiss_error(self, ctx, *args):
-        """kiss error handler"""
+    @slap.error
+    async def slap_error(self, ctx, *args):
+        """slap error handler"""
 
         print(args)
 
