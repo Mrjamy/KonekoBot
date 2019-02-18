@@ -34,7 +34,7 @@ class Settings:
             # "general.goodbye",
             # "general.welcome",
             "leveling.level",
-            # "moderation.moderation",
+            # "adminstration.adminstration",
             "music.music",
             # "nsfw.nsfw",
             "utility.utility",
