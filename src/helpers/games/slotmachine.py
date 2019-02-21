@@ -5,8 +5,8 @@ from enum import Enum
 
 
 class SlotMachine:
-    INITIAL_STAKE = 50
-    INITIAL_JACKPOT = 1000
+
+    __slots__ = 'current_stake', 'current_jackpot'
 
     class Reel(Enum):
         CHERRY = 1
@@ -28,54 +28,42 @@ class SlotMachine:
         Reel.SEVEN: 'jackpot'
     }
 
-    def __init__(self, stake=INITIAL_STAKE, jackpot=INITIAL_JACKPOT):
-        self.current_stake = stake
-        self.current_jackpot = jackpot
+    message = list()
+
+    def __init__(self):
+        self.current_jackpot = 1000  # TODO: get jackpot from cache or DB
 
     def _play_round(self):
         first, second, third = random.choice(SlotMachine._values), random.choice(SlotMachine._values), random.choice(SlotMachine._values)
-        self._adjust_score(first, second, third)
+        return self._adjust_score(first, second, third)
 
     def _adjust_score(self, first, second, third):
         if first == SlotMachine.Reel.CHERRY:
             if second == SlotMachine.Reel.CHERRY:
-                win = 7 if third == SlotMachine.Reel.CHERRY else 5
+                return 7 if third == SlotMachine.Reel.CHERRY else 5
             else:
-                win = 2
+                return 2
         else:
             if first == second == third:
                 win = SlotMachine.payout[first]
-                win = self.current_jackpot if win == 'jackpot' else win
+                return self.current_jackpot if win == 'jackpot' else win
             else:
-                win = -1
+                return -1
 
         if win == self.current_jackpot:
-            print("You won the JACKPOT!!")
+            self.message.append("You won the JACKPOT!!")
         else:
-            print('\t'.join(map(lambda x: x.name.center(6), (first, second, third))))
-            print("You {} £{}".format("won" if win > 0 else "lost", win))
-            self.current_stake += win
+            self.message.append('\t'.join(map(lambda x: x.name.center(6), (first, second, third))))
+            self.message.append("You {} £{}".format("won" if win > 0 else "lost", win))
             self.current_jackpot -= win
 
-    def play(self):
-        while self.current_stake:
-            self._play_round()
+    def play(self, credit: int, bet: int = 1):
+        credit += bet * self._play_round()
+
+        for _ in self.message:
+            print(_)
+        print(f"credit is {credit}")
 
 
 if __name__ == '__main__':
-    print('''
-Welcome to the Slot Machine
-You'll start with £50. You'll be asked if you want to play.
-Answer with yes/no. you can also use y/n
-There is no case sensitivity, type it however you like!
-To win you must get one of the following combinations:
-BAR\tBAR\tBAR\t\tpays\t£250
-BELL\tBELL\tBELL/BAR\tpays\t£20
-PLUM\tPLUM\tPLUM/BAR\tpays\t£14
-ORANGE\tORANGE\tORANGE/BAR\tpays\t£10
-CHERRY\tCHERRY\tCHERRY\t\tpays\t£7
-CHERRY\tCHERRY\t  -\t\tpays\t£5
-CHERRY\t  -\t  -\t\tpays\t£2
-7\t  7\t  7\t\tpays\t The Jackpot!
-''')
-    SlotMachine().play()
+    SlotMachine().play(1000, 10)
