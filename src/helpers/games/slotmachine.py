@@ -28,7 +28,7 @@ class SlotMachine:
         Reel.SEVEN: 'jackpot'
     }
 
-    message = list()
+    message = []
 
     def __init__(self):
         self.current_jackpot = 1000  # TODO: get jackpot from cache or DB
@@ -40,15 +40,15 @@ class SlotMachine:
     def _adjust_score(self, first, second, third):
         if first == SlotMachine.Reel.CHERRY:
             if second == SlotMachine.Reel.CHERRY:
-                return 7 if third == SlotMachine.Reel.CHERRY else 5
+                win = 7 if third == SlotMachine.Reel.CHERRY else 5
             else:
-                return 2
+                win = 2
         else:
             if first == second == third:
                 win = SlotMachine.payout[first]
-                return self.current_jackpot if win == 'jackpot' else win
+                win = self.current_jackpot if win == 'jackpot' else win
             else:
-                return -1
+                win = -1
 
         if win == self.current_jackpot:
             self.message.append("You won the JACKPOT!!")
@@ -57,11 +57,12 @@ class SlotMachine:
             self.message.append("You {} £{}".format("won" if win > 0 else "lost", win))
             self.current_jackpot -= win
 
+            return win
+
     def play(self, credit: int, bet: int = 1):
         credit += bet * self._play_round()
 
-        for _ in self.message:
-            print(_)
+        print(self.message)
         print(f"credit is {credit}")
 
 
