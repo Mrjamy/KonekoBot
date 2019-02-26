@@ -27,6 +27,7 @@ class Settings:
             "gambling.coinflip",
             "gambling.gambling",
             "gambling.gamble",
+            "gambling.slots",
             # "games.pokemon",
             "games.dnd",
             "games.rps",
