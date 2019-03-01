@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from src.core.exceptions import NotEnoughBalance
 
 
-class ErrorHandler:
+class ErrorHandler(commands.Cog):
     __slots__ = 'bot'
 
     def __init__(self, bot):

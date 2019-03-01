@@ -6,7 +6,7 @@ from src.helpers.database.models.currency_model import Currency as Model
 from src.core.exceptions import NotEnoughBalance
 
 
-class Gambling:
+class Gambling(commands.Cog):
     """Command coinflip."""
 
     __slots__ = 'bot'

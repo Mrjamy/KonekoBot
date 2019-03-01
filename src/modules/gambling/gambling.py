@@ -7,7 +7,7 @@ from discord.ext import commands
 # TODO: add the option to place a bet of :neko: on the following commands
 
 
-class Gambling:
+class Gambling(commands.Cog):
     """Gambling commands."""
 
     __slots__ = 'bot'
