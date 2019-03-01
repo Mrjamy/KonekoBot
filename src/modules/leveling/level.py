@@ -5,7 +5,7 @@ from src.helpers.database.models.level_model import Level as Model
 from src.helpers.user.nick_helper import Name
 
 
-class Level:
+class Level(commands.Cog):
     """Leveling module."""
 
     __slots__ = 'bot'

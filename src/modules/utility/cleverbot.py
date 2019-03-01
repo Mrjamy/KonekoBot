@@ -3,7 +3,7 @@
 from discord.ext import commands
 
 
-class CleverBot:
+class CleverBot(commands.Cog):
     """Cleverbot session."""
 
     __slots__ = 'bot'

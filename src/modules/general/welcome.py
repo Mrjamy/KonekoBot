@@ -1,7 +1,7 @@
 from KonekoBot import KonekoBot
 
 
-class Welcome:
+class Welcome(commands.Cog):
     """Class called when an user join."""
 
     __slots__ = 'bot'

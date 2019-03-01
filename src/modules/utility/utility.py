@@ -5,7 +5,7 @@ from discord.ext import commands
 from src.core.checks import Checks
 
 
-class Utility:
+class Utility(commands.Cog):
     """Utility commands."""
 
     __slots__ = 'bot'

@@ -6,7 +6,7 @@ from src.helpers.database.models.currency_model import Currency as Model
 from src.helpers.user.nick_helper import Name
 
 
-class Currency:
+class Currency(commands.Cog):
     """Currency module."""
 
     __slots__ = 'bot'
