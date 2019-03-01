@@ -1,7 +1,7 @@
 from KonekoBot import KonekoBot
 
 
-class Goodbye:
+class Goodbye(commands.Cog):
     """Class called when an user leaves."""
 
     __slots__ = 'bot'

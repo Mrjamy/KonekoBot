@@ -13,7 +13,7 @@ etc.
 """
 
 
-class Dungeon:
+class Dungeon(commands.Cog):
     """Explore the dungeon"""
 
     __slots__ = "bot"

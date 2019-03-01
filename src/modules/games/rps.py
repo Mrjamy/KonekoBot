@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands
 
 
-class Games:
+class Games(commands.Cog):
     """Some fun games."""
 
     __slots__ = 'bot'

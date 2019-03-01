@@ -5,7 +5,7 @@ from src.helpers.random.image_generator import ImageGenerator
 from src.helpers.user.nick_helper import Name
 
 
-class General:
+class General(commands.Cog):
     """General commands."""
 
     __slots__ = 'bot'
