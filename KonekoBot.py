@@ -78,9 +78,6 @@ if __name__ == '__main__':
     # Dry run option for travis.
     if KonekoBot.dry_run is True:
         print("Quitting: dry run")
-        close = loop.create_task(KonekoBot.close())
-        loop.run_until_complete(close)
-        loop.close()
         exit(0)
 
     KonekoBot.uptime = time.time()
