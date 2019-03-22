@@ -71,7 +71,7 @@ if __name__ == '__main__':
     Setup().setup()
 
     for extension in settings.toggle_extensions:
-        KonekoBot.load_extension("src.modules." + extension)
+        KonekoBot.load_extension("src.cogs." + extension)
     for extension in settings.core_extensions:
         KonekoBot.load_extension(extension)
 
