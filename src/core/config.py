@@ -37,7 +37,6 @@ class Settings:
             "leveling.level",
             # "adminstration.adminstration",
             "music.music",
-            # "nsfw.nsfw",
             "utility.utility",
             # "utility.stats",
         ]
