@@ -29,7 +29,7 @@ before_script:
 script:
   - python -m compileall ./KonekoBot.py
   - python -m compileall ./src/core
-  - python -m compileall ./src/modules
+  - python -m compileall ./src/cogs
   - python -m compileall ./src/helpers
 
   - python KonekoBot.py -t "TOKEN" -d 1
