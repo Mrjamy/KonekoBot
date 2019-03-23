@@ -40,6 +40,7 @@ class Settings:
             # "utility.stats",
         ]
         self.core_extensions = [
+            # "DBL",
             "ErrorHandler",
             "EventListener"
         ]
