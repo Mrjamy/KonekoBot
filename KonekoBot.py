@@ -8,11 +8,11 @@ from discord.ext import commands
 from src.core.config import Settings
 from src.core.setup import Setup
 
-settings = Settings()
 loop = asyncio.get_event_loop()
 settings = Settings()
 config = configparser.ConfigParser()
 config.read('config.ini')
+# TODO : Add a logger to the bot.
 
 # Create an AutoSharded bot.
 KonekoBot = commands.AutoShardedBot(
@@ -29,30 +29,13 @@ KonekoBot.dry_run = settings.dry_run
 KonekoBot.settings = settings
 
 
-# Function called when the bot is ready.
-@KonekoBot.event
-async def on_ready():
-    """KonekoBot on_ready event."""
-    game = settings.prefix + "help for help"
-    activity = discord.Game(name=game)
-    await KonekoBot.change_presence(status=discord.Status.online, activity=activity)
-    # Bot logged in.
-    print(f'Logged in as {KonekoBot.user}')
-    print(f'I am in {len(KonekoBot.guilds)} guilds.')
-
-
-@KonekoBot.event
-async def on_command(ctx):
-    KonekoBot.command_count += 1
-
-
 if __name__ == '__main__':
     Setup().setup()
 
-    for extension in settings.toggle_extensions:
-        KonekoBot.load_extension("src.cogs." + extension)
-    for extension in settings.core_extensions:
-        KonekoBot.load_extension(extension)
+    for extension in KonekoBot.settings.toggle_extensions:
+        KonekoBot.load_extension(f"src.cogs.{extension}")
+    for extension in KonekoBot.settings.core_extensions:
+        KonekoBot.load_extension(f"src.core.{extension}")
 
     # Dry run option for travis.
     if KonekoBot.dry_run is True:

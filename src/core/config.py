@@ -40,5 +40,6 @@ class Settings:
             # "utility.stats",
         ]
         self.core_extensions = [
-            "src.core.ErrorHandler",
+            "ErrorHandler",
+            "EventListener"
         ]
