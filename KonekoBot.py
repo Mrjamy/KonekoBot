@@ -22,7 +22,7 @@ KonekoBot = commands.AutoShardedBot(
 KonekoBot.uptime = time.time()
 KonekoBot.command_count = 0
 KonekoBot.dry_run = settings.dry_run
-KonekoBot.remove_command('help')
+KonekoBot.settings = settings
 
 
 # Function called when the bot is ready.
@@ -35,31 +35,6 @@ async def on_ready():
     # Bot logged in.
     print(f'Logged in as {KonekoBot.user}')
     print(f'I am in {len(KonekoBot.guilds)} guilds.')
-
-
-@KonekoBot.command(name='help', aliases=['h'], pass_context=True, hidden=True)
-async def help_command(ctx, command: str = None):
-    """Shows this message."""
-
-    # If no commands are supplied help will return a brief summary of all commands.
-    if command is None:
-        pages = await KonekoBot.formatter.format_help_for(ctx, KonekoBot)
-    # If one command is supplied attempt to show it description.
-    else:
-        # try to see if it is a cog name
-        name = KonekoBot.get_command(command)
-        if name is None:
-            embed = discord.Embed(description=KonekoBot.command_not_found.format(command),
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
-            return
-
-        pages = await KonekoBot.formatter.format_help_for(ctx, name)
-
-    for page in pages:
-        embed = discord.Embed(description=page.strip("```").replace('<', '[').replace('>', ']'),
-                              color=discord.Color.dark_purple())
-        await ctx.channel.send(embed=embed)
 
 
 @KonekoBot.event
