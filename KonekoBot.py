@@ -3,12 +3,16 @@
 import asyncio
 import time
 import discord
+import configparser
 from discord.ext import commands
 from src.core.config import Settings
 from src.core.setup import Setup
 
 settings = Settings()
 loop = asyncio.get_event_loop()
+settings = Settings()
+config = configparser.ConfigParser()
+config.read('config.ini')
 
 # Create an AutoSharded bot.
 KonekoBot = commands.AutoShardedBot(
@@ -57,7 +61,7 @@ if __name__ == '__main__':
 
     KonekoBot.uptime = time.time()
     print("Logging into Discord...")
-    KonekoBot.run(settings.token)
+    KonekoBot.run(config.get('Koneko', 'token'))
 
     try:
         loop.run_until_complete(KonekoBot)
