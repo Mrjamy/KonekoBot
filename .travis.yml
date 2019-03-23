@@ -32,7 +32,7 @@ script:
   - python -m compileall ./src/cogs
   - python -m compileall ./src/helpers
 
-  - python KonekoBot.py -t "TOKEN" -d 1
+  - python KonekoBot.py -d 1
 
 matrix:
   allow_failures:
