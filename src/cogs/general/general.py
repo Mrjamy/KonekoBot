@@ -37,7 +37,7 @@ class General(commands.Cog):
     @commands.command(aliases=[], pass_context=True)
     async def hug(self, ctx):
         """Mention a user to hug them!"""
-
+        # TODO: async
         image = ImageGenerator(tag='hug').to_image()
 
         # TODO: add catch for self mentions
@@ -61,9 +61,6 @@ class General(commands.Cog):
     @hug.error
     async def hug_error(self, ctx, *args):
         """hug error handler"""
-
-        print(args)
-
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
                                   color=discord.Color.red())
@@ -75,7 +72,7 @@ class General(commands.Cog):
     @commands.command(aliases=["headpat"], pass_context=True)
     async def pat(self, ctx):
         """Mention a user to pat them!"""
-
+        # TODO: async
         image = ImageGenerator(tag='pat').to_image()
 
         # TODO: add catch for self mentions
@@ -99,11 +96,7 @@ class General(commands.Cog):
     @pat.error
     async def pat_error(self, ctx, *args):
         """pat error handler"""
-
         # Throw a patception :sad_face:
-
-        print(args)
-
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
                                   color=discord.Color.red())
@@ -115,7 +108,7 @@ class General(commands.Cog):
     @commands.command(aliases=[], pass_context=True)
     async def kiss(self, ctx):
         """Mention a user to kiss them!"""
-
+        # TODO: async
         image = ImageGenerator(tag='kiss').to_image()
 
         # TODO: add catch for self mentions
@@ -137,9 +130,6 @@ class General(commands.Cog):
     @kiss.error
     async def kiss_error(self, ctx, *args):
         """kiss error handler"""
-
-        print(args)
-
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
                                   color=discord.Color.red())
@@ -151,7 +141,7 @@ class General(commands.Cog):
     @commands.command(aliases=[], pass_context=True)
     async def slap(self, ctx):
         """Mention a user to slap them!"""
-
+        # TODO: async
         image = ImageGenerator(tag='slap').to_image()
 
         # TODO: add catch for self mentions
@@ -175,9 +165,6 @@ class General(commands.Cog):
     @slap.error
     async def slap_error(self, ctx, *args):
         """slap error handler"""
-
-        print(args)
-
         if ctx.message.channel.permissions_for(ctx.me).embed_links:
             embed = discord.Embed(title=f'I could not perform this task :sob:',
                                   color=discord.Color.red())
