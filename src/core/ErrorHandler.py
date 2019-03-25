@@ -16,6 +16,7 @@ class ErrorHandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.Cog.listener()
     async def on_command_error(self, ctx, error):
         """The event triggered when an error is raised while invoking a command.
         ctx   : Context
@@ -113,6 +114,7 @@ class ErrorHandler(commands.Cog):
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
     # TODO: properly intercept system errors
+    @commands.Cog.listener()
     async def on_error(self, ctx, event, *args, **kwargs):
         # TODO: catch discord.HTTPException
         # TODO: catch discord.Forbidden
