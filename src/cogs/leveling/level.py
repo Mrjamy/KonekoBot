@@ -1,6 +1,5 @@
 import discord
 from discord.ext import commands
-from KonekoBot import KonekoBot
 from src.helpers.database.models.level_model import Level as Model
 from src.helpers.user.nick_helper import Name
 
@@ -75,12 +74,12 @@ class Level(commands.Cog):
 
         await ctx.channel.send(embed=embed)
 
-    @KonekoBot.event
+    @commands.Cog.listener()
     async def on_member_join(self, member):
         """Stores the user in the database whenever a new user joins."""
         await Model().insert(member.id, member.guild.id)
 
-    @KonekoBot.event
+    @commands.Cog.listener()
     async def on_message(self, ctx):
         """Whenever a user sends a message award them with a small amount of exp."""
         if ctx.author.bot:
