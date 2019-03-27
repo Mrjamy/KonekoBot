@@ -1,16 +1,17 @@
 import discord
 from discord.ext import commands
-from src.helpers.database.models.level_model import Level as Model
+from src.helpers.database.repositories.level_repository import LevelRepository
 from src.helpers.user.nick_helper import Name
 
 
 class Level(commands.Cog):
     """Leveling module."""
 
-    __slots__ = 'bot'
+    __slots__ = 'bot', 'level_repository'
 
     def __init__(self, bot):
         self.bot = bot
+        self.level_repository = LevelRepository()
 
     # TODO: send a fancy card then responding.
     @commands.guild_only()
@@ -28,7 +29,7 @@ class Level(commands.Cog):
         else:
             user = ctx.author
 
-        level = Model().get(user.id, ctx.guild.id)
+        level = await self.level_repository.get(user.id, ctx.guild.id)
 
         up = (level.level + 1) ** 4
         embed = discord.Embed(title=f'`{Name.nick_parser(user)}` is level {level.level}, {level.experience}/{up} xp',
@@ -46,7 +47,7 @@ class Level(commands.Cog):
         else:
             count = rank + 1
 
-        levels = Model().get_all(ctx.guild.id)
+        levels = await self.level_repository.get_all(ctx.guild.id)
 
         embed = discord.Embed(title=f'{ctx.guild.name}\'s scoreboard:',
                               color=discord.Color.green())
@@ -77,7 +78,7 @@ class Level(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         """Stores the user in the database whenever a new user joins."""
-        await Model().insert(member.id, member.guild.id)
+        await self.level_repository.insert(member.id, member.guild.id)
 
     @commands.Cog.listener()
     async def on_message(self, ctx):
@@ -87,12 +88,12 @@ class Level(commands.Cog):
         if not ctx.guild:
             return
 
-        level = Model().get(ctx.author.id, ctx.guild.id)
+        level = await self.level_repository.add_xp(ctx.author.id, ctx.guild.id)
         await self.level_up(level, ctx)
 
     async def level_up(self, user, ctx):
-        up = Model().levelup_check(ctx.author.id, ctx.guild.id)
-        level = Model().get(ctx.author.id, ctx.guild.id)
+        up = await self.level_repository.levelup_check(ctx.author.id, ctx.guild.id)
+        level = await self.level_repository.get(ctx.author.id, ctx.guild.id)
 
         if up:
             try:
