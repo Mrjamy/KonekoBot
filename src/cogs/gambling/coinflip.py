@@ -2,8 +2,6 @@ import random
 import asyncio
 from discord.ext import commands
 from src.helpers.user.nick_helper import Name
-from src.helpers.database.models.currency_model import Currency as Model
-from src.core.exceptions import NotEnoughBalance
 
 
 class Gambling(commands.Cog):

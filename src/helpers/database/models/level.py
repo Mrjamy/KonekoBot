@@ -10,5 +10,8 @@ class Level(Model):
     level = fields.IntField(null=False, default=1)
     last_message = fields.DatetimeField(auto_now=True)
 
-    # def __str__(self):
-    #     return str(self.level)
+    class Meta:
+        table = 'levels'
+
+    def __str__(self):
+        return str(self.level)
