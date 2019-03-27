@@ -14,7 +14,8 @@
     "apps": {
         "models": {
             "models": [
-                "src.helpers.database.models.level"
+                "src.helpers.database.models.level",
+                "src.helpers.database.models.currency"
             ],
             "default_connection": "default"
         }

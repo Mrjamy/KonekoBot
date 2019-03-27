@@ -14,7 +14,6 @@ class LevelRepository:
         guild_id: int [required]
             The guild the user is related to.
         """
-        # Filter records on user_id && guild_id return 1.
         level = await Level.filter(
             snowflake=user_id,
             guild=guild_id
@@ -35,10 +34,10 @@ class LevelRepository:
             Optional custom starting point for the scoreboard.
         """
         return await Level.filter(guild=guild_id) \
-        .order_by('experience') \
-        .limit(10) \
-        .offset(offset) \
-        .all()
+            .order_by('experience') \
+            .limit(10) \
+            .offset(offset) \
+            .all()
 
     async def add_xp(self, user_id: int, guild_id: int) -> Level:
         """ Adds a random amount of experience to the user betweem 5 and 10.
@@ -70,13 +69,20 @@ class LevelRepository:
         return level
 
     async def insert(self, user_id: int, guild_id: int) -> Level:
-        # Insert a record.
+        """ Insert a user to the database
+        Parameters
+        ------------
+        user_id: int [Required]
+            The user's discord snowflake.
+        guild_id: int [required]
+            The guild the user is related to.
+        """
         return await Level.create(
-            snowflake = user_id,
-            guild = guild_id,
-            experience = 0,
-            level = 0
-        ).save()
+            snowflake=user_id,
+            guild=guild_id,
+            experience=0,
+            level=0
+        )
 
     async def levelup_check(self, user_id: int, guild_id: int) -> bool:
         """ Check if the target user has passed the required amount to level up.
@@ -95,7 +101,12 @@ class LevelRepository:
 
         up = False
         if lvl_start < lvl_end:
-            await level.update(level=lvl_end)
+            await Level.filter(
+                snowflake=user_id,
+                guild=guild_id
+            ).first().update(
+                level=lvl_end
+            )
             up = True
 
         return up
