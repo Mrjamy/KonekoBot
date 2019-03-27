@@ -21,13 +21,16 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 # TODO : Add a logger to the bot.
 
+
 class Bot(commands.AutoShardedBot):
     # Create an AutoSharded bot.
     def __init__(self):
         super().__init__(
-            # Customizable when running the bot using the "-c" or "--command-prefix" option.
+            # Customizable when running the bot using the "-c" or
+            # "--command-prefix" option.
             command_prefix=commands.when_mentioned_or(settings.prefix),
-            # Customizable when running the bot using the "-p" or "--pm-help" option.
+            # Customizable when running the bot using the "-p" or "--pm-help"
+            # option.
             pm_help=settings.pm_help,
             owner_id=settings.owner_id,
         )
