@@ -11,9 +11,13 @@ class EventListener(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         """KonekoBot on_ready event."""
-        game = self.bot.settings.prefix + "h for help"
-        activity = discord.Game(name=game)
-        await self.bot.change_presence(status=discord.Status.online, activity=activity)
+        await self.bot.change_presence(
+            status = discord.Status.online,
+            activity = discord.Activity(
+                type = discord.ActivityType.watching,
+                name = f"{self.bot.settings.prefix}h for help"
+            )
+        )
         # Bot logged in.
         print(f'Logged in as {self.bot.user}')
         print(f'I am in {len(self.bot.guilds)} guilds.')
