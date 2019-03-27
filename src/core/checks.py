@@ -76,4 +76,3 @@ class Checks:
                 raise NotInVoiceChannel
 
         return commands.check(predicate)
-

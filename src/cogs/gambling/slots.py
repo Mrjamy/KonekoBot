@@ -27,7 +27,7 @@ class Games(commands.Cog):
         mutation = bet * slotmachine._play_round()
         await self.currency_repository.update(ctx.author.id, ctx.guild.id, mutation)
 
-        # TODO: add emojoi\'s to the embed. 
+        # TODO: add emojoi\'s to the embed.
         embed = discord.Embed(title=f"You pulled the slots! \n {slotmachine.slots}",
                               color=discord.Color.dark_purple())
         await ctx.channel.send(embed=embed)
