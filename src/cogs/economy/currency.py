@@ -2,17 +2,18 @@ import discord
 from src.core.checks import Checks
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
-from src.helpers.database.models.currency_model import Currency as Model
+from src.helpers.database.repositories.currency_repository import CurrencyRepository
 from src.helpers.user.nick_helper import Name
 
 
 class Currency(commands.Cog):
     """Currency module."""
 
-    __slots__ = 'bot'
+    __slots__ = 'bot', 'currency_repository'
 
     def __init__(self, bot):
         self.bot = bot
+        self.currency_repository = CurrencyRepository()
 
     @commands.guild_only()
     @commands.command(aliases=['balance', 'neko'], pass_context=True)
@@ -24,7 +25,7 @@ class Currency(commands.Cog):
         else:
             user = ctx.author
 
-        balance = Model().get(user.id, ctx.guild.id)
+        balance = await self.currency_repository.get(user.id, ctx.guild.id)
 
         embed = discord.Embed(title=f'`{Name.nick_parser(user)}` has {balance.amount} <:neko:521458388513849344>',
                               color=discord.Color.green())
@@ -36,7 +37,7 @@ class Currency(commands.Cog):
     async def claim(self, ctx):
         """Claim your daily login reward."""
 
-        balance = Model().update(ctx.author.id, ctx.guild.id, +100)
+        balance = await self.currency_repository.update(ctx.author.id, ctx.guild.id, +100)
 
         embed = discord.Embed(title=f'`{Name.nick_parser(ctx.message.author)}` claimed their daily login reward your '
                                     f'new balance is {balance.amount}',
@@ -56,8 +57,8 @@ class Currency(commands.Cog):
             await ctx.channel.send(embed=embed)
             return
 
-        Model().update(ctx.author.id, ctx.guild.id, -amount)
-        Model().update(user.id, ctx.guild.id, +amount)
+        await self.currency_repository.update(ctx.author.id, ctx.guild.id, -amount)
+        await self.currency_repository.update(user.id, ctx.guild.id, +amount)
 
         embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} successfully transferred {amount} '
                                     f'<:neko:521458388513849344> to {Name.nick_parser(user)}.',
@@ -78,7 +79,7 @@ class Currency(commands.Cog):
             await ctx.channel.send(embed=embed)
             return
 
-        Model().update(user.id, ctx.guild.id, amount)
+        await self.currency_repository.update(user.id, ctx.guild.id, amount)
 
         embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} gave {amount} <:neko:521458388513849344> '
                                     f'to {Name.nick_parser(user)}',
@@ -99,7 +100,7 @@ class Currency(commands.Cog):
             await ctx.channel.send(embed=embed)
             return
 
-        Model().update(user.id, ctx.guild.id, amount)
+        await self.currency_repository.update(user.id, ctx.guild.id, amount)
 
         embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} <:neko:521458388513849344> '
                                     f'from {Name.nick_parser(user)}',
@@ -117,7 +118,7 @@ class Currency(commands.Cog):
         else:
             count = rank + 1
 
-        wealth = Model().get_all(ctx.guild.id, rank)
+        wealth = await self.currency_repository.get_all(ctx.guild.id, rank)
 
         embed = discord.Embed(title=f'{ctx.guild.name}\'s wealth overview:',
                               color=discord.Color.green())
