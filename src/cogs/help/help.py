@@ -62,7 +62,7 @@ def command_helper(command):
     """Displays a command and it's sub commands"""
 
     try:
-        cmd = [x for x in command.commands if not x.hidden] # retrieves commands that are not hidden
+        cmd = [x for x in command.commands if not x.hidden]  # retrieves commands that are not hidden
         cmds_ = []
         for i in list(chunks(list(cmd), 6)):
             embed = discord.Embed(color=discord.Color.dark_purple())
@@ -80,6 +80,7 @@ def command_helper(command):
         embed.set_author(name=command.signature)
         embed.description = command.help
         return [embed]
+
 
 # ?tag lazy paginator is a more refined/easier to read version of this paginator.
 async def paginate(ctx, input_):
