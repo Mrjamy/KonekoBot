@@ -1,0 +1,101 @@
+import random
+from datetime import datetime
+from src.helpers.database.models.level import Level
+
+
+class LevelRepository:
+    async def get(self, user_id: int, guild_id: int) -> Level:
+        """ Searches the database for a specific user, if not found one will be
+        created.
+        Parameters
+        ------------
+        user_id: int [Required]
+            The user's discord snowflake.
+        guild_id: int [required]
+            The guild the user is related to.
+        """
+        # Filter records on user_id && guild_id return 1.
+        level = await Level.filter(
+            snowflake=user_id,
+            guild=guild_id
+        ).first()
+
+        if level is None:
+            level = await self.insert(user_id, guild_id)
+        return level
+
+    async def get_all(self, guild_id: int, offset: int = 0) -> list:
+        """ Searches the database for the top 10 users based on level. the
+        parameter offset can be used to pick a custom starting point.
+        Parameters
+        ------------
+        guild_id: int [required]
+            The guild that will be filtered.
+        offset: int [optional]
+            Optional custom starting point for the scoreboard.
+        """
+        return await Level.filter(guild=guild_id) \
+        .order_by('experience') \
+        .limit(10) \
+        .offset(offset) \
+        .all()
+
+    async def add_xp(self, user_id: int, guild_id: int) -> Level:
+        """ Adds a random amount of experience to the user betweem 5 and 10.
+        Parameters
+        ------------
+        user_id: int [Required]
+            The user's discord snowflake.
+        guild_id: int [required]
+            The guild the user is related to.
+        """
+        def _cooldown():
+            return (datetime.now() - level.last_message).total_seconds() < 30
+
+        level = await self.get(user_id, guild_id)
+
+        if not _cooldown():
+            xp = level.experience + random.randint(5, 10)
+            await Level.filter(
+                snowflake=user_id,
+                guild=guild_id
+            ).first().update(
+                experience=xp,
+                last_message=datetime.now()
+            )
+            # Method .update() returns a NoneType so we need to aquire a new
+            # copy of the level object
+            level = await self.get(user_id, guild_id)
+
+        return level
+
+    async def insert(self, user_id: int, guild_id: int) -> Level:
+        # Insert a record.
+        return await Level.create(
+            snowflake = user_id,
+            guild = guild_id,
+            experience = 0,
+            level = 0
+        ).save()
+
+    async def levelup_check(self, user_id: int, guild_id: int) -> bool:
+        """ Check if the target user has passed the required amount to level up.
+        Parameters
+        ------------
+        user_id: int [Required]
+            The user's discord snowflake.
+        guild_id: int [required]
+            The guild the user is related to.
+        """
+        level = await self.get(user_id, guild_id)
+
+        experience = level.experience
+        lvl_start = level.level
+        lvl_end = int(experience ** (1 / 4))
+
+        up = False
+        if lvl_start < lvl_end:
+            await level.update(level=lvl_end)
+            up = True
+
+        return up
