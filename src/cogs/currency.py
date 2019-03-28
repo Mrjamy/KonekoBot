@@ -65,7 +65,7 @@ class Currency(commands.Cog):
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
-    @Checks.is_owner()
+    @commands.is_owner()
     @commands.guild_only()
     @commands.command(aliases=[], pass_context=True, hidden=True)
     async def give(self, ctx, user, amount: int):
@@ -86,7 +86,7 @@ class Currency(commands.Cog):
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
-    @Checks.is_owner()
+    @commands.is_owner()
     @commands.guild_only()
     @commands.command(aliases=[], pass_context=True, hidden=True)
     async def take(self, ctx, user, amount: int):

@@ -15,15 +15,6 @@ settings = Settings()
 
 class Checks:
     @staticmethod
-    def is_owner():
-        def predicate(ctx):
-            if ctx.author.id == settings.owner_id:
-                return True
-            else:
-                raise OwnerOnly
-        return commands.check(predicate)
-
-    @staticmethod
     def is_dev():
         def predicate(ctx):
             if ctx.author.id in settings.dev_ids:
