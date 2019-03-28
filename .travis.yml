@@ -19,12 +19,10 @@ install:
   - pip install -r requirements.txt
 
 before_script:
-  - cd src/core
-  - mkdir data
-  - cd data
-  - printf '' > level.sqlite
-  - printf '' > currency.sqlite
-  - cd ../../..
+  - PROJECT_ROOT=$(pwd)
+  - cd src/helpers/database
+  - printf '' > config.json
+  - cd $PROJECT_ROOT
 
 script:
   - python -m compileall ./KonekoBot.py
