@@ -13,13 +13,6 @@ class Utility(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @Checks.is_owner()
-    @commands.command(pass_context=True, hidden=True)
-    async def shutdown(self, ctx):
-        """Shuts the bot down."""
-
-        await ctx.channel.send(f"Don't kill me!")
-
     @commands.bot_has_permissions(embed_links=True)
     @commands.command(pass_context=True)
     async def stats(self, ctx):
