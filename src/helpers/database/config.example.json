@@ -5,8 +5,8 @@
             "credentials": {
                 "host": "localhost",
                 "port": "5432",
-                "user": "myusername",
-                "password": "mypassword",
+                "user": "postgres",
+                "password": "",
                 "database": "koneko"
             }
         }
