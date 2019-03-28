@@ -2,10 +2,8 @@ language: python
 
 dist: xenial
 
-addons:
-  apt:
-    sources:
-    packages:
+services:
+  - postgresql
 
 python:
   - 3.6-dev   # 3.6 development branch
@@ -19,9 +17,10 @@ install:
   - pip install -r requirements.txt
 
 before_script:
+  - psql -c 'create database koneko;' -U postgres
   - PROJECT_ROOT=$(pwd)
   - cd src/helpers/database
-  - printf '' > config.json
+  - cp config.example.json config.json
   - cd $PROJECT_ROOT
 
 script:
