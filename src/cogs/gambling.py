@@ -20,17 +20,6 @@ class Gambling(commands.Cog):
         self.bot = bot
         self.currency_repository = CurrencyRepository()
 
-    @Checks.is_owner()
-    @commands.guild_only()
-    @commands.command(aliases=[], pass_context=True)
-    async def choice(self, ctx, *choices):
-        """Choose from the given options split by \",\" """
-        result = random.choice(" ".join(choices).split(","))
-        if len(result) > 0:
-            await ctx.channel.send(result)
-        else:
-            await ctx.channel.send(f"I am unable to choose, please refer to `{ctx.prefix}help`")
-
     # TODO: add options to play blackjack.
 
     # TODO: add options to play roulette.

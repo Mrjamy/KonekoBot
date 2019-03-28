@@ -26,15 +26,6 @@ class Checks:
         return commands.check(predicate)
 
     @staticmethod
-    def is_nsfw_channel():
-        def predicate(ctx):
-            if not isinstance(ctx.channel, discord.DMChannel) and ctx.channel.is_nsfw():
-                return True
-            else:
-                raise NotNsfwChannel
-        return commands.check(predicate)
-
-    @staticmethod
     def has_permissions(**permissions):
         def predicate(ctx):
             if all(getattr(ctx.channel.permissions_for(ctx.author), name, None) == value for name, value in

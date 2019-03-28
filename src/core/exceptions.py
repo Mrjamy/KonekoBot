@@ -13,10 +13,6 @@ class DjOnly(commands.CommandError):
     pass
 
 
-class NotNsfwChannel(commands.CommandError):
-    pass
-
-
 class NoPermission(commands.CommandError):
     pass
 
