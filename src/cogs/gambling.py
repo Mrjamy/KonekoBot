@@ -1,16 +1,20 @@
+# Builtins
 import random
 import asyncio
+
+# Pip
+import discord
 from discord.ext import commands
+
+# Locals
 from src.core.checks import Checks
-from src.helpers.user.nick_helper import Name
-from src.helpers.games.slotmachine import SlotMachine
-from src.helpers.database.repositories.currency_repository import CurrencyRepository
 from src.core.exceptions import NotEnoughBalance
+from src.helpers.database.repositories.currency_repository import CurrencyRepository
+from src.helpers.games.slotmachine import Slots
+from src.helpers.user.nick_helper import Name
 
 
 # TODO: add the option to place a bet of :neko: on the following commands
-
-
 class Gambling(commands.Cog):
     """Gambling commands."""
 
@@ -79,9 +83,11 @@ class Gambling(commands.Cog):
         if not 0 <= bet <= balance.amount:
             raise NotEnoughBalance
 
-        slotmachine = SlotMachine()
+        mutation = -bet
+        slotmachine = Slots(bet=bet)
+        slotmachine._play_round()
+        mutation += bet * slotmachine.win
 
-        mutation = bet * slotmachine._play_round()
         await self.currency_repository.update(ctx.author.id, ctx.guild.id, mutation)
 
         # TODO: add emojoi\'s to the embed.
@@ -89,7 +95,7 @@ class Gambling(commands.Cog):
                               color=discord.Color.dark_purple())
         await ctx.channel.send(embed=embed)
 
-        embed = discord.Embed(title=f"Your bet {bet}, {slotmachine.message}",
+        embed = discord.Embed(title=f"Your bet {bet}, {slotmachine.msg}",
                               color=discord.Color.dark_purple())
         await ctx.channel.send(embed=embed)
 
