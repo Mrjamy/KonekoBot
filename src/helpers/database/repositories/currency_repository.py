@@ -46,13 +46,14 @@ class CurrencyRepository:
         guild_id: int [required]
             The guild the user is related to.
         """
-        def check():
-            if not bool(self.get(user_id, guild_id).amount >= amount):
+        async def check():
+            balance = await self.get(user_id, guild_id)
+            if not bool(balance.amount >= amount):
                 raise NotEnoughBalance
 
         # Check if a user has the funds to proceed
         if amount < 0:
-            check()
+            await check()
 
         currency = await self.get(user_id, guild_id)
 
