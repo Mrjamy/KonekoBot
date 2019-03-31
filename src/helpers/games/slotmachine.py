@@ -1,68 +1,56 @@
+import os
 import random
 import time
-import os
-from enum import Enum
+from collections import namedtuple, Counter
 
 
-class SlotMachine:
+Fruit = namedtuple('Fruit', ['name', 'weight', 'reward', 'pos'])
 
-    __slots__ = 'current_stake', 'current_jackpot', 'message', 'slots', 'bet'
 
-    class Reel(Enum):
-        CHERRY = 1
-        LEMON = 2
-        ORANGE = 3
-        PLUM = 4
-        BELL = 5
-        BAR = 6
-        SEVEN = 7
+class Slots:
 
-    _values = list(Reel)
-    payout = {
-        Reel.CHERRY: 7,
-        Reel.LEMON: 7,
-        Reel.ORANGE: 10,
-        Reel.PLUM: 14,
-        Reel.BELL: 20,
-        Reel.BAR: 250,
-        Reel.SEVEN: 'jackpot'
-    }
+    __slots__ = 'slots', 'bet', 'fruits', 'msg', 'win'
 
-    def __init__(self, bet=10):
+    def __init__(self, bet: int = 10):
         self.bet = bet
-        self.current_jackpot = 1000  # TODO: get jackpot from cache or DB
+        self.fruits = [
+            Fruit(name='apple', weight=10000, reward=1, pos=0),
+            Fruit(name='banana', weight=7000, reward=1.5, pos=1),
+            Fruit(name='lemon', weight=5000, reward=2, pos=2),
+            Fruit(name='grapes', weight=4000, reward=4, pos=3),
+            Fruit(name='cherries', weight=3000, reward=6, pos=4),
+            Fruit(name='bell', weight=2000, reward=10, pos=5),
+            Fruit(name='seven', weight=500, reward=100, pos=6),
+        ]
 
     def _play_round(self):
-        first, second, third = random.choice(SlotMachine._values), random.choice(SlotMachine._values), random.choice(SlotMachine._values)
-        return self._adjust_score(first, second, third)
+        weights = [fruit.weight for fruit in self.fruits]
+        selected_fruits = random.choices(self.fruits, k=3, weights=weights)
+        fruit_a, fruit_b, fruit_c = selected_fruits
+        self.slots = f":{self.fruits[fruit_a.pos].name}: :{self.fruits[fruit_b.pos].name}: :{self.fruits[fruit_c.pos].name}:"
+        return self._pay_out(selected_fruits)
 
-    def _adjust_score(self, first, second, third):
-        if first == SlotMachine.Reel.CHERRY:
-            if second == SlotMachine.Reel.CHERRY:
-                win = 7 if third == SlotMachine.Reel.CHERRY else 5
-            else:
-                win = 2
+    def _pay_out(self, fruits: list):
+        most_common, count = (Counter(fruits).most_common(n=1)[0])
+        if count == 1:
+            self.win = 0
+            self.msg = f"You lost {self.bet} <:neko:521458388513849344>"
+        elif count == 2:
+            self.win = (self.bet * most_common.reward) / 5
+            self.msg = f"You won {self.bet * self.win} <:neko:521458388513849344>"
         else:
-            if first == second == third:
-                win = SlotMachine.payout[first]
-                win = self.current_jackpot if win == 'jackpot' else win
-            else:
-                win = -1
-
-        if win == self.current_jackpot:
-            self.message = "You won the JACKPOT!!"
-        else:
-            self.message = "You {} <:neko:521458388513849344>".format(f"won {win * self.bet}" if win > 0 else f"lost {self.bet}")
-            self.current_jackpot -= win
-        self.slots = '\t'.join(map(lambda x: x.name.center(6), (first, second, third)))
-
-        return win
+            self.win = self.bet * most_common.reward
+            self.msg = f"You won {self.bet * self.win} <:neko:521458388513849344>"
 
     def play(self, credit: int, bet: int = 1):
-        credit += bet * self._play_round()
+        slotmachine = Slots(bet=bet)
 
-        print(self.slots)
-        print(self.message)
+        credit -= bet
+        slotMachine._play_round()
+        credit += bet * slotmachine.win
+
+        print(slotmachine.slots)
+        print(slotmachine.msg)
         print(f"credit is {credit}")
 
 
