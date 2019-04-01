@@ -3,14 +3,14 @@
 # Builtins
 import time
 import traceback
+import asyncio
 
 # Pip
-import asyncio
 import configparser
 import discord
+from discord.ext import commands
 
 # Locals
-from discord.ext import commands
 from src.core.config import Settings
 from src.helpers.database.db import run
 
