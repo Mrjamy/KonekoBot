@@ -23,7 +23,7 @@ def helper(ctx):
             embed.set_author(name=f"{i} Commands ({len(cmd_)})")
             embed.description = ctx.bot.cogs[i].__doc__
             for y in x:
-                embed.add_field(name=y.signature, value=y.help, inline=False)
+                embed.add_field(name=f"{y.name} {y.signature}" , value=y.help, inline=False)
             cmds_.append(embed)
 
         for n, a in enumerate(cmds_):
@@ -49,7 +49,7 @@ def cog_helper(cog):
         embed.set_author(name=name)
         embed.description = cog.__doc__
         for x in i:
-            embed.add_field(name=x.signature, value=x.help, inline=False)
+            embed.add_field(name=f"{x.name} {x.signature}", value=x.help, inline=False)
         cmds_.append(embed)
 
     for n, a in enumerate(cmds_):
@@ -69,15 +69,15 @@ def command_helper(command):
             embed.set_author(name=command.signature)
             embed.description = command.help
             for x in i:
-                embed.add_field(name=x.signature, value=x.help, inline=False)
+                embed.add_field(name=f"{x.name} {x.signature}", value=x.help, inline=False)
             cmds_.append(embed)
 
         for n, x in enumerate(cmds_):
             x.set_footer(text=f"Page {n+1} of {len(cmds_)}")
         return cmds_
     except AttributeError:
-        embed = discord.Embed(color=discord.Color.red())
-        embed.set_author(name=command.signature)
+        embed = discord.Embed(color=discord.Color.dark_purple())
+        embed.set_author(name=f"{command.name} {command.signature}")
         embed.description = command.help
         return [embed]
 
@@ -196,6 +196,7 @@ class Help(commands.Cog):
 
     @commands.command(hidden=True)
     async def help(self, ctx, *, command=None):
+        # TODO: display aliases too
         if not command:
             await paginate(ctx, helper(ctx))
 
