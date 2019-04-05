@@ -16,7 +16,7 @@ class Currency(commands.Cog):
         self.currency_repository = CurrencyRepository()
 
     @commands.guild_only()
-    @commands.command(aliases=['balance', 'neko'], pass_context=True)
+    @commands.command(aliases=['balance', 'neko'])
     async def coins(self, ctx, user=None):
         """Get your total balance."""
 
@@ -33,7 +33,7 @@ class Currency(commands.Cog):
 
     @commands.cooldown(1, 60 * 60 * 20, BucketType.member)
     @commands.guild_only()
-    @commands.command(aliases=['login', 'daily'], pass_context=True)
+    @commands.command(aliases=['login', 'daily'])
     async def claim(self, ctx):
         """Claim your daily login reward."""
 
@@ -45,7 +45,7 @@ class Currency(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(aliases=[], pass_context=True)
+    @commands.command()
     async def transfer(self, ctx, user, amount: int):
         """Transfers an amount of coins to a user."""
 
@@ -67,7 +67,7 @@ class Currency(commands.Cog):
 
     @commands.is_owner()
     @commands.guild_only()
-    @commands.command(aliases=[], pass_context=True, hidden=True)
+    @commands.command(hidden=True)
     async def give(self, ctx, user, amount: int):
         """Give a certain amount of currency to a user."""
 
@@ -88,7 +88,7 @@ class Currency(commands.Cog):
 
     @commands.is_owner()
     @commands.guild_only()
-    @commands.command(aliases=[], pass_context=True, hidden=True)
+    @commands.command(hidden=True)
     async def take(self, ctx, user, amount: int):
         """Take a certain amount of currency from a user."""
 
@@ -108,7 +108,7 @@ class Currency(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(aliases=['fortune'], pass_context=True)
+    @commands.command(aliases=['fortune'])
     async def wealth(self, ctx, rank: int = 1):
         """Shows the server's wealth."""
         rank -= 1

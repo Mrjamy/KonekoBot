@@ -11,13 +11,13 @@ class CleverBot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(aliases=[], pass_context=True)
+    @commands.group(aliases=[])
     async def clever_bot(self, ctx):
 
         if ctx.invoked_subcommand is None:
             await ctx.channel.send("pass an action!")
 
-    @clever_bot.command(name="start", pass_context=True)
+    @clever_bot.command(name="start")
     async def start_session(self, ctx):
         """Command description."""
 

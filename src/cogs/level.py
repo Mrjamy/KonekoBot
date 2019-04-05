@@ -15,7 +15,7 @@ class Level(commands.Cog):
 
     # TODO: send a fancy card then responding.
     @commands.guild_only()
-    @commands.command(aliases=['xp', 'exp', 'experience'], pass_context=True)
+    @commands.command(aliases=['xp', 'exp', 'experience'])
     async def level(self, ctx, user=None):
         """Shows your xp stats."""
 
@@ -37,7 +37,7 @@ class Level(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(aliases=['score', 'levels'], pass_context=True)
+    @commands.command(aliases=['score', 'levels'])
     async def scoreboard(self, ctx, rank: int = 1):
         """Shows the server's scoreboard."""
         rank -= 1
