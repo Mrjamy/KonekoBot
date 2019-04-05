@@ -75,7 +75,7 @@ class Gambling(commands.Cog):
             await self.currency_repository.update(ctx.author.id, ctx.guild.id, -amount)
             await ctx.channel.send('Unfortunately you lost :(')
 
-    @commands.command(aliases=[])
+    @commands.command()
     async def slots(self, ctx, bet: int = 10):
         """Play a game of slots."""
         balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)
