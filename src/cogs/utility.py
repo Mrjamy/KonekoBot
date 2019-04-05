@@ -14,7 +14,7 @@ class Utility(commands.Cog):
         self.bot = bot
 
     @commands.bot_has_permissions(embed_links=True)
-    @commands.command(pass_context=True)
+    @commands.command()
     async def stats(self, ctx):
         """Returns current statistics of the bot."""
 
