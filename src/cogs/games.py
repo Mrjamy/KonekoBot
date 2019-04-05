@@ -11,7 +11,7 @@ class Games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=[])
+    @commands.command()
     async def rps(self, ctx, choice: str):
         """Play a game of rock paper scissors."""
         player = choice.lower()

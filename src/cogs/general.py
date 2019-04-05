@@ -14,7 +14,7 @@ class General(commands.Cog):
         self.bot = bot
 
     # Command hello, listen to /hello
-    @commands.command(aliases=[])
+    @commands.command()
     async def hello(self, ctx):
         """A simple greeting!"""
         # Get a random greeting.
@@ -34,7 +34,7 @@ class General(commands.Cog):
         await ctx.channel.send(latency)
 
     # Command hug, listen to /hug
-    @commands.command(aliases=[])
+    @commands.command()
     async def hug(self, ctx):
         """Mention a user to hug them!"""
         # TODO: async
@@ -105,7 +105,7 @@ class General(commands.Cog):
             await ctx.channel.send(f'I could not perform this task :sob:')
 
     # Command kiss, listen to /kiss
-    @commands.command(aliases=[])
+    @commands.command()
     async def kiss(self, ctx):
         """Mention a user to kiss them!"""
         # TODO: async
@@ -138,7 +138,7 @@ class General(commands.Cog):
             await ctx.channel.send(f'I could not perform this task :sob:')
 
     # Command slap, listen to /slap
-    @commands.command(aliases=[])
+    @commands.command()
     async def slap(self, ctx):
         """Mention a user to slap them!"""
         # TODO: async

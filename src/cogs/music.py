@@ -253,7 +253,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='pause', aliases=[])
+    @commands.command(name='pause')
     async def pause_(self, ctx):
         """Pause the currently playing song."""
         vc = ctx.voice_client
@@ -273,7 +273,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='resume', aliases=[])
+    @commands.command(name='resume')
     async def resume_(self, ctx):
         """Resume the currently paused song."""
         vc = ctx.voice_client
@@ -293,7 +293,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='skip', aliases=[])
+    @commands.command(name='skip')
     async def skip_(self, ctx):
         """Skip the song."""
         vc = ctx.voice_client
@@ -404,7 +404,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='stop', aliases=[])
+    @commands.command(name='stop')
     async def stop_(self, ctx):
         """Stop the currently playing song.
         !Warning!
