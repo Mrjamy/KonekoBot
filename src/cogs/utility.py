@@ -38,10 +38,6 @@ class Utility(commands.Cog):
 
     # TODO: add command /remind <message>
 
-    # TODO: add command to change presense
-        # (ab)use ctx.invoked_with
-        # /playing /streaming /watching <description>
-
 
 def setup(bot):
     bot.add_cog(Utility(bot))

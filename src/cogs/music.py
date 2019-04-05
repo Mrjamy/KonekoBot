@@ -7,8 +7,9 @@ from discord.ext import commands
 from youtube_dl import YoutubeDL
 from .helpers.exceptions import VoiceConnectionError, InvalidVoiceChannel
 
-# TODO: Fully implement checks.
-# TODO: Customizable role for is_dj() check.
+# TODO: Checkout lavalink
+# TODO: v1.1 Fully implement checks.
+# TODO: v1.1 Customizable role for is_dj() check.
 from src.core.checks import Checks
 
 
