@@ -5,6 +5,7 @@ from src.helpers.random.image_generator import ImageGenerator
 from src.helpers.user.nick_helper import Name
 
 
+# TODO: v1.1 refactor misc commands in one. parse ctx.invoked_with as image tag
 class General(commands.Cog):
     """General commands."""
 
@@ -37,7 +38,7 @@ class General(commands.Cog):
     @commands.command()
     async def hug(self, ctx):
         """Mention a user to hug them!"""
-        # TODO: async
+        # TODO: v1.1 async
         image = ImageGenerator(tag='hug').to_image()
 
         # TODO: add catch for self mentions
@@ -72,7 +73,7 @@ class General(commands.Cog):
     @commands.command(aliases=["headpat"])
     async def pat(self, ctx):
         """Mention a user to pat them!"""
-        # TODO: async
+        # TODO: v1.1 async
         image = ImageGenerator(tag='pat').to_image()
 
         # TODO: add catch for self mentions
@@ -108,7 +109,7 @@ class General(commands.Cog):
     @commands.command()
     async def kiss(self, ctx):
         """Mention a user to kiss them!"""
-        # TODO: async
+        # TODO: v1.1 async
         image = ImageGenerator(tag='kiss').to_image()
 
         # TODO: add catch for self mentions
@@ -141,7 +142,7 @@ class General(commands.Cog):
     @commands.command()
     async def slap(self, ctx):
         """Mention a user to slap them!"""
-        # TODO: async
+        # TODO: v1.1 async
         image = ImageGenerator(tag='slap').to_image()
 
         # TODO: add catch for self mentions
@@ -172,8 +173,8 @@ class General(commands.Cog):
         else:
             await ctx.channel.send(f'I could not perform this task :sob:')
 
-    # TODO: add command /lewd
-    # TODO: add command /beer <user>
+    # TODO: v1.1 add command /lewd
+    # TODO: v1.1 add command /beer <user>
 
 
 def setup(bot):
