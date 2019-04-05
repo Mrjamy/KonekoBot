@@ -40,8 +40,8 @@ class Checks:
             elif commands.is_owner():
                 return True
             else:
-                # TODO: Add option to set the DJ role to any existing role.
-                # TODO: Store this setting in a database.
+                # TODO: v1.1 Add option to set the DJ role to any existing role.
+                # TODO: v1.1 Store this setting in a database.
                 # ctx.send("This command requires you to have the role DJ")
                 raise DjOnly
         return commands.check(predicate)

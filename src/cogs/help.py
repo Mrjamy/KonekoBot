@@ -23,7 +23,7 @@ def helper(ctx):
             embed.set_author(name=f"{i} Commands ({len(cmd_)})")
             embed.description = ctx.bot.cogs[i].__doc__
             for y in x:
-                embed.add_field(name=f"{y.name} {y.signature}" , value=y.help, inline=False)
+                embed.add_field(name=f"{y.name} {y.signature}", value=y.help, inline=False)
             cmds_.append(embed)
 
         for n, a in enumerate(cmds_):
@@ -196,7 +196,7 @@ class Help(commands.Cog):
 
     @commands.command(hidden=True)
     async def help(self, ctx, *, command=None):
-        # TODO: display aliases too
+        # TODO: v1.1 display aliases too
         if not command:
             await paginate(ctx, helper(ctx))
 
