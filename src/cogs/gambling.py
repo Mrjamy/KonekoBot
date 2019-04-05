@@ -31,7 +31,7 @@ class Gambling(commands.Cog):
     # TODO: add options to play russian roulette.
 
     @commands.guild_only()
-    @commands.command(aliases=['flip', 'toss'], pass_context=True)
+    @commands.command(aliases=['flip', 'toss'])
     async def coinflip(self, ctx, choice: str = None):
         """Tosses a coin."""
         async def result():
@@ -59,7 +59,7 @@ class Gambling(commands.Cog):
         await result()
 
     @commands.guild_only()
-    @commands.command(aliases=["bet"], pass_context=True)
+    @commands.command(aliases=["bet"])
     async def gamble(self, ctx, amount: int = 100):
         """Gambles an amount of :nekko:."""
 
@@ -75,7 +75,7 @@ class Gambling(commands.Cog):
             await self.currency_repository.update(ctx.author.id, ctx.guild.id, -amount)
             await ctx.channel.send('Unfortunately you lost :(')
 
-    @commands.command(aliases=[], pass_context=True)
+    @commands.command(aliases=[])
     async def slots(self, ctx, bet: int = 10):
         """Play a game of slots."""
         balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)

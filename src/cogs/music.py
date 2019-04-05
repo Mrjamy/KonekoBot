@@ -193,7 +193,7 @@ class Music(commands.Cog):
 
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='connect', aliases=['join'], pass_context=True)
+    @commands.command(name='connect', aliases=['join'])
     async def connect_(self, ctx):
         """Connect to voice."""
 
@@ -225,7 +225,7 @@ class Music(commands.Cog):
 
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='play', aliases=['sing'], pass_context=True)
+    @commands.command(name='play', aliases=['sing'])
     async def play_(self, ctx, *, search: str):
         """Request a song and add it to the queue.
         This command attempts to join a valid voice channel if the bot is not already in one.
@@ -253,7 +253,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='pause', aliases=[], pass_context=True)
+    @commands.command(name='pause', aliases=[])
     async def pause_(self, ctx):
         """Pause the currently playing song."""
         vc = ctx.voice_client
@@ -273,7 +273,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='resume', aliases=[], pass_context=True)
+    @commands.command(name='resume', aliases=[])
     async def resume_(self, ctx):
         """Resume the currently paused song."""
         vc = ctx.voice_client
@@ -293,7 +293,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='skip', aliases=[], pass_context=True)
+    @commands.command(name='skip', aliases=[])
     async def skip_(self, ctx):
         """Skip the song."""
         vc = ctx.voice_client
@@ -314,7 +314,7 @@ class Music(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(name='queue', aliases=['q', 'playlist'], pass_context=True)
+    @commands.command(name='queue', aliases=['q', 'playlist'])
     async def queue_info(self, ctx):
         """Retrieve a basic queue of upcoming songs."""
         vc = ctx.voice_client
@@ -341,7 +341,7 @@ class Music(commands.Cog):
         return await ctx.channel.send(embed=embed)
 
     @commands.guild_only()
-    @commands.command(name='now_playing', aliases=['np', 'current', 'currentsong', 'playing'], pass_context=True)
+    @commands.command(name='now_playing', aliases=['np', 'current', 'currentsong', 'playing'])
     async def now_playing_(self, ctx):
         """Display information about the currently playing song."""
         vc = ctx.voice_client
@@ -371,7 +371,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='volume', aliases=['vol'], pass_context=True)
+    @commands.command(name='volume', aliases=['vol'])
     async def change_volume(self, ctx, *, volume: float):
         """Change the player volume.
         Parameters
@@ -404,7 +404,7 @@ class Music(commands.Cog):
     # @Checks.is_dj()
     @Checks.is_connected_voice()
     @commands.guild_only()
-    @commands.command(name='stop', aliases=[], pass_context=True)
+    @commands.command(name='stop', aliases=[])
     async def stop_(self, ctx):
         """Stop the currently playing song.
         !Warning!
