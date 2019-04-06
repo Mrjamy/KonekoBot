@@ -1,8 +1,10 @@
+# Pip
 import discord
 from discord.ext import commands
+
+# Locals
 from src.core.config import Settings
 from src.core.exceptions import (
-    OwnerOnly,
     DevOnly,
     NoPermission,
     DjOnly,

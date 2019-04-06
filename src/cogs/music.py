@@ -1,12 +1,16 @@
+# Builtins
 import asyncio
 import itertools
 from async_timeout import timeout
 from functools import partial
+
+# Pip
 import discord
 from discord.ext import commands
 from youtube_dl import YoutubeDL
-from .helpers.exceptions import VoiceConnectionError, InvalidVoiceChannel
 
+# Locals
+from .helpers.exceptions import VoiceConnectionError, InvalidVoiceChannel
 # TODO: Checkout lavalink
 # TODO: v1.1 Fully implement checks.
 # TODO: v1.1 Customizable role for is_dj() check.

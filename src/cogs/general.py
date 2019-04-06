@@ -1,6 +1,8 @@
+# Pip
 import discord
 from discord.ext import commands
-from src.helpers.random.text_generator import TextGenerator
+
+# Locals
 from src.helpers.random.image_generator import ImageGenerator
 from src.helpers.user.nick_helper import Name
 
@@ -13,17 +15,6 @@ class General(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-
-    # Command hello, listen to /hello
-    @commands.command()
-    async def hello(self, ctx):
-        """A simple greeting!"""
-        # Get a random greeting.
-
-        r = TextGenerator('greet_phrases').to_str()
-
-        message = f'{r} {Name.nick_parser(ctx.message.author)}'
-        await ctx.channel.send(message)
 
     # Command ping, listen to /ping
     @commands.command(aliases=["pong"])

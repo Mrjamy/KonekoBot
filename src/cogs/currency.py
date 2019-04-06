@@ -1,7 +1,10 @@
+# Pip
 import discord
-from src.core.checks import Checks
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
+
+# Locals
+from src.core.checks import Checks
 from src.helpers.database.repositories.currency_repository import CurrencyRepository
 from src.helpers.user.nick_helper import Name
 

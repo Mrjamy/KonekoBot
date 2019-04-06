@@ -1,6 +1,10 @@
 # Credit to https://github.com/OneEyedKnight
-import discord
+
+# Builtins
 import asyncio
+
+# Pip
+import discord
 from discord.ext import commands
 
 

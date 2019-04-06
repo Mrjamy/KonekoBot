@@ -1,7 +1,8 @@
+# Builtins
 import os
 import random
 import time
-from collections import namedtuple, Counter
+from collections import Counter, namedtuple
 
 
 Fruit = namedtuple('Fruit', ['name', 'weight', 'reward', 'pos'])
