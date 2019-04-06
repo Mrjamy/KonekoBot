@@ -17,15 +17,13 @@ For a full list of all the commands refer to the [command list](docs/commands.md
 
 ## Installation
 
-The installation process is straightforward; all major platforms are supported: 
-* [Windows](docs/installing-windows.md)
-* [Linux](docs/installing-linux.md)
-* [macOS](docs/installing-macos.md) - Coming soon. 
+Just invite me using [this](https://discordapp.com/oauth2/authorize?client_id=502913609458909194&scope=bot&permissions=3427328) link!
+
+In case you insist on running your own copy check the notes under the [docs](docs/installing) (outdated)
 
 ## About me
 
-I am still in beta and new commands are being added on a daily base! 
-
+I am still in beta and new commands are being added on a daily base!
 
 ## Questions?
 
