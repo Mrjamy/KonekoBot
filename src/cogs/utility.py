@@ -1,7 +1,12 @@
-import time
+# Builtins
+from time import time
 from datetime import datetime, timedelta
+
+# Pip
 import discord
 from discord.ext import commands
+
+# Locals
 from src.core.checks import Checks
 
 
@@ -18,7 +23,7 @@ class Utility(commands.Cog):
     async def stats(self, ctx):
         """Returns current statistics of the bot."""
 
-        seconds = round(time.time() - self.bot.uptime)
+        seconds = round(time() - self.bot.uptime)
 
         sec = timedelta(seconds=seconds)
         d = datetime(1, 1, 1) + sec

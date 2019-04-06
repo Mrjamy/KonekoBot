@@ -1,5 +1,8 @@
+# Pip
 import discord
 from discord.ext import commands
+
+# Locals
 from src.helpers.database.repositories.level_repository import LevelRepository
 from src.helpers.user.nick_helper import Name
 

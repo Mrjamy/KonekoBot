@@ -1,8 +1,5 @@
+# Pip
 from discord.ext import commands
-
-
-class OwnerOnly(commands.CommandError):
-    pass
 
 
 class DevOnly(commands.CommandError):

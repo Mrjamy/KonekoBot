@@ -1,6 +1,9 @@
+# Pip
 import discord
 from rolldice import *
 from discord.ext import commands
+
+# Locals
 from src.helpers.user.nick_helper import Name
 
 
