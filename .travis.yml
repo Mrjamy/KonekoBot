@@ -14,9 +14,11 @@ python:
   - 3.8
 
 install:
+  # Install required libraries.
   - pip install -r requirements.txt
 
 before_script:
+  # Create a postgres database.
   - psql -c 'create database koneko;' -U postgres
   - PROJECT_ROOT=$(pwd)
   - cd src/helpers/database
@@ -24,11 +26,13 @@ before_script:
   - cd $PROJECT_ROOT
 
 script:
+  # Lint all files.
   - python -m compileall ./KonekoBot.py
   - python -m compileall ./src/core
   - python -m compileall ./src/cogs
   - python -m compileall ./src/helpers
 
+  # Force a boot.
   - python KonekoBot.py -d 1
 
 matrix:

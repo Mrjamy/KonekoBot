@@ -1,6 +1,8 @@
+# Pip
 import discord
 from discord.ext import commands
 
+# Locals
 from src.core.checks import Checks
 
 

@@ -1,3 +1,4 @@
+# Locals
 from src.core.exceptions import NotEnoughBalance
 from src.helpers.database.models.currency import Currency
 

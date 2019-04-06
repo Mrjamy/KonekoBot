@@ -1,4 +1,7 @@
+# Builtins
 import random
+
+# Pip
 import discord
 from discord.ext import commands
 

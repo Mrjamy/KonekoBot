@@ -1,13 +1,18 @@
+# Builtins
 import sys
 import traceback
+from datetime import datetime, timedelta
+
+# Pip
 import discord
 from discord.ext import commands
+
+# locals
 from src.core.exceptions import (
     DjOnly,
-    NotInVoiceChannel
+    NotInVoiceChannel,
+    NotEnoughBalance
 )
-from datetime import datetime, timedelta
-from src.core.exceptions import NotEnoughBalance
 
 
 class ErrorHandler(commands.Cog):

@@ -19,19 +19,15 @@ loop = asyncio.get_event_loop()
 settings = Settings()
 config = configparser.ConfigParser()
 config.read('config.ini')
-# TODO : Add a logger to the bot.
+# TODO : v1.1 Add a logger to the bot.
 
 
 class Bot(commands.AutoShardedBot):
     # Create an AutoSharded bot.
     def __init__(self):
         super().__init__(
-            # Customizable when running the bot using the "-c" or
-            # "--command-prefix" option.
+            # TODO : v1.1 allow different prefix on guilds.
             command_prefix=commands.when_mentioned_or(settings.prefix),
-            # Customizable when running the bot using the "-p" or "--pm-help"
-            # option.
-            pm_help=settings.pm_help,
             owner_id=settings.owner_id,
         )
         self.uptime = time.time()
@@ -40,6 +36,8 @@ class Bot(commands.AutoShardedBot):
         self.settings = settings
         self.db = loop.run_until_complete(run())
 
+    # TODO : v1.1 create a run function to call in __main__
+    
 
 if __name__ == '__main__':
     KonekoBot = Bot()
@@ -51,6 +49,7 @@ if __name__ == '__main__':
             KonekoBot.load_extension(f"src.core.{cog}")
     except ImportError as error:
         traceback.print_exc()
+        exit(1)
 
     # Dry run option for travis.
     if KonekoBot.dry_run is True:
