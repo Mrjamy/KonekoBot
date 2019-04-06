@@ -36,7 +36,16 @@ class Koneko(commands.AutoShardedBot):
         self.settings = settings
         self.db = loop.run_until_complete(run())
 
-    # TODO : v1.1 create a run function to call in __main__
+    async def on_message(self, message: discord.Message):
+        if message.author.bot:
+            return
+        if self.user in message.mentions:
+            try:
+                await message.add_reaction("\N{EYES}")
+            except discord.HTTPException:
+                pass
+        await self.process_commands(message)
+
     async def start(self, token):
         await self.login(token, bot=True)
         await self.connect(reconnect=True)
