@@ -22,7 +22,7 @@ config.read('config.ini')
 # TODO : v1.1 Add a logger to the bot.
 
 
-class Bot(commands.AutoShardedBot):
+class Koneko(commands.AutoShardedBot):
     # Create an AutoSharded bot.
     def __init__(self):
         super().__init__(
@@ -37,10 +37,24 @@ class Bot(commands.AutoShardedBot):
         self.db = loop.run_until_complete(run())
 
     # TODO : v1.1 create a run function to call in __main__
-    
+    async def start(self, token):
+        await self.login(token, bot=True)
+        await self.connect(reconnect=True)
+
+    async def logout(self):
+        await super().logout()
+        exit(0)
+
+    def run(self):
+        loop = self.loop
+        try:
+            loop.run_until_complete(self.start(config.get('Koneko', 'token')))
+        except KeyboardInterrupt:
+            loop.run_until_complete(self.logout())
+
 
 if __name__ == '__main__':
-    KonekoBot = Bot()
+    KonekoBot = Koneko()
 
     try:
         for cog in KonekoBot.settings.toggle_extensions:
@@ -57,13 +71,4 @@ if __name__ == '__main__':
         exit(0)
 
     print("Logging into Discord...")
-    KonekoBot.run(config.get('Koneko', 'token'))
-    try:
-        loop.run_until_complete(KonekoBot)
-    except discord.LoginFailure:
-        print("Could not login.")
-    except Exception as e:
-        loop.run_until_complete(KonekoBot.close())
-    finally:
-        loop.close()
-        exit(1)
+    KonekoBot.run()
