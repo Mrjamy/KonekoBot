@@ -10,7 +10,7 @@ __pycache__/
 # Configuration
 *.ini
 !config.example.ini
-src/helpers/database/config\.json
+src/utils/database/config\.json
 
 # Temp files
 src/core/images/tmp/

@@ -6,11 +6,10 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.helpers.random.image_provider import ImageProvider
-from src.helpers.user.nick_helper import Name
+from src.utils.random.image_provider import ImageProvider
+from src.utils.user.nick_helper import Name
 
 
-# TODO: v1.1 refactor misc commands in one. parse ctx.invoked_with as image tag
 class General(commands.Cog):
     """General commands."""
 
@@ -28,10 +27,8 @@ class General(commands.Cog):
         # Send it to the user
         await ctx.channel.send(latency)
 
-    # Command hug, listen to /hug
     @commands.command(aliases=["pat", "kiss", "slap", "lewd"])
     async def hug(self, ctx, users: commands.Greedy[discord.Member]):
-        """Mention a user to hug them!"""
         provider = ImageProvider()
 
         url = provider.image(query=ctx.invoked_with)
@@ -40,7 +37,7 @@ class General(commands.Cog):
         mentions = ' '.join([f'{Name.nick_parser(user)}' for user in users])
 
 
-        with open('src/cogs/helpers/sentences.json') as f:
+        with open('src/cogs/utils/sentences.json') as f:
             data = json.load(f)
             if any(u.id in [502913609458909194, 533653653362311188] for u in users):
                 message = data[ctx.invoked_with]['koneko'].format(Name.nick_parser(ctx.message.author),)

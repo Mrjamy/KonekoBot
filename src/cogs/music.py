@@ -10,7 +10,7 @@ from discord.ext import commands
 from youtube_dl import YoutubeDL
 
 # Locals
-from .helpers.exceptions import VoiceConnectionError, InvalidVoiceChannel
+from .utils.exceptions import VoiceConnectionError, InvalidVoiceChannel
 # TODO: Checkout lavalink
 # TODO: v1.1 Fully implement checks.
 # TODO: v1.1 Customizable role for is_dj() check.
