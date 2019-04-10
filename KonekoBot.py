@@ -12,7 +12,7 @@ from discord.ext import commands
 
 # Locals
 from src.core.config import Settings
-from src.helpers.database.db import run
+from src.utils.database.db import run
 
 
 loop = asyncio.get_event_loop()

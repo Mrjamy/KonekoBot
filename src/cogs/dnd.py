@@ -4,7 +4,7 @@ from rolldice import *
 from discord.ext import commands
 
 # Locals
-from src.helpers.user.nick_helper import Name
+from src.utils.user.nick_helper import Name
 
 
 # TODO: add a dungeon/dnd based game.

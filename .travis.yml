@@ -21,7 +21,7 @@ before_script:
   # Create a postgres database.
   - psql -c 'create database koneko;' -U postgres
   - PROJECT_ROOT=$(pwd)
-  - cd src/helpers/database
+  - cd src/utils/database
   - cp config.example.json config.json
   - cd $PROJECT_ROOT
 
@@ -30,7 +30,7 @@ script:
   - python -m compileall ./KonekoBot.py
   - python -m compileall ./src/core
   - python -m compileall ./src/cogs
-  - python -m compileall ./src/helpers
+  - python -m compileall ./src/utils
 
   # Force a boot.
   - python KonekoBot.py -d 1

@@ -9,9 +9,9 @@ from discord.ext import commands
 # Locals
 from src.core.checks import Checks
 from src.core.exceptions import NotEnoughBalance
-from src.helpers.database.repositories.currency_repository import CurrencyRepository
-from src.helpers.games.slotmachine import Slots
-from src.helpers.user.nick_helper import Name
+from src.utils.database.repositories.currency_repository import CurrencyRepository
+from src.utils.games.slotmachine import Slots
+from src.utils.user.nick_helper import Name
 
 
 # TODO: add the option to place a bet of :neko: on the following commands

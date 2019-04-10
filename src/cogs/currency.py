@@ -5,8 +5,8 @@ from discord.ext.commands.cooldowns import BucketType
 
 # Locals
 from src.core.checks import Checks
-from src.helpers.database.repositories.currency_repository import CurrencyRepository
-from src.helpers.user.nick_helper import Name
+from src.utils.database.repositories.currency_repository import CurrencyRepository
+from src.utils.user.nick_helper import Name
 
 
 class Currency(commands.Cog):
