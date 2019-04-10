@@ -5,3 +5,4 @@ tortoise-orm
 asyncpg
 py-rolldice
 dblpy
+jishaku
