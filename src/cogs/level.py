@@ -3,8 +3,8 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.helpers.database.repositories.level_repository import LevelRepository
-from src.helpers.user.nick_helper import Name
+from src.utils.database.repositories.level_repository import LevelRepository
+from src.utils.user.nick_helper import Name
 
 
 class Level(commands.Cog):
