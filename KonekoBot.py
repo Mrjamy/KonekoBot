@@ -73,6 +73,7 @@ if __name__ == '__main__':
     except ImportError as error:
         traceback.print_exc()
         exit(1)
+    KonekoBot.load_extension("jishaku")
 
     # Dry run option for travis.
     if KonekoBot.dry_run is True:
