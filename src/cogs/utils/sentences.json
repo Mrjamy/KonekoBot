@@ -1,22 +1,22 @@
 {
-    "hug" : {
-        "koneko" : "*Hugs {} back :heart:*",
-        "other" : "*{} hugs {}*"
+    "hug": {
+        "koneko": "*Hugs {} back :heart:*",
+        "other": "*{} hugs {}*"
     },
-    "pat" : {
-        "koneko" : "*Pats {} back :heart:*",
-        "other" : "*{} pats {}*"
+    "kiss": {
+        "koneko": "It's... It's not like I like you",
+        "other": "*{} kiss {}*"
     },
-    "kiss" : {
-        "koneko" : "It's... It's not like I like you",
-        "other" : "*{} kiss {}*"
+    "lewd": {
+        "koneko": "*Gets embarresed* Baka",
+        "other": "*{} lewds {}*"
     },
-    "slap" : {
-        "koneko" : "*Gets slightly angry*",
-        "other" : "*{} slaps {}*"
+    "pat": {
+        "koneko": "*Pats {} back :heart:*",
+        "other": "*{} pats {}*"
     },
-    "lewd" : {
-        "koneko" : "*Gets embarresed* Baka",
-        "other" : "*{} lewds {}*"
+    "slap": {
+        "koneko": "*Gets slightly angry*",
+        "other": "*{} slaps {}*"
     }
 }
