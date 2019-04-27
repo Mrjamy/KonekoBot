@@ -4,9 +4,6 @@ __pycache__/
 # ide stuff
 \.idea/
 
-# Database
-*.sqlite
-
 # Configuration
 *.ini
 !config.example.ini
