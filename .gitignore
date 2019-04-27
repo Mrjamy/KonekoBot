@@ -11,3 +11,6 @@ src/utils/database/config\.json
 
 # Temp files
 src/core/images/tmp/
+
+# Stream output files
+nohup.out
