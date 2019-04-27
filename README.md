@@ -17,9 +17,9 @@ For a full list of all the commands refer to the [command list](docs/commands.md
 
 ## Installation
 
-Just invite me using [this](https://discordapp.com/oauth2/authorize?client_id=502913609458909194&scope=bot&permissions=3427328) link!
+Just invite me using [this](https://discordapp.com/oauth2/authorize?client_id=502913609458909194&scope=bot&permissions=3460160) link!
 
-In case you insist on running your own copy check the notes under the [docs](docs/installing) (outdated)
+In case you insist on running your own copy check the notes under the [docs](docs/installing) but really just invite me!
 
 ## About me
 
