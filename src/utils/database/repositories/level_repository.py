@@ -37,7 +37,7 @@ class LevelRepository:
             Optional custom starting point for the scoreboard.
         """
         return await Level.filter(guild=guild_id) \
-            .order_by('experience') \
+            .order_by('-experience') \
             .limit(10) \
             .offset(offset) \
             .all()
