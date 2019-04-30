@@ -34,7 +34,7 @@ class CurrencyRepository:
             Optional custom starting point for the scoreboard.
         """
         return await Currency.filter(guild=guild_id) \
-            .order_by('amount') \
+            .order_by('-amount') \
             .limit(10) \
             .offset(offset) \
             .all()
