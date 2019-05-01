@@ -192,13 +192,13 @@ async def paginate(ctx, input_):
                 paging = False
 
 
-class Help(aliases=["h"], commands.Cog):
+class Help(commands.Cog):
     """Help command"""
 
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(hidden=True)
+    @commands.command(aliases=["h"], hidden=True)
     async def help(self, ctx, *, command=None):
         # TODO: v1.1 display aliases too
         if not command:
