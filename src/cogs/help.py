@@ -192,7 +192,7 @@ async def paginate(ctx, input_):
                 paging = False
 
 
-class Help(commands.Cog):
+class Help(aliases=["h"], commands.Cog):
     """Help command"""
 
     def __init__(self, bot):
