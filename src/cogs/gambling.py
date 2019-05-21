@@ -86,7 +86,7 @@ class Gambling(commands.Cog):
         mutation = -bet
         slotmachine = Slots(bet=bet)
         slotmachine._play_round()
-        mutation += bet * slotmachine.win
+        mutation += slotmachine.win
 
         await self.currency_repository.update(ctx.author.id, ctx.guild.id, mutation)
 
