@@ -37,7 +37,7 @@ class Slots:
             self.win = 0
             self.msg = f"You lost {self.bet} <:neko:521458388513849344>"
         elif count == 2:
-            self.win = (self.bet * most_common.reward) / 5
+            self.win = self.bet * most_common.reward * 0.8
             self.msg = f"You won {self.win} <:neko:521458388513849344>"
         else:
             self.win = self.bet * most_common.reward
