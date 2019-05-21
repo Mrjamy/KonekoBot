@@ -38,22 +38,22 @@ class Slots:
             self.msg = f"You lost {self.bet} <:neko:521458388513849344>"
         elif count == 2:
             self.win = (self.bet * most_common.reward) / 5
-            self.msg = f"You won {self.bet * self.win} <:neko:521458388513849344>"
+            self.msg = f"You won {self.win} <:neko:521458388513849344>"
         else:
             self.win = self.bet * most_common.reward
-            self.msg = f"You won {self.bet * self.win} <:neko:521458388513849344>"
+            self.msg = f"You won {self.win} <:neko:521458388513849344>"
 
     def play(self, credit: int, bet: int = 1):
-        slotmachine = Slots(bet=bet)
+        slotMachine = Slots(bet=bet)
 
         credit -= bet
         slotMachine._play_round()
-        credit += bet * slotmachine.win
+        credit += slotMachine.win
 
-        print(slotmachine.slots)
-        print(slotmachine.msg)
+        print(slotMachine.slots)
+        print(slotMachine.msg)
         print(f"credit is {credit}")
 
 
 if __name__ == '__main__':
-    SlotMachine().play(1000, 10)
+    round = Slots().play(1000000, 1000000)
