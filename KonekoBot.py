@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 # Builtins
+import asyncio
 import time
 import traceback
-import asyncio
+import logging
 
 # Pip
 import configparser
@@ -13,6 +14,7 @@ from discord.ext import commands
 # Locals
 from src.core.config import Settings
 from src.utils.database.db import run
+from src.utils.database.repositories.prefix_repository import PrefixRepository
 
 
 loop = asyncio.get_event_loop()
@@ -21,13 +23,23 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 # TODO : v1.1 Add a logger to the bot.
 
+async def _prefix(bot, msg):
+    user_id = bot.user.id
+    prefix = [f'<@!{user_id}> ', f'<@{user_id}> ']
+    if msg.guild is None:
+        prefix.append('$')
+    else:
+        guild_prefix = await PrefixRepository().get(msg.guild)
+        prefix.extend(guild_prefix)
+    return prefix
+
 
 class Koneko(commands.AutoShardedBot):
     # Create an AutoSharded bot.
     def __init__(self):
         super().__init__(
             # TODO : v1.1 allow different prefix on guilds.
-            command_prefix=commands.when_mentioned_or(settings.prefix),
+            command_prefix=_prefix,
             owner_id=settings.owner_id,
         )
         self.uptime = time.time()
