@@ -40,7 +40,7 @@ class Settings:
             # "welcome",
         ]
         self.core_extensions = [
-            # "DBL",
+            "DBL",
             "ErrorHandler",
             "EventListener"
         ]
