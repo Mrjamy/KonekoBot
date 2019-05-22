@@ -8,6 +8,7 @@ from discord.ext import commands
 
 # Locals
 from src.core.checks import Checks
+from src.utils.database.repositories.prefix_repository import PrefixRepository
 
 
 class Utility(commands.Cog):
@@ -17,6 +18,7 @@ class Utility(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
+        self.prefix_repository = PrefixRepository()
 
     @commands.bot_has_permissions(embed_links=True)
     @commands.command()
@@ -40,6 +42,29 @@ class Utility(commands.Cog):
         embed.add_field(name="Commands executed", value=command_count, inline=True)
 
         await ctx.channel.send(embed=embed)
+
+
+    @commands.guild_only()
+    @commands.group()
+    async def prefix(self, ctx):
+        if ctx.invoked_subcommand is None:
+            prefix = await self.prefix_repository.get(ctx.guild)
+            return await ctx.channel.send(f"Prefix for this guild is {prefix}")
+
+    @prefix.command()
+    async def set(self, ctx, prefix: str = None):
+        if not prefix:
+            return await ctx.channel.send(f"Please specify a prefix")
+        prefix = await self.prefix_repository.insert(ctx.guild, prefix)
+        return await ctx.channel.send(f"Prefix for this guild is now {prefix}")
+
+    @prefix.command()
+    async def delete(self, ctx):
+        res = await self.prefix_repository.delete(ctx.guild)
+        if res:
+            return await ctx.channel.send(f"Successfully deleted custom prefix `{ctx.prefix}` will now be the default prefix for this guild")
+        else:
+            return await ctx.channel.send("No custom prefix found")
 
     # TODO: add command /remind <message>
 
