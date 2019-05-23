@@ -18,7 +18,7 @@ class Admin(commands.Cog):
         return await self.bot.is_owner(ctx.author)
 
     @commands.command(aliases=["watch", "listen"], hidden=True)
-    async def game(self, ctx, *, name: str=None):
+    async def game(self, ctx, *, name: str = None):
         """Change koneko's presence, owner only"""
 
         activities = {
