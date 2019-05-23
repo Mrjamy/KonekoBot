@@ -41,7 +41,7 @@ class Level(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['score', 'levels'])
-    async def scoreboard(self, ctx, rank: int = 1):
+    async def scoreboard(self, ctx, rank: int=1):
         """Shows the server's scoreboard."""
         rank -= 1
         if rank <= 0:

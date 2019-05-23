@@ -26,7 +26,7 @@ class LevelRepository:
             level = await self.insert(user_id, guild_id)
         return level
 
-    async def get_all(self, guild_id: int, offset: int = 0) -> list:
+    async def get_all(self, guild_id: int, offset: int=0) -> list:
         """ Searches the database for the top 10 users based on level. the
         parameter offset can be used to pick a custom starting point.
         Parameters

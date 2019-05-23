@@ -112,7 +112,7 @@ class Currency(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['fortune'])
-    async def wealth(self, ctx, rank: int = 1):
+    async def wealth(self, ctx, rank: int=1):
         """Shows the server's wealth."""
         rank -= 1
         if rank <= 0:
