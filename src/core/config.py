@@ -9,17 +9,11 @@ class Settings:
     def __init__(self):
         parser = optparse.OptionParser()
 
-        parser.add_option("-p", "--pm-help", dest="pm_help", default=0)
         parser.add_option("-d", "--dry-run", dest="boot_only", default=0)
 
-        (options, args) = parser.parse_args()
+        (options, _) = parser.parse_args()
 
-        self.pm_help = bool(int(options.pm_help))
         self.dry_run = bool(int(options.boot_only))
-        self.owner_id = 180640710217826304
-        self.dev_ids = [
-            self.owner_id
-        ]
         self.toggle_extensions = [
             "admin",
             # "adminstration",
