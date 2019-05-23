@@ -36,7 +36,6 @@ class General(commands.Cog):
             users = [self.bot.user]
         mentions = ' '.join([f'{Name.nick_parser(user)}' for user in users])
 
-
         with open('src/cogs/utils/sentences.json') as f:
             data = json.load(f)
             if any(u.id in [502913609458909194, 533653653362311188] for u in users):

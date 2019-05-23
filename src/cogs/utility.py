@@ -43,7 +43,6 @@ class Utility(commands.Cog):
 
         await ctx.channel.send(embed=embed)
 
-
     @commands.guild_only()
     @commands.group()
     async def prefix(self, ctx):
@@ -52,7 +51,7 @@ class Utility(commands.Cog):
             return await ctx.channel.send(f"Prefix for this guild is {prefix}")
 
     @prefix.command()
-    async def set(self, ctx, prefix: str = None):
+    async def set(self, ctx, prefix: str=None):
         if not prefix:
             return await ctx.channel.send(f"Please specify a prefix")
         prefix = await self.prefix_repository.insert(ctx.guild, prefix)

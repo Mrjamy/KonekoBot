@@ -17,9 +17,8 @@ class Admin(commands.Cog):
     async def cog_check(self, ctx):
         return await self.bot.is_owner(ctx.author)
 
-
     @commands.command(aliases=["watch", "listen"], hidden=True)
-    async def game(self, ctx, *, name: str = None):
+    async def game(self, ctx, *, name: str=None):
         """Change koneko's presence, owner only"""
 
         activities = {
@@ -40,7 +39,7 @@ class Admin(commands.Cog):
                 return await ctx.channel.send(json.dumps(data, indent=4, sort_keys=True))
 
     @sentence.command()
-    async def get(self, ctx, command : str, string : str):
+    async def get(self, ctx, command: str, string: str):
         with open('src/cogs/utils/sentences.json') as f:
             data = json.load(f)
             try:
@@ -57,7 +56,7 @@ class Admin(commands.Cog):
             raise error
 
     @sentence.command()
-    async def update(self, ctx, command : str, string : str, *, new : str):
+    async def update(self, ctx, command: str, string: str, *, new: str):
         # Open file in read mode.
         with open('src/cogs/utils/sentences.json', 'r') as f:
             data = json.load(f)
@@ -78,6 +77,7 @@ class Admin(commands.Cog):
             await ctx.send('Some parameters seem missing :thinking:')
         else:
             raise error
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))
