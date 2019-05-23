@@ -52,7 +52,7 @@ class Utility(commands.Cog):
 
     @commands.has_permissions(administrator=True)
     @prefix.command()
-    async def set(self, ctx, prefix: str=None):
+    async def set(self, ctx, prefix: str = None):
         if not prefix:
             return await ctx.channel.send(f"Please specify a prefix")
         prefix = await self.prefix_repository.insert(ctx.guild, prefix)
