@@ -16,15 +16,6 @@ settings = Settings()
 
 class Checks:
     @staticmethod
-    def is_dev():
-        async def predicate(ctx):
-            if ctx.author.id in settings.dev_ids:
-                return True
-            else:
-                raise DevOnly
-        return commands.check(predicate)
-
-    @staticmethod
     def has_permissions(**permissions):
         async def predicate(ctx):
             if all(getattr(ctx.channel.permissions_for(ctx.author), name, None) == value for name, value in
