@@ -50,6 +50,7 @@ class Utility(commands.Cog):
             prefix = await self.prefix_repository.get(ctx.guild)
             return await ctx.channel.send(f"Prefix for this guild is {prefix}")
 
+    @commands.has_permissions(administrator=True)
     @prefix.command()
     async def set(self, ctx, prefix: str=None):
         if not prefix:
@@ -57,6 +58,7 @@ class Utility(commands.Cog):
         prefix = await self.prefix_repository.insert(ctx.guild, prefix)
         return await ctx.channel.send(f"Prefix for this guild is now {prefix}")
 
+    @commands.has_permissions(administrator=True)
     @prefix.command()
     async def delete(self, ctx):
         res = await self.prefix_repository.delete(ctx.guild)
