@@ -23,7 +23,7 @@ class CurrencyRepository:
             currency = await self.insert(user_id, guild_id)
         return currency
 
-    async def get_all(self, guild_id: int, offset: int=0) -> list:
+    async def get_all(self, guild_id: int, offset: int = 0) -> list:
         """ Searches the database for the top 10 users based on currency. the
         parameter offset can be used to pick a custom starting point.
         Parameters
@@ -39,7 +39,7 @@ class CurrencyRepository:
             .offset(offset) \
             .all()
 
-    async def update(self, user_id: int, guild_id: int, amount: int=+100) -> Currency:
+    async def update(self, user_id: int, guild_id: int, amount: int = +100) -> Currency:
         """ updates an user's balance by amount, positve or negative.
         ------------
         user_id: int [Required]

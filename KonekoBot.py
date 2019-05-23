@@ -23,6 +23,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 # TODO : v1.1 Add a logger to the bot.
 
+
 async def _prefix(bot, msg):
     user_id = bot.user.id
     prefix = [f'<@!{user_id}> ', f'<@{user_id}> ']
