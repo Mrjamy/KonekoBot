@@ -28,27 +28,32 @@ jobs:
   include:
     # Compile all files.
     - stage: compile
-      matrix:
-        include:
-        - python: 3.6-dev   # 3.6 development branch
-        - python: 3.6       # 3.6 stable/release
-        - python: 3.7-dev   # 3.7 development branch
-        - python: 3.7       # 3.7 Stable/release
-        - python: 3.8-dev   # 3.8 development branch
       script: ./.travis/lint.sh
+      python: 3.6-dev       # 3.6 development branch
+    - stage: compile
+      script: ./.travis/lint.sh
+      python: 3.6       # 3.6 stable/release
+    - stage: compile
+      script: ./.travis/lint.sh
+      python: 3.7-dev   # 3.7 development branch
+    - stage: compile
+      script: ./.travis/lint.sh
+      python: 3.7       # 3.7 Stable/release
+    - stage: compile
+      script: ./.travis/lint.sh
+      python: 3.8-dev   # 3.8 development branch
+
     # Run tests
     - stage: test
-      matrix:
-        include:
-        - python: 3.7
+      python: 3.7
       name: "pep8 conformance"
       script: ./.travis/tests.sh
+
     # Force a boot.
     - stage: run
-      matrix:
-        include:
-        - python: 3.7
+      python: 3.7
       script: python KonekoBot.py -d 1
+      
     # - stage: deploy
       # deploy to ssh
       # reboot bot
