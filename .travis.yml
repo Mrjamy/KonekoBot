@@ -53,9 +53,14 @@ jobs:
     - stage: run
       python: 3.7
       script: python KonekoBot.py -d 1
-      
+
     # - stage: deploy
       # deploy to ssh
       # reboot bot
+
+  allow_failures:
+    - stage: compile
+      script: ./.travis/lint.sh
+      python: 3.8       # 3.8 Stable/release (not yet out)
 
 cache: pip
