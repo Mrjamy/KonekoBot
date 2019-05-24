@@ -38,19 +38,22 @@ jobs:
   include:
     # Compile all files.
     - stage: compile
-      script: python -m compileall ./KonekoBot.py
-      script: python -m compileall ./src/core
-      script: python -m compileall ./src/cogs
-      script: python -m compileall ./src/utils
-      script: python -m compileall ./tests
+      script:
+        - python -m compileall ./KonekoBot.py
+        - python -m compileall ./src/core
+        - python -m compileall ./src/cogs
+        - python -m compileall ./src/utils
+        - python -m compileall ./tests
     # Run tests
     - stage: test
-      script: python ./tests/pep8.py
+      script:
+        - python ./tests/pep8.py
       name: "pep8 conformance"
       python: 3.7
     # Force a boot.
     - stage: run
-      script: python KonekoBot.py -d 1
+      script:
+        - python KonekoBot.py -d 1
       python: 3.7
     # - stage: deploy
       # deploy to ssh
