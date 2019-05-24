@@ -46,15 +46,13 @@ jobs:
         - python -m compileall ./tests
     # Run tests
     - stage: test
-      script:
-        - python ./tests/pep8.py
+      python: '3.7'
       name: "pep8 conformance"
-      python: 3.7
+      script: python ./tests/pep8.py
     # Force a boot.
     - stage: run
-      script:
-        - python KonekoBot.py -d 1
-      python: 3.7
+      python: '3.7'
+      script: python KonekoBot.py -d 1
     # - stage: deploy
       # deploy to ssh
       # reboot bot
