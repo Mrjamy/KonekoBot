@@ -33,25 +33,22 @@ before_script:
   - cd $PROJECT_ROOT
 
 jobs:
-  allow_failures:
-    - python: 3.8
   include:
     # Compile all files.
     - stage: compile
-      script:
-        - python -m compileall ./KonekoBot.py
-        - python -m compileall ./src/core
-        - python -m compileall ./src/cogs
-        - python -m compileall ./src/utils
-        - python -m compileall ./tests
+      script: python -m compileall ./KonekoBot.py
+      script: python -m compileall ./src/core
+      script:  python -m compileall ./src/cogs
+      script:  python -m compileall ./src/utils
+      script:  python -m compileall ./tests
     # Run tests
     - stage: test
-      python: '3.7'
+      # python: '3.7'
       name: "pep8 conformance"
       script: python ./tests/pep8.py
     # Force a boot.
     - stage: run
-      python: '3.7'
+      # python: '3.7'
       script: python KonekoBot.py -d 1
     # - stage: deploy
       # deploy to ssh
