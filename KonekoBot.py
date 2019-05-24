@@ -41,7 +41,7 @@ class Koneko(commands.AutoShardedBot):
         super().__init__(
             # TODO : v1.1 allow different prefix on guilds.
             command_prefix=_prefix,
-            owner_id=settings.owner_id,
+            owner_id=180640710217826304,
         )
         self.uptime = time.time()
         self.command_count = 0
