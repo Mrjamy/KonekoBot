@@ -115,7 +115,7 @@ class Currency(commands.Cog):
     async def wealth(self, ctx, rank: int = 1):
         """Shows the server's wealth."""
         rank -= 1
-        if rank <= 0:
+        if rank < 0:
             rank = 0
             count = 1
         else:
