@@ -43,7 +43,7 @@ class Currency(commands.Cog):
         balance = await self.currency_repository.update(ctx.author.id, ctx.guild.id, +100)
 
         embed = discord.Embed(title=f'`{Name.nick_parser(ctx.message.author)}` claimed their daily login reward your '
-                                    f'new balance is {balance.amount}',
+                                    f'new balance is {balance.amount} <:neko:521458388513849344>',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
