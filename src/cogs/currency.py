@@ -107,7 +107,7 @@ class Currency(commands.Cog):
             await ctx.channel.send(embed=embed)
             return
 
-        await self.currency_repository.update(user.id, ctx.guild.id, amount)
+        await self.currency_repository.update(user.id, ctx.guild.id, -amount)
 
         embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} <:neko:521458388513849344> '
                                     f'from {Name.nick_parser(user)}',
