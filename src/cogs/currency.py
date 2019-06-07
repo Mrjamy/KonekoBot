@@ -52,6 +52,8 @@ class Currency(commands.Cog):
     async def transfer(self, ctx, user, amount: int):
         """Transfers an amount of coins to a user."""
 
+        if amount <= 0:
+            return
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
@@ -74,6 +76,8 @@ class Currency(commands.Cog):
     async def give(self, ctx, user, amount: int):
         """Give a certain amount of currency to a user."""
 
+        if amount <= 0:
+            return
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
