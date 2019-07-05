@@ -52,6 +52,8 @@ class Currency(commands.Cog):
     async def transfer(self, ctx, user, amount: int):
         """Transfers an amount of coins to a user."""
 
+        if amount <= 0:
+            return
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
@@ -74,6 +76,8 @@ class Currency(commands.Cog):
     async def give(self, ctx, user, amount: int):
         """Give a certain amount of currency to a user."""
 
+        if amount <= 0:
+            return
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
@@ -103,7 +107,7 @@ class Currency(commands.Cog):
             await ctx.channel.send(embed=embed)
             return
 
-        await self.currency_repository.update(user.id, ctx.guild.id, amount)
+        await self.currency_repository.update(user.id, ctx.guild.id, -amount)
 
         embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} <:neko:521458388513849344> '
                                     f'from {Name.nick_parser(user)}',
