@@ -81,7 +81,7 @@ class Level(commands.Cog):
     @commands.Cog.listener()
     async def on_member_join(self, member):
         """Stores the user in the database whenever a new user joins."""
-        await self.level_repository.insert(member.id, member.guild.id)
+        await self.level_repository.get(member.id, member.guild.id)
 
     @commands.Cog.listener()
     async def on_message(self, ctx):
