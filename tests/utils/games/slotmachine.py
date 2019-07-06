@@ -4,6 +4,8 @@ import random
 import time
 from collections import Counter, namedtuple
 
+# TODO: import from src dir.
+
 
 Fruit = namedtuple('Fruit', ['name', 'weight', 'reward', 'pos'])
 

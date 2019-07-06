@@ -15,13 +15,12 @@ class Slots:
     def __init__(self, bet: int = 10):
         self.bet = bet
         self.fruits = [
-            Fruit(name='apple', weight=10000, reward=1, pos=0),
-            Fruit(name='banana', weight=7000, reward=1.5, pos=1),
-            Fruit(name='lemon', weight=5000, reward=2, pos=2),
-            Fruit(name='grapes', weight=4000, reward=4, pos=3),
-            Fruit(name='cherries', weight=3000, reward=6, pos=4),
-            Fruit(name='bell', weight=2000, reward=10, pos=5),
-            Fruit(name='seven', weight=500, reward=100, pos=6),
+            Fruit(name='apple', weight=100, reward=1.1, pos=0),
+            Fruit(name='lemon', weight=50, reward=2.2, pos=1),
+            Fruit(name='grapes', weight=40, reward=4.4, pos=2),
+            Fruit(name='cherries', weight=30, reward=6.6, pos=3),
+            Fruit(name='bell', weight=20, reward=11, pos=4),
+            Fruit(name='seven', weight=5, reward=110, pos=5),
         ]
 
     def _play_round(self):
