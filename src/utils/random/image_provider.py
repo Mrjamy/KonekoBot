@@ -10,7 +10,7 @@ class ImageProvider:
         path = os.path.join(os.path.dirname(__file__), '..', '..')
 
         self.local_dir = os.path.join(rf'{path}', 'core', 'images')
-        self.external_dir = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/development/src/core/images/'
+        self.external_dir = rf'https://raw.githubusercontent.com/jmuilwijk/KonekoBot/master/src/core/images/'
 
     def image(self, query: str):
         local_dir = os.path.join(self.local_dir, query)
