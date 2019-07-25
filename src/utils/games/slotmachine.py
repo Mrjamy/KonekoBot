@@ -1,10 +1,9 @@
 # Builtins
-import os
+import logging
 import random
-import time
 from collections import Counter, namedtuple
 
-
+module_logger = logging.getLogger('koneko.Slots')
 Fruit = namedtuple('Fruit', ['name', 'weight', 'reward', 'pos'])
 
 
@@ -42,17 +41,18 @@ class Slots:
             self.win = self.bet * most_common.reward
             self.msg = f"You won {self.win} <:neko:521458388513849344>"
 
-    def play(self, credit: int, bet: int = 1):
-        slotMachine = Slots(bet=bet)
+    @staticmethod
+    def play(credit: int, bet: int = 1):
+        slot_machine = Slots(bet=bet)
 
         credit -= bet
-        slotMachine._play_round()
-        credit += slotMachine.win
+        slot_machine._play_round()
+        credit += slot_machine.win
 
-        print(slotMachine.slots)
-        print(slotMachine.msg)
-        print(f"credit is {credit}")
+        module_logger.debug(slot_machine.slots)
+        module_logger.debug(slot_machine.msg)
+        module_logger.debug(f"credit is {credit}")
 
 
 if __name__ == '__main__':
-    round = Slots().play(1000000, 1000000)
+    Slots().play(1000000, 1000000)

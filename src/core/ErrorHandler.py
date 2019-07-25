@@ -1,5 +1,5 @@
 # Builtins
-import sys
+import logging
 import traceback
 from datetime import datetime, timedelta
 
@@ -13,6 +13,8 @@ from src.core.exceptions import (
     NotInVoiceChannel,
     NotEnoughBalance
 )
+
+module_logger = logging.getLogger('koneko.ErrorHandler')
 
 
 class ErrorHandler(commands.Cog):
@@ -115,8 +117,8 @@ class ErrorHandler(commands.Cog):
             return
 
         # All other Errors not returned come here... And we can just print the default TraceBack.
-        print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
-        traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+        module_logger.error('Ignoring exception in command {}:'.format(ctx.command))
+        module_logger.error(traceback.print_exception(type(error), error, error.__traceback__))
 
     # TODO: properly intercept system errors
     @commands.Cog.listener()
