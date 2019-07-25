@@ -21,7 +21,14 @@ loop = asyncio.get_event_loop()
 settings = Settings()
 config = configparser.ConfigParser()
 config.read('config.ini')
-# TODO : v1.1 Add a logger to the bot.
+# Add a file logger to koneko
+logger = logging.getLogger('koneko')
+logger.setLevel(logging.DEBUG)
+fh = logging.FileHandler('koneko.log')
+f = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'
+formatter = logging.Formatter(f)
+fh.setFormatter(formatter)
+logger.addHandler(fh)
 
 
 async def _prefix(bot, msg):
@@ -36,10 +43,11 @@ async def _prefix(bot, msg):
 
 
 class Koneko(commands.AutoShardedBot):
+    __slots__ = 'uptime', 'command_count', 'dry_run', 'settings', 'db', 'logger'
+
     # Create an AutoSharded bot.
     def __init__(self):
         super().__init__(
-            # TODO : v1.1 allow different prefix on guilds.
             command_prefix=_prefix,
             owner_id=180640710217826304,
         )
@@ -68,11 +76,10 @@ class Koneko(commands.AutoShardedBot):
         exit(0)
 
     def run(self):
-        loop = self.loop
         try:
-            loop.run_until_complete(self.start(config.get('Koneko', 'token')))
+            self.loop.run_until_complete(self.start(config.get('Koneko', 'token')))
         except KeyboardInterrupt:
-            loop.run_until_complete(self.logout())
+            self.loop.run_until_complete(self.logout())
 
 
 if __name__ == '__main__':
@@ -84,14 +91,14 @@ if __name__ == '__main__':
         for cog in KonekoBot.settings.core_extensions:
             KonekoBot.load_extension(f"src.core.{cog}")
     except ImportError as error:
-        traceback.print_exc()
+        logger.error(traceback.print_exc())
         exit(1)
     KonekoBot.load_extension("jishaku")
 
     # Dry run option for travis.
     if KonekoBot.dry_run is True:
-        print("Quitting: dry run")
+        logger.debug("Quitting: dry run")
         exit(0)
 
-    print("Logging into Discord...")
+    logger.debug("Logging into Discord...")
     KonekoBot.run()

@@ -1,3 +1,6 @@
+# Builtins
+import logging
+
 # Pip
 import configparser
 import discord
@@ -5,6 +8,7 @@ from discord.ext import commands
 
 config = configparser.ConfigParser()
 config.read('config.ini')
+module_logger = logging.getLogger('koneko.EventListener')
 
 
 class EventListener(commands.Cog):
@@ -24,8 +28,8 @@ class EventListener(commands.Cog):
             )
         )
         # Bot logged in.
-        print(f'Logged in as {self.bot.user}')
-        print(f'I am in {len(self.bot.guilds)} guilds.')
+        module_logger.debug(f'Logged in as {self.bot.user}')
+        module_logger.debug(f'I am in {len(self.bot.guilds)} guilds.')
 
     @commands.Cog.listener()
     async def on_command(self, ctx):

@@ -15,3 +15,6 @@ src/core/images/tmp/
 
 # Stream output files
 nohup.out
+
+# Log files
+/koneko.log
