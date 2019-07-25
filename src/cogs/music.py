@@ -12,8 +12,8 @@ from youtube_dl import YoutubeDL
 # Locals
 from .utils.exceptions import VoiceConnectionError, InvalidVoiceChannel
 # TODO: Checkout lavalink
-# TODO: v1.1 Fully implement checks.
-# TODO: v1.1 Customizable role for is_dj() check.
+# TODO: v2.0 Fully implement checks.
+# TODO: v2.0 Customizable role for is_dj() check.
 from src.core.checks import Checks
 
 
