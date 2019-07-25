@@ -200,7 +200,7 @@ class Help(commands.Cog):
 
     @commands.command(aliases=["h"], hidden=True)
     async def help(self, ctx, *, command=None):
-        # TODO: v1.1 display aliases too
+        # TODO: v1.2 display aliases too
         if not command:
             await paginate(ctx, helper(ctx))
 
