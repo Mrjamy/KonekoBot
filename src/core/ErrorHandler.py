@@ -29,14 +29,17 @@ class ErrorHandler(commands.Cog):
         ctx   : Context
         error : Exception"""
 
-        # This prevents any commands with local handlers being handled here in on_command_error.
+        # This prevents any commands with local handlers being handled here in
+        # on_command_error.
         if hasattr(ctx.command, 'on_error'):
             return
 
-        ignored = (commands.CommandNotFound, commands.UserInputError, commands.CheckFailure)
+        ignored = (commands.CommandNotFound, commands.UserInputError,
+                   commands.CheckFailure)
 
-        # Allows us to check for original exceptions raised and sent to CommandInvokeError.
-        # If nothing is found. We keep the exception passed to on_command_error.
+        # Allows us to check for original exceptions raised and sent to
+        # CommandInvokeError. If nothing is found. We keep the exception passed
+        # to on_command_error.
         error = getattr(error, 'original', error)
 
         # Anything in ignored will return and prevent anything happening.
@@ -116,19 +119,10 @@ class ErrorHandler(commands.Cog):
             await ctx.channel.send(embed=embed)
             return
 
-        # All other Errors not returned come here... And we can just print the default TraceBack.
+        # All other Errors not returned come here... And we can just print the
+        # default TraceBack.
         module_logger.error('Ignoring exception in command {}:'.format(ctx.command))
         module_logger.error(traceback.print_exception(type(error), error, error.__traceback__))
-
-    # TODO: properly intercept system errors
-    @commands.Cog.listener()
-    async def on_error(self, ctx, event, *args, **kwargs):
-        # TODO: catch discord.HTTPException
-        # TODO: catch discord.Forbidden
-        # TODO: catch discord.LoginFailure
-        # TODO: catch discord.NotFound
-        # TODO: catch generic errors
-        return
 
 
 def setup(bot):
