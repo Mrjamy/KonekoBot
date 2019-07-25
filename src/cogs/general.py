@@ -49,7 +49,7 @@ class General(commands.Cog):
 
         await ctx.channel.send(embed=embed)
 
-    # TODO: v1.1 add command /beer <user>
+    # TODO: v1.2 add command /beer <user>
 
 
 def setup(bot):
