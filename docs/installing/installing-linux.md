@@ -56,12 +56,7 @@ git clone https://github.com/jmuilwijk/KonekoBot.git
  DIR=$(pwd)
  cd src/util/database
  cp config.example.json config.json
- ```
- Populate the token and dbl_token with your own  
- Save
- ```bash
- ctrl + x
- y
+ cd $DIR
  ```
 
 ### Run the bot.
