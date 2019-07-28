@@ -1,6 +1,6 @@
 # Koneko's Command list.
 
-#### *Music, games, fun commands and much more!*
+#### *Games, fun commands and much more!*
 
 
 ## Table of contents
@@ -8,7 +8,6 @@
 - [Gambling](#gambling)
 - [Games](#games)
 - [Leveling](#leveling)
-- [Music](#music)
 - [Utility](#utility)
 - [General](#general)
 
@@ -46,22 +45,6 @@ Commands and aliases | Description | Usage
 
 ###### [Back to ToC](#table-of-contents)
 
-### Music  
-Commands and aliases | Description | Usage
-----------------|--------------|-------
-`$connect` `$join` | Connects Koneko to the voice-channel **You must be in a voice channel**. | `$connect`
-`$play` `$sing` | Requests a song and add it to the end of the queue, this will also attempt to connect the bot to the voice channel if it is not already in one. **You must be in a voice channel**. | `$play tetris`
-`$pause` | Pause the currently playing song. **You must be in a voice channel**. | `$pause`
-`$resume` | Resumes the currently paused song. **You must be in a voice channel**. | `$resume`
-`$skip` | Skip the current song and plays the next song queued up. **You must be in a voice channel**. | `$skip`
-`$queue` `$q` `$playlist` | Retreives some basic info on the currently queued up sonds. | `$q` `$playlist`
-`$now_playing` `$np` `$current` `$currentsong` `$playing` | Display information about the currently playing song. | `$np` `$now_playing`
-`$volume` `$vol` | Use $volume to adjust the music player's volume using a number between 1 and 100. **You must be in a voice channel**. | `$volume 100`
-`$stop` | This will stop the currently playing song and make Koneko leave the voice channel. **You must be in a voice channel**. | `$stop`
-
-
-###### [Back to ToC](#table-of-contents)
-
 ### Utility  
 Commands and aliases | Description | Usage
 ----------------|--------------|-------
@@ -80,7 +63,5 @@ Commands and aliases | Description | Usage
 `$pat` | Use $pat to pat someone by mentioning them. | `$pat @someone` `$pat`
 `$kiss` | Use $kiss to kiss someone by mentioning them. | `$kiss @someone` `$kiss`
 `$slap` | Use $slap to slap someone by mentioning them. | `$slap @someone` `$slap`
-
-
 
 ###### [Back to ToC](#table-of-contents)
