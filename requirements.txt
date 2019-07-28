@@ -1,5 +1,4 @@
 discord.py[voice]
-youtube_dl
 async_timeout
 tortoise-orm
 asyncpg
