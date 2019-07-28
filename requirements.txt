@@ -6,4 +6,3 @@ asyncpg
 py-rolldice
 dblpy
 jishaku
-pycodestyle
