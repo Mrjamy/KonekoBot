@@ -26,7 +26,6 @@ class Settings:
             # "goodbye",
             "help",
             "level",
-            "music",
             # "stats",
             "utility",
             # "welcome",
