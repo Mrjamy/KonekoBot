@@ -1,5 +1,6 @@
 # Builtins
 import json
+import logging
 
 # Pip
 import discord
@@ -8,6 +9,8 @@ from discord.ext import commands
 # Locals
 from src.utils.random.image_provider import ImageProvider
 from src.utils.user.nick_helper import Name
+
+module_logger = logging.getLogger('koneko.General')
 
 
 class General(commands.Cog):

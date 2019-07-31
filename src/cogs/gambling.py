@@ -8,7 +8,6 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.core.checks import Checks
 from src.core.exceptions import NotEnoughBalance
 from src.utils.database.repositories.currency_repository import CurrencyRepository
 from src.utils.games.slotmachine import Slots
