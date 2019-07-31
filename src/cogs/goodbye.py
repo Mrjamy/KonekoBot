@@ -1,4 +1,13 @@
+# Builtins
+import logging
+
+# Pip
+from discord.ext import commands
+
+# Locals
 from KonekoBot import KonekoBot
+
+module_logger = logging.getLogger('koneko.Goodbye')
 
 
 class Goodbye(commands.Cog):

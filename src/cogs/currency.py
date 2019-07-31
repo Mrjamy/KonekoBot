@@ -7,7 +7,6 @@ from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
 # Locals
-from src.core.checks import Checks
 from src.utils.database.repositories.currency_repository import CurrencyRepository
 from src.utils.user.nick_helper import Name
 
@@ -27,6 +26,8 @@ class Currency(commands.Cog):
     @commands.command(aliases=['balance', 'neko'])
     async def coins(self, ctx, user=None):
         """Get your total balance."""
+
+        # TODO: add user transformer in function argument
 
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
@@ -57,6 +58,8 @@ class Currency(commands.Cog):
     async def transfer(self, ctx, user, amount: int):
         """Transfers an amount of coins to a user."""
 
+        # TODO: add user transformer in function argument
+
         if amount <= 0:
             return
         if len(ctx.message.mentions) == 1:
@@ -81,6 +84,8 @@ class Currency(commands.Cog):
     async def give(self, ctx, user, amount: int):
         """Give a certain amount of currency to a user."""
 
+        # TODO: add user transformer in function argument
+
         if amount <= 0:
             return
         if len(ctx.message.mentions) == 1:
@@ -103,6 +108,8 @@ class Currency(commands.Cog):
     @commands.command(hidden=True)
     async def take(self, ctx, user, amount: int):
         """Take a certain amount of currency from a user."""
+
+        # TODO: add user transformer in function argument
 
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]

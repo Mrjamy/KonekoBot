@@ -8,7 +8,6 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.core.checks import Checks
 from src.utils.database.repositories.prefix_repository import PrefixRepository
 
 module_logger = logging.getLogger('koneko.Games')
@@ -17,7 +16,7 @@ module_logger = logging.getLogger('koneko.Games')
 class Utility(commands.Cog):
     """Utility commands."""
 
-    __slots__ = 'bot'
+    __slots__ = 'bot', 'prefix_repository'
 
     def __init__(self, bot):
         self.bot = bot

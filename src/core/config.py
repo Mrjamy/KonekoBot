@@ -1,13 +1,12 @@
 # Builtins
-import optparse
 import logging
+import optparse
 
 module_logger = logging.getLogger('koneko.Settings')
 
-class Settings:
-    __slots__ = (
-        'token', 'pm_help', 'prefix', 'dry_run', 'owner_id', 'dev_ids', 'toggle_extensions', 'core_extensions'
-    )
+
+class Settings(object):
+    __slots__ = 'dry_run', 'toggle_extensions', 'core_extensions'
 
     def __init__(self):
         parser = optparse.OptionParser()
@@ -34,7 +33,7 @@ class Settings:
             # "welcome",
         ]
         self.core_extensions = [
-            # "DBL",
+            "DBL",
             "ErrorHandler",
             "EventListener"
         ]
