@@ -7,7 +7,8 @@ module_logger = logging.getLogger('koneko.Slots')
 Fruit = namedtuple('Fruit', ['name', 'weight', 'reward', 'pos'])
 
 
-class Slots:
+class Slots(object):
+    """Slotmachine class"""
 
     __slots__ = 'slots', 'bet', 'fruits', 'msg', 'win'
 

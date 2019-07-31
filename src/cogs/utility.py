@@ -8,7 +8,6 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.core.checks import Checks
 from src.utils.database.repositories.prefix_repository import PrefixRepository
 
 module_logger = logging.getLogger('koneko.Games')

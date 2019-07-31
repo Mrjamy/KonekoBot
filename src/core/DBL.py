@@ -1,12 +1,10 @@
 # Builtins
-import aiohttp
 import asyncio
 import logging
 
 # Pip
 import configparser
 import dbl
-import discord
 from discord.ext import commands
 
 module_logger = logging.getLogger('koneko.DBL')
