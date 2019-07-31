@@ -1,12 +1,10 @@
 # Builtins
-import aiohttp
 import asyncio
 import logging
 
 # Pip
 import configparser
 import dbl
-import discord
 from discord.ext import commands
 
 module_logger = logging.getLogger('koneko.DBL')
@@ -14,6 +12,8 @@ module_logger = logging.getLogger('koneko.DBL')
 
 class DiscordBotsOrgAPI(commands.Cog):
     """Handles interactions with the discordbots.org API"""
+
+    __slots__ = 'bot', 'token', 'dblpy'
 
     def __init__(self, bot):
         config = configparser.ConfigParser()

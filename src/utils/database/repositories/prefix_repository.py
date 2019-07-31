@@ -10,8 +10,9 @@ config.read('config.ini')
 
 module_logger = logging.getLogger('koneko.PrefixRepository')
 
-class PrefixRepository:
-    async def get(self, guild_id: int) -> Prefix:
+
+class PrefixRepository(object):
+    async def get(self, guild_id: int) -> list:
         """ Return all prefixes of a guild.
         Parameters
         ------------
@@ -28,7 +29,7 @@ class PrefixRepository:
             _prefix.append(str(prefix))
         return _prefix
 
-    async def insert(self, guild_id: int, prefix: str) -> Prefix:
+    async def insert(self, guild_id: int, prefix: str) -> list:
         """ Set a guild specific prefix
         Parameters
         ------------

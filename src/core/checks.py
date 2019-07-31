@@ -8,7 +8,9 @@ from src.core.exceptions import NoPermission
 settings = Settings()
 
 
-class Checks:
+class Checks(object):
+    """Class containing all custom checks."""
+
     @staticmethod
     def has_permissions(**permissions):
         async def predicate(ctx):

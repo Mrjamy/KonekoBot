@@ -24,7 +24,7 @@ module_logger = logging.getLogger('koneko.Dungeon')
 class Dungeon(commands.Cog):
     """Explore the dungeon"""
 
-    __slots__ = "bot"
+    __slots__ = 'bot'
 
     def __init__(self, bot):
         self.bot = bot
