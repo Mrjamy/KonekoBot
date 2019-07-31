@@ -1,12 +1,15 @@
 # Builtins
+import logging
 import random
 from datetime import datetime
 
 # Locals
 from src.utils.database.models.level import Level
 
+module_logger = logging.getLogger('koneko.LevelRepository')
 
-class LevelRepository:
+
+class LevelRepository(object):
     async def get(self, user_id: int, guild_id: int) -> Level:
         """ Searches the database for a specific user, if not found one will be
         created.

@@ -1,4 +1,5 @@
 # Builtins
+import logging
 import random
 import asyncio
 
@@ -7,11 +8,12 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.core.checks import Checks
 from src.core.exceptions import NotEnoughBalance
 from src.utils.database.repositories.currency_repository import CurrencyRepository
 from src.utils.games.slotmachine import Slots
 from src.utils.user.nick_helper import Name
+
+module_logger = logging.getLogger('koneko.Gambling')
 
 
 # TODO: add the option to place a bet of :neko: on the following commands

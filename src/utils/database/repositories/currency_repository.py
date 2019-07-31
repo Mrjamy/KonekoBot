@@ -1,9 +1,14 @@
+# builtins
+import logging
+
 # Locals
 from src.core.exceptions import NotEnoughBalance
 from src.utils.database.models.currency import Currency
 
+module_logger = logging.getLogger('koneko.CurrencyRepository')
 
-class CurrencyRepository:
+
+class CurrencyRepository(object):
     async def get(self, user_id: int, guild_id: int) -> Currency:
         """ Searches the database for a specific user, if not found one will be
         created.

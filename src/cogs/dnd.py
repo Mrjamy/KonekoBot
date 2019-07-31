@@ -1,3 +1,6 @@
+# Builtins
+import logging
+
 # Pip
 import discord
 from rolldice import *
@@ -15,11 +18,13 @@ battle
 etc.
 """
 
+module_logger = logging.getLogger('koneko.Dungeon')
+
 
 class Dungeon(commands.Cog):
     """Explore the dungeon"""
 
-    __slots__ = "bot"
+    __slots__ = 'bot'
 
     def __init__(self, bot):
         self.bot = bot

@@ -1,3 +1,6 @@
+# Builtins
+import logging
+
 # Pip
 import discord
 from discord.ext import commands
@@ -5,6 +8,8 @@ from discord.ext import commands
 # Locals
 from src.utils.database.repositories.level_repository import LevelRepository
 from src.utils.user.nick_helper import Name
+
+module_logger = logging.getLogger('koneko.Level')
 
 
 class Level(commands.Cog):
