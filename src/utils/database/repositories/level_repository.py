@@ -1,10 +1,12 @@
 # Builtins
+import logging
 import random
 from datetime import datetime
 
 # Locals
 from src.utils.database.models.level import Level
 
+module_logger = logging.getLogger('koneko.LevelRepository')
 
 class LevelRepository:
     async def get(self, user_id: int, guild_id: int) -> Level:

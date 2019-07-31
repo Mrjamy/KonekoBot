@@ -1,5 +1,8 @@
+# Builtins
 import optparse
+import logging
 
+module_logger = logging.getLogger('koneko.Settings')
 
 class Settings:
     __slots__ = (

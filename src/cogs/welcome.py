@@ -1,4 +1,9 @@
+# Builtins
+import logging
+
 from KonekoBot import KonekoBot
+
+module_logger = logging.getLogger('koneko.Welcome')
 
 
 class Welcome(commands.Cog):

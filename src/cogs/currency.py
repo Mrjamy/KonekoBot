@@ -1,3 +1,6 @@
+# Builtins
+import logging
+
 # Pip
 import discord
 from discord.ext import commands
@@ -7,6 +10,8 @@ from discord.ext.commands.cooldowns import BucketType
 from src.core.checks import Checks
 from src.utils.database.repositories.currency_repository import CurrencyRepository
 from src.utils.user.nick_helper import Name
+
+module_logger = logging.getLogger('koneko.Currency')
 
 
 class Currency(commands.Cog):
