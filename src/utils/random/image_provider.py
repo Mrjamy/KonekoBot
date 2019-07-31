@@ -1,10 +1,13 @@
 # Builtins
+import logging
 import os
 import random
 
+module_logger = logging.getLogger('koneko.Games')
+
 
 class ImageProvider:
-    __slots__ = ['local_dir', 'external_dir']
+    __slots__ = 'local_dir', 'external_dir'
 
     def __init__(self):
         path = os.path.join(os.path.dirname(__file__), '..', '..')

@@ -49,6 +49,8 @@ jobs:
         - psql -c 'create database koneko;' -U postgres
         - CONFIG_DIR='src/utils/database'
         - cp $CONFIG_DIR/config.example.json $CONFIG_DIR/config.json
+        # Copy configuration files.
+        - cp config.example.ini config.ini
       script:
         - python KonekoBot.py -d 1
 
