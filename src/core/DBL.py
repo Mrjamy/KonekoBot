@@ -15,6 +15,8 @@ module_logger = logging.getLogger('koneko.DBL')
 class DiscordBotsOrgAPI(commands.Cog):
     """Handles interactions with the discordbots.org API"""
 
+    __slots__ = 'bot', 'token', 'dblpy'
+
     def __init__(self, bot):
         config = configparser.ConfigParser()
         config.read('config.ini')

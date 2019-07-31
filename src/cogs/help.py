@@ -195,6 +195,8 @@ async def paginate(ctx, input_):
 class Help(commands.Cog):
     """Help command"""
 
+    __slots__ = 'bot'
+
     def __init__(self, bot):
         self.bot = bot
 
