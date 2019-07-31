@@ -8,11 +8,7 @@ import discord
 from discord.ext import commands
 
 # locals
-from src.core.exceptions import (
-    DjOnly,
-    NotInVoiceChannel,
-    NotEnoughBalance
-)
+from src.core.exceptions import NotEnoughBalance
 
 module_logger = logging.getLogger('koneko.ErrorHandler')
 
@@ -85,18 +81,6 @@ class ErrorHandler(commands.Cog):
             else:
                 fmt = ' and '.join(missing)
             embed = discord.Embed(title=f'You need the **{fmt}** permission(s) to use this command.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
-            return
-
-        if isinstance(error, DjOnly):
-            embed = discord.Embed(title=f'This command requires you to have a role called DJ.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
-            return
-
-        if isinstance(error, NotInVoiceChannel):
-            embed = discord.Embed(title=f'This command requires you to be in a voice channel.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
