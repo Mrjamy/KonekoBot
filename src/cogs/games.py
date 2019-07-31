@@ -1,9 +1,12 @@
 # Builtins
+import logging
 import random
 
 # Pip
 import discord
 from discord.ext import commands
+
+module_logger = logging.getLogger('koneko.Games')
 
 
 class Games(commands.Cog):

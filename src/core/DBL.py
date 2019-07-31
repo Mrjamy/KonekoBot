@@ -9,6 +9,8 @@ import dbl
 import discord
 from discord.ext import commands
 
+module_logger = logging.getLogger('koneko.DBL')
+
 
 class DiscordBotsOrgAPI(commands.Cog):
     """Handles interactions with the discordbots.org API"""
@@ -26,16 +28,14 @@ class DiscordBotsOrgAPI(commands.Cog):
         """This function runs every 30 minutes to automatically update your server count"""
 
         while True:
-            logger.info('attempting to post server count')
+            module_logger.info('attempting to post server count')
             try:
-                await self.dblpy.post_server_count()
-                logger.info('posted server count ({})'.format(len(self.bot.guilds)))
+                await self.dblpy.post_guild_count()
+                module_logger.info('posted server count ({})'.format(len(self.bot.guilds)))
             except Exception as e:
-                logger.exception(f"Failed to post server count\n {type(e).__name__}: {e}")
+                module_logger.exception(f"Failed to post server count\n {type(e).__name__}: {e}")
             await asyncio.sleep(1800)
 
 
 def setup(bot):
-    global logger
-    logger = logging.getLogger('bot')
     bot.add_cog(DiscordBotsOrgAPI(bot))

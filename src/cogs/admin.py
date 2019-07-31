@@ -1,12 +1,12 @@
 # Builtins
 import json
+import logging
 
 # Pip
 import discord
 from discord.ext import commands
 
-# Locals
-from src.core.checks import Checks
+module_logger = logging.getLogger('koneko.Admin')
 
 
 class Admin(commands.Cog):

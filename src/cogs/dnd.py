@@ -1,3 +1,6 @@
+# Builtins
+import logging
+
 # Pip
 import discord
 from rolldice import *
@@ -14,6 +17,8 @@ explore
 battle
 etc.
 """
+
+module_logger = logging.getLogger('koneko.Dungeon')
 
 
 class Dungeon(commands.Cog):

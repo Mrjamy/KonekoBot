@@ -1,5 +1,6 @@
 # Pip
 import configparser
+import logging
 
 # Locals
 from src.utils.database.models.prefix import Prefix
@@ -7,6 +8,7 @@ from src.utils.database.models.prefix import Prefix
 config = configparser.ConfigParser()
 config.read('config.ini')
 
+module_logger = logging.getLogger('koneko.PrefixRepository')
 
 class PrefixRepository:
     async def get(self, guild_id: int) -> Prefix:

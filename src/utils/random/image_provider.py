@@ -1,6 +1,9 @@
 # Builtins
+import logging
 import os
 import random
+
+module_logger = logging.getLogger('koneko.Games')
 
 
 class ImageProvider:
