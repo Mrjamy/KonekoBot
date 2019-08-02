@@ -1,10 +1,10 @@
-![intro](https://raw.githubusercontent.com/jmuilwijk/KonekoBot/master/src/core/images/KonekoIntro.png)
+![intro](https://raw.githubusercontent.com/mrjamy/KonekoBot/master/src/core/images/KonekoIntro.png)
 
 # Koneko - A multi purpose Discord bot
 
-#### *Music, games, fun commands and much more!*
+#### *Games, fun commands and much more!*
 
-[<img src="https://img.shields.io/badge/discord-py-blue.svg">](https://github.com/Rapptz/discord.py)  [![Build Status](https://api.travis-ci.org/jmuilwijk/KonekoBot.svg)](https://travis-ci.org/jmuilwijk/KonekoBot)
+[<img src="https://img.shields.io/badge/discord-py-blue.svg">](https://github.com/Rapptz/discord.py)  [![Build Status](https://api.travis-ci.org/mrjamy/KonekoBot.svg)](https://travis-ci.org/mrjamy/KonekoBot)
 
 **Koneko** is a multipurpose discord bot with all kinds of commands!
 
