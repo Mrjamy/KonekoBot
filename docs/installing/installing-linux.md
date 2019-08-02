@@ -36,7 +36,7 @@ sudo apt-get install git
 ### Installing
 - Download the latest release version of this project.
 ```bash
-git clone https://github.com/jmuilwijk/KonekoBot.git
+git clone https://github.com/mrjamy/KonekoBot.git
 ```
  - <sub>If you choose not to use git you will need to download the files yourself and would be having a harder time keeping it updated.</sub>
 - Set the config files  
