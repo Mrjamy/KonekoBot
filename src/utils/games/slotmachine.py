@@ -41,6 +41,7 @@ class Slots(object):
         else:
             self.win = self.bet * most_common.reward
             self.msg = f"You won {self.win} <:neko:521458388513849344>"
+        self.win = round(self.win, 2)
 
     @staticmethod
     def play(credit: int, bet: int = 1):
