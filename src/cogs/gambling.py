@@ -63,7 +63,7 @@ class Gambling(commands.Cog):
     @commands.guild_only()
     @commands.command(aliases=["bet"])
     async def gamble(self, ctx, amount: int = 100):
-        """Gambles an amount of :nekko:."""
+        """Gambles an amount of <:neko:521458388513849344>  """
 
         balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)
 
