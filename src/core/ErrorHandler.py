@@ -88,7 +88,7 @@ class ErrorHandler(commands.Cog):
             return
 
         if isinstance(error, NotEnoughBalance):
-            embed = discord.Embed(title=f'You can\'t. afford this right now.',
+            embed = discord.Embed(title=f'You can\'t afford this right now.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
