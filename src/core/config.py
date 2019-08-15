@@ -33,7 +33,6 @@ class Settings(object):
             # "welcome",
         ]
         self.core_extensions = [
-            "DBL",
             "ErrorHandler",
             "EventListener"
         ]
