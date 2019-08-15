@@ -24,11 +24,11 @@ config.read('config.ini')
 # Add a file logger to koneko
 logger = logging.getLogger('koneko')
 logger.setLevel(logging.DEBUG)
-fh = logging.FileHandler('koneko.log')
-f = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'
-formatter = logging.Formatter(f)
-fh.setFormatter(formatter)
-logger.addHandler(fh)
+loggerFileHandler = logging.FileHandler('koneko.log')
+loggerFormat = '%(asctime)-15s - [%(process)-6s] %(levelname)-8s - %(name)s - %(message)s'
+loggerFormatter = logging.Formatter(loggerFormat)
+loggerFileHandler.setFormatter(loggerFormatter)
+logger.addHandler(loggerFileHandler)
 
 
 async def _prefix(bot, msg):
