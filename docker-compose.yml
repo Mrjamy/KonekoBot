@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+    koneko:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        volumes:
+            - .:/code
+    db:
+        image: postgres
