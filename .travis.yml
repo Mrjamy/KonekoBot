@@ -19,7 +19,7 @@ jobs:
   include:
     # Compile all files.
     - stage: compile
-      python: 3.6-dev       # 3.6 development branch
+      python: 3.6-dev   # 3.6 development branch
     - stage: compile
       python: 3.6       # 3.6 stable/release
     - stage: compile
