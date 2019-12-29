@@ -4,7 +4,7 @@
 
 #### *Games, fun commands and much more!*
 
-[<img src="https://img.shields.io/badge/discord-py-blue.svg">](https://github.com/Rapptz/discord.py)  [![Build Status](https://api.travis-ci.org/mrjamy/KonekoBot.svg)](https://travis-ci.org/mrjamy/KonekoBot)
+[<img src="https://img.shields.io/badge/discord-py-blue.svg">](https://github.com/Rapptz/discord.py)  [![Build Status](https://api.travis-ci.com/mrjamy/KonekoBot.svg)](https://travis-ci.com/mrjamy/KonekoBot)
 
 **Koneko** is a multipurpose discord bot with all kinds of commands!
 
