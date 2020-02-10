@@ -48,6 +48,7 @@ class Utility(commands.Cog):
     @commands.guild_only()
     @commands.group()
     async def prefix(self, ctx):
+        """Get Koneko's prefix."""
         if ctx.invoked_subcommand is None:
             prefix = await self.prefix_repository.get(ctx.guild)
             return await ctx.channel.send(f"Prefix for this guild is {prefix}")
@@ -55,6 +56,7 @@ class Utility(commands.Cog):
     @commands.has_permissions(administrator=True)
     @prefix.command()
     async def set(self, ctx, prefix: str = None):
+        """Set a custom prefix for Koneko."""
         if not prefix:
             return await ctx.channel.send(f"Please specify a prefix")
         prefix = await self.prefix_repository.insert(ctx.guild, prefix)
@@ -63,6 +65,7 @@ class Utility(commands.Cog):
     @commands.has_permissions(administrator=True)
     @prefix.command()
     async def delete(self, ctx):
+        """Delete koneko's custom prefix."""
         res = await self.prefix_repository.delete(ctx.guild)
         if res:
             return await ctx.channel.send(f"Successfully deleted custom prefix `{ctx.prefix}` will now be the default prefix for this guild")
