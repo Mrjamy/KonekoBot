@@ -57,6 +57,7 @@ class General(commands.Cog):
 
     @commands.command()
     async def give_item(self, ctx, users: commands.Greedy[discord.Member], *, item):
+        """Give one or more users an item."""
         if len(users) == 0:
             users = [self.bot.user]
         mentions = ' '.join([f'{Name.nick_parser(user)}' for user in users])
