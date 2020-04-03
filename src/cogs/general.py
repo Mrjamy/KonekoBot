@@ -30,7 +30,7 @@ class General(commands.Cog):
         # Send it to the user
         await ctx.channel.send(latency)
 
-    @commands.command(aliases=["pat", "kiss", "slap", "lewd"])
+    @commands.command(aliases=["pat", "kiss", "slap", "lewd", "respect"])
     async def hug(self, ctx, users: commands.Greedy[discord.Member]):
         """Interact with other users."""
         provider = ImageProvider()
