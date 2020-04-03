@@ -46,8 +46,11 @@ class General(commands.Cog):
                 # TODO: use fstrings.
                 message = data[ctx.invoked_with]['koneko'].format(Name.nick_parser(ctx.message.author),)
             else:
-                # TODO: use fstrings.
-                message = data[ctx.invoked_with]['other'].format(Name.nick_parser(ctx.message.author), mentions)
+                if ctx.invoked_with == "respect":
+                    message = data[ctx.invoked_with]['other'].format(mentions)
+                else:
+                    # TODO: use fstrings.
+                    message = data[ctx.invoked_with]['other'].format(Name.nick_parser(ctx.message.author), mentions)
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
