@@ -2,6 +2,7 @@
 
 # Builtins
 import asyncio
+import sys
 import time
 import traceback
 import logging
@@ -15,6 +16,10 @@ from discord.ext import commands
 from src.core.config import Settings
 from src.utils.database.db import run
 from src.utils.database.repositories.prefix_repository import PrefixRepository
+
+
+if sys.version_info < (3, 6):
+    raise ImportError("Python 3.6 or greater is required")
 
 
 loop = asyncio.get_event_loop()
