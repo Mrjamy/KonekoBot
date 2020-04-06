@@ -21,19 +21,22 @@ class Games(commands.Cog):
     async def rps(self, ctx, choice: str = ""):
         """Play a game of rock paper scissors."""
         player = choice.lower()
-        options = [
-            "rock",
-            "paper",
-            "scissors",
-        ]
+        options = {
+            "r": "rock",
+            "p": "paper",
+            "s": "scissors"
+        }
 
-        if player not in options:
+        if player in options:
+            module_logger.info("p in o")
+            player = options.get(player)
+        elif player not in options.values():
             embed = discord.Embed(title='Please choose from: rock, paper, scissors',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
 
-        bot = random.choice(options)
+        bot = random.choice(list(options.values()))
 
         if player == bot:
             color = discord.Color.dark_grey()
