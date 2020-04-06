@@ -10,3 +10,7 @@ services:
             - .:/code
     db:
         image: postgres
+        environment:
+            POSTGRES_DB: koneko
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
