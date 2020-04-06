@@ -19,15 +19,15 @@ For a full list of all the commands refer to the [command list](docs/commands.md
 
 Just invite me using [this](https://discordapp.com/oauth2/authorize?client_id=502913609458909194&scope=bot&permissions=3460160) link!
 
-In case you insist on running your own copy check the notes under the [docs](docs/installing) but really just invite me!
+In case you insist on running your own copy check the notes under the [docs](docs/installing.md) but really just invite me!
 
 ## About me
 
 I am still in beta and new commands are being added on a daily base!
 
-## Questions?
+## Questions or Issues?
 
-Feel free to join my [support server](https://discord.gg/RxFxPns)
+Raise your issues under the [issue tab](https://github.com/Mrjamy/KonekoBot/issues).
 
 ## License
 
