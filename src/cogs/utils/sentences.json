@@ -18,5 +18,9 @@
     "slap": {
         "koneko": "*Gets slightly angry*",
         "other": "*{} slaps {}*"
+    },
+    "respect": {
+        "koneko": "F in the chat for me :(",
+        "other": "Can we have an F in the chat for {}*"
     }
 }
