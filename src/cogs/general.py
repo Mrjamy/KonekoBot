@@ -32,7 +32,9 @@ class General(commands.Cog):
 
     @commands.command(aliases=["pat", "kiss", "slap", "lewd", "respect"])
     async def hug(self, ctx, users: commands.Greedy[discord.Member]):
-        """Interact with other users."""
+        """Interact with other users.
+
+        Possible interactions are: pat, kiss, slap, lewd and respect"""
         provider = ImageProvider()
 
         url = provider.image(query=ctx.invoked_with)
@@ -44,7 +46,7 @@ class General(commands.Cog):
             data = json.load(f)
             if any(u.id in [502913609458909194, 533653653362311188] for u in users):
                 # TODO: use fstrings.
-                message = data[ctx.invoked_with]['koneko'].format(Name.nick_parser(ctx.message.author),)
+                message = data[ctx.invoked_with]['koneko'].format(Name.nick_parser(ctx.message.author))
             else:
                 if ctx.invoked_with == "respect":
                     message = data[ctx.invoked_with]['other'].format(mentions)
