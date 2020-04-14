@@ -1,4 +1,5 @@
 # Builtins
+import asyncio
 import logging
 import random
 
@@ -20,15 +21,28 @@ class Games(commands.Cog):
     @commands.command()
     async def rps(self, ctx, choice: str = ""):
         """Play a game of rock paper scissors."""
-        player = choice.lower()
         options = {
             "r": "rock",
             "p": "paper",
             "s": "scissors"
         }
 
+        if choice == "":
+            m = await ctx.channel.send("Please choose from: rock, paper, scissors")
+
+            def validate(m_):
+                return m_.author == ctx.author and m_.channel == ctx.channel
+
+            try:
+                choice = await ctx.bot.wait_for('message', check=validate,
+                                                timeout=60)
+                choice = choice.content
+            except asyncio.TimeoutError:
+                return await m.delete()
+
+        player = choice.lower()
+
         if player in options:
-            module_logger.info("p in o")
             player = options.get(player)
         elif player not in options.values():
             embed = discord.Embed(title='Please choose from: rock, paper, scissors',
