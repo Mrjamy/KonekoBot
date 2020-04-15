@@ -34,5 +34,6 @@ class Settings(object):
         ]
         self.core_extensions = [
             "ErrorHandler",
-            "EventListener"
+            "EventListener",
+            "HotReload"
         ]
