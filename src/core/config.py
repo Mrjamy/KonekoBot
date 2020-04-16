@@ -21,7 +21,7 @@ class Settings(object):
             # "adminstration",
             # "alert",
             "currency",
-            "dnd",
+            # "dnd",
             "gambling",
             "games",
             "general",
