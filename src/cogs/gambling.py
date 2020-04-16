@@ -64,6 +64,8 @@ class Gambling(commands.Cog):
     @commands.command(aliases=["bet"])
     async def gamble(self, ctx, amount: int = 100):
         """Gambles an amount of <:neko:521458388513849344>  """
+        if amount <= 0:
+            raise NotEnoughBalance
 
         balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)
 
