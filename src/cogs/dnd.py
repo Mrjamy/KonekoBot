@@ -3,7 +3,7 @@ import logging
 
 # Pip
 import discord
-from rolldice import *
+from rolldice import DiceBag
 from discord.ext import commands
 
 # Locals

@@ -35,8 +35,10 @@ jobs:
       name: "pep8 conformance"
       install:
         - pip install pycodestyle
+        - pip install flake8
       script:
-        - pycodestyle src  --ignore=E501
+        - pycodestyle . --ignore=E501
+        - flake8 --ignore E501
 
     # Force a boot.
     - stage: run
