@@ -98,7 +98,7 @@ if __name__ == '__main__':
         for cog in KonekoBot.settings.core_extensions:
             KonekoBot.load_extension(f"src.core.{cog}")
     except ImportError as error:
-        logger.error(traceback.print_exc())
+        logger.error(traceback.print_tb(error))
         exit(1)
     KonekoBot.load_extension("jishaku")
 
