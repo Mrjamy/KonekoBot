@@ -7,7 +7,8 @@ from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
 # Locals
-from src.utils.database.repositories.currency_repository import CurrencyRepository
+from src.utils.database.repositories.currency_repository import \
+    CurrencyRepository
 from src.utils.emojis.emoji import Emoji
 from src.utils.user.nick_helper import Name
 

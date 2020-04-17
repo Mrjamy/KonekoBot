@@ -3,12 +3,11 @@ import logging
 
 # Pip
 import discord
-from rolldice import DiceBag
 from discord.ext import commands
+from rolldice import DiceBag
 
 # Locals
 from src.utils.user.nick_helper import Name
-
 
 # TODO: add a dungeon/dnd based game.
 # TODO: add command /dungeon <arguments>

@@ -1,7 +1,7 @@
 # Builtins
+import asyncio
 import logging
 import random
-import asyncio
 
 # Pip
 import discord
@@ -9,7 +9,8 @@ from discord.ext import commands
 
 # Locals
 from src.core.exceptions import NotEnoughBalance
-from src.utils.database.repositories.currency_repository import CurrencyRepository
+from src.utils.database.repositories.currency_repository import \
+    CurrencyRepository
 from src.utils.games.slotmachine import Slots
 from src.utils.user.nick_helper import Name
 
