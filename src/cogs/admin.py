@@ -28,6 +28,7 @@ class Admin(commands.Cog):
             'game': discord.Game(name=name),
             'listen': discord.Activity(type=discord.ActivityType.listening, name=name),
             'watch': discord.Activity(type=discord.ActivityType.watching, name=name)
+            # TODO: allow for custom a status
         }
 
         activity = activities[ctx.invoked_with]

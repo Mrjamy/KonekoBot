@@ -8,6 +8,7 @@ from discord.ext.commands.cooldowns import BucketType
 
 # Locals
 from src.utils.database.repositories.currency_repository import CurrencyRepository
+from src.utils.emojis.emoji import Emoji
 from src.utils.user.nick_helper import Name
 
 module_logger = logging.getLogger('koneko.Currency')
@@ -16,11 +17,12 @@ module_logger = logging.getLogger('koneko.Currency')
 class Currency(commands.Cog):
     """Currency module."""
 
-    __slots__ = 'bot', 'currency_repository'
+    __slots__ = 'bot', 'currency_repository', 'emoji'
 
     def __init__(self, bot):
         self.bot = bot
         self.currency_repository = CurrencyRepository()
+        self.emoji = Emoji(bot)
 
     @commands.guild_only()
     @commands.command(aliases=['balance', 'neko'])
@@ -36,7 +38,7 @@ class Currency(commands.Cog):
 
         balance = await self.currency_repository.get(user.id, ctx.guild.id)
 
-        embed = discord.Embed(title=f'`{Name.nick_parser(user)}` has {balance.amount} <:neko:521458388513849344>',
+        embed = discord.Embed(title=f'`{Name.nick_parser(user)}` has {balance.amount} {self.emoji.cash}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -49,7 +51,7 @@ class Currency(commands.Cog):
         balance = await self.currency_repository.update(ctx.author.id, ctx.guild.id, +100)
 
         embed = discord.Embed(title=f'`{Name.nick_parser(ctx.message.author)}` claimed their daily login reward your '
-                                    f'new balance is {balance.amount} <:neko:521458388513849344>',
+                                    f'new balance is {balance.amount} {self.emoji.cash}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -65,7 +67,7 @@ class Currency(commands.Cog):
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
-            embed = discord.Embed(title=f'Could not find a user to transfer the <:neko:521458388513849344> to.',
+            embed = discord.Embed(title=f'Could not find a user to transfer the {self.emoji.cash} to.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
@@ -74,7 +76,7 @@ class Currency(commands.Cog):
         await self.currency_repository.update(user.id, ctx.guild.id, +amount)
 
         embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} successfully transferred {amount} '
-                                    f'<:neko:521458388513849344> to {Name.nick_parser(user)}.',
+                                    f'{self.emoji.cash} to {Name.nick_parser(user)}.',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -91,14 +93,14 @@ class Currency(commands.Cog):
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
-            embed = discord.Embed(title=f'Could not find a user to give the <:neko:521458388513849344> to.',
+            embed = discord.Embed(title=f'Could not find a user to give the {self.emoji.cash} to.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
 
         await self.currency_repository.update(user.id, ctx.guild.id, amount)
 
-        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} gave {amount} <:neko:521458388513849344> '
+        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} gave {amount} {self.emoji.cash} '
                                     f'to {Name.nick_parser(user)}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
@@ -114,14 +116,14 @@ class Currency(commands.Cog):
         if len(ctx.message.mentions) == 1:
             user = ctx.message.mentions[0]
         else:
-            embed = discord.Embed(title=f'Could not find a user to remove <:neko:521458388513849344> from.',
+            embed = discord.Embed(title=f'Could not find a user to remove {self.emoji.cash} from.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
 
         await self.currency_repository.update(user.id, ctx.guild.id, -amount)
 
-        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} <:neko:521458388513849344> '
+        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} {self.emoji.cash} '
                                     f'from {Name.nick_parser(user)}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
@@ -149,7 +151,7 @@ class Currency(commands.Cog):
                     try:
                         embed.add_field(
                             name=f'#{count} {Name.nick_parser(u)}',
-                            value=f'{user.amount} <:neko:521458388513849344>',
+                            value=f'{user.amount} {self.emoji.cash}',
                             inline=False
                         )
                         count += 1
