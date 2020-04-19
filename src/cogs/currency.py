@@ -23,7 +23,7 @@ class Currency(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.currency_repository = CurrencyRepository()
-        self.emoji = Emoji(bot)
+        self.emoji = Emoji()
 
     @commands.guild_only()
     @commands.command(aliases=['balance', 'neko'])
