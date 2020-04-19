@@ -107,6 +107,8 @@ async def paginate(ctx, input_):
 
     paging = True
     while paging:
+        reaction = None
+
         def check(r_, u_):
             return u_ == ctx.author and r_.message.id == pages.id and str(r_.emoji) in r
 
