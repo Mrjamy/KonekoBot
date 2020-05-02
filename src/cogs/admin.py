@@ -40,7 +40,7 @@ class Admin(commands.Cog):
         if ctx.invoked_subcommand is None:
             with open('src/cogs/utils/sentences.json') as f:
                 data = json.load(f)
-                return await ctx.channel.send(json.dumps(data, indent=4, sort_keys=True))
+                return await ctx.channel.send(f'```json\n {json.dumps(data, indent=4, sort_keys=True)}```')
 
     @sentence.command()
     async def get(self, ctx, command: str, string: str):
