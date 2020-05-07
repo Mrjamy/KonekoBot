@@ -11,7 +11,8 @@ module_logger = logging.getLogger('koneko.CurrencyRepository')
 
 
 class CurrencyRepository(object):
-    async def get(self, user_id: int, guild_id: int) -> Currency:
+    @staticmethod
+    async def get(user_id: int, guild_id: int) -> Currency:
         """ Searches the database for a specific user, if not found one will be
         created.
         Parameters
@@ -27,10 +28,11 @@ class CurrencyRepository(object):
         ).first()
 
         if currency is None:
-            currency = await self.insert(user_id, guild_id)
+            currency = await CurrencyRepository.insert(user_id, guild_id)
         return currency
 
-    async def get_all(self, guild_id: int, offset: int = 0) -> list:
+    @staticmethod
+    async def get_all(guild_id: int, offset: int = 0) -> list:
         """ Searches the database for the top 10 users based on currency. the
         parameter offset can be used to pick a custom starting point.
         Parameters
@@ -46,7 +48,8 @@ class CurrencyRepository(object):
             .offset(offset) \
             .all()
 
-    async def update(self, user_id: int, guild_id: int, amount: int = +100) -> Currency:
+    @staticmethod
+    async def update(user_id: int, guild_id: int, amount: int = +100) -> Currency:
         """ updates an user's balance by amount, positve or negative.
         ------------
         user_id: int [Required]
@@ -55,7 +58,7 @@ class CurrencyRepository(object):
             The guild the user is related to.
         """
         async def check():
-            balance = await self.get(user_id, guild_id)
+            balance = await CurrencyRepository.get(user_id, guild_id)
             if not bool(balance.amount >= amount):
                 raise NotEnoughBalance
 
@@ -63,7 +66,7 @@ class CurrencyRepository(object):
         if amount < 0:
             await check()
 
-        currency = await self.get(user_id, guild_id)
+        currency = await CurrencyRepository.get(user_id, guild_id)
 
         bal = currency.amount + amount
         await Currency.filter(
@@ -74,9 +77,10 @@ class CurrencyRepository(object):
         )
         # Method .update() returns a NoneType so we need to aquire a new
         # copy of the currency object
-        return await self.get(user_id, guild_id)
+        return await CurrencyRepository.get(user_id, guild_id)
 
-    async def insert(self, user_id: int, guild_id: int) -> Currency:
+    @staticmethod
+    async def insert(user_id: int, guild_id: int) -> Currency:
         """ Insert a user to the database
         Parameters
         ------------

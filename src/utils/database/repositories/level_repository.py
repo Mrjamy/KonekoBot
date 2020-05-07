@@ -10,7 +10,8 @@ module_logger = logging.getLogger('koneko.LevelRepository')
 
 
 class LevelRepository(object):
-    async def get(self, user_id: int, guild_id: int) -> Level:
+    @staticmethod
+    async def get(user_id: int, guild_id: int) -> Level:
         """ Searches the database for a specific user, if not found one will be
         created.
         Parameters
@@ -26,10 +27,11 @@ class LevelRepository(object):
         ).first()
 
         if level is None:
-            level = await self.insert(user_id, guild_id)
+            level = await LevelRepository.insert(user_id, guild_id)
         return level
 
-    async def get_all(self, guild_id: int, offset: int = 0) -> list:
+    @staticmethod
+    async def get_all(guild_id: int, offset: int = 0) -> list:
         """ Searches the database for the top 10 users based on level. the
         parameter offset can be used to pick a custom starting point.
         Parameters
@@ -45,7 +47,8 @@ class LevelRepository(object):
             .offset(offset) \
             .all()
 
-    async def add_xp(self, user_id: int, guild_id: int) -> Level:
+    @staticmethod
+    async def add_xp(user_id: int, guild_id: int) -> Level:
         """ Adds a random amount of experience to the user betweem 5 and 10.
         Parameters
         ------------
@@ -57,7 +60,7 @@ class LevelRepository(object):
         def _cooldown():
             return (datetime.now() - level.last_message).total_seconds() < 30
 
-        level = await self.get(user_id, guild_id)
+        level = await LevelRepository.get(user_id, guild_id)
 
         if not _cooldown():
             xp = level.experience + random.randint(5, 10)
@@ -70,11 +73,12 @@ class LevelRepository(object):
             )
             # Method .update() returns a NoneType so we need to aquire a new
             # copy of the level object
-            level = await self.get(user_id, guild_id)
+            level = await LevelRepository.get(user_id, guild_id)
 
         return level
 
-    async def insert(self, user_id: int, guild_id: int) -> Level:
+    @staticmethod
+    async def insert(user_id: int, guild_id: int) -> Level:
         """ Insert a user to the database
         Parameters
         ------------
@@ -90,7 +94,8 @@ class LevelRepository(object):
             level=0
         )
 
-    async def levelup_check(self, user_id: int, guild_id: int) -> bool:
+    @staticmethod
+    async def levelup_check(user_id: int, guild_id: int) -> bool:
         """ Check if the target user has passed the required amount to level up.
         Parameters
         ------------
@@ -99,7 +104,7 @@ class LevelRepository(object):
         guild_id: int [required]
             The guild the user is related to.
         """
-        level = await self.get(user_id, guild_id)
+        level = await LevelRepository.get(user_id, guild_id)
 
         experience = level.experience
         lvl_start = level.level

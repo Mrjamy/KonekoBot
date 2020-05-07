@@ -12,7 +12,8 @@ module_logger = logging.getLogger('koneko.PrefixRepository')
 
 
 class PrefixRepository(object):
-    async def get(self, guild_id: int) -> list:
+    @staticmethod
+    async def get(guild_id: int) -> list:
         """ Return all prefixes of a guild.
         Parameters
         ------------
@@ -29,7 +30,8 @@ class PrefixRepository(object):
             _prefix.append(str(prefix))
         return _prefix
 
-    async def insert(self, guild_id: int, prefix: str) -> list:
+    @staticmethod
+    async def insert(guild_id: int, prefix: str) -> list:
         """ Set a guild specific prefix
         Parameters
         ------------
@@ -52,16 +54,15 @@ class PrefixRepository(object):
             ).first().update(
                 prefix=prefix
             )
-        return await self.get(guild_id)
+        return await PrefixRepository.get(guild_id)
 
-    async def delete(self, guild_id: int) -> bool:
+    @staticmethod
+    async def delete(guild_id: int) -> bool:
         """ Delete a prefix for a guild
         Parameters
         ------------
         guild_id: int [required]
             The guild the prefix is related to.
-        prefix: str [required]
-            The prefix to delete.
         """
         prefix = await Prefix.filter(
             guild=guild_id
