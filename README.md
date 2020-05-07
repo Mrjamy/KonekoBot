@@ -8,10 +8,7 @@
 
 **Koneko** is a multipurpose discord bot with all kinds of commands!
 
-The default set of modules includes and is not limited to:
-* Music features (YouTube, queues).
-* Leveling system.
-* And much more planned in the future.  
+Including leveling, interaction, currency and much more.
 
 For a full list of all the commands refer to the [command list](docs/commands.md)
 
