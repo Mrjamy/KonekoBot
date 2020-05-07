@@ -50,7 +50,7 @@ class Koneko(commands.AutoShardedBot):
     """Auto sharded discord bot."""
 
     __slots__ = 'uptime', 'command_count', 'dry_run', 'settings', 'db', \
-                'logger', 'user', 'loop'
+                'logger', 'loop'
 
     # Create an AutoSharded bot.
     def __init__(self):
