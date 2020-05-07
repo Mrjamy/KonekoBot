@@ -90,7 +90,7 @@ class Level(commands.Cog):
 
     @commands.Cog.listener()
     async def on_message(self, ctx):
-        """Whenever a user sends a message award them with a small amount of exp."""
+        """Whenever a user sends a message award them with some exp."""
         if ctx.author.bot:
             return
         if not ctx.guild:
