@@ -2,6 +2,7 @@
 
 # Builtins
 import asyncio
+from typing import List
 
 # Pip
 import discord
@@ -14,7 +15,7 @@ def chunks(l, n):
         yield l[i:i + n]
 
 
-def helper(ctx):
+def helper(ctx) -> List[discord.Embed]:
     """Displays all commands"""
 
     cmds_ = []
@@ -37,7 +38,7 @@ def helper(ctx):
     return cmds_
 
 
-def cog_helper(cog):
+def cog_helper(cog) -> List[discord.Embed]:
     """Displays commands from a cog"""
 
     name = cog.__class__.__name__
@@ -62,7 +63,7 @@ def cog_helper(cog):
     return cmds_
 
 
-def command_helper(command):
+def command_helper(command: commands.command) -> List[discord.Embed]:
     """Displays a command and it's sub commands"""
 
     try:
@@ -87,13 +88,14 @@ def command_helper(command):
 
 
 # ?tag lazy paginator is a more refined/easier to read version of this paginator.
-async def paginate(ctx, input_):
+async def paginate(ctx, input_: List[discord.Embed]) -> None:
     """Paginator"""
 
     try:
         pages = await ctx.send(embed=input_[0])
     except (AttributeError, TypeError):
-        return await ctx.send(embed=input_)
+        await ctx.send(embed=input_)
+        return
 
     if len(input_) == 1:
         return
@@ -109,7 +111,7 @@ async def paginate(ctx, input_):
     while paging:
         reaction = None
 
-        def check(r_, u_):
+        def check(r_, u_) -> bool:
             return u_ == ctx.author and r_.message.id == pages.id and str(r_.emoji) in r
 
         done, pending = await asyncio.wait([ctx.bot.wait_for('reaction_add', check=check, timeout=120),
@@ -171,13 +173,14 @@ async def paginate(ctx, input_):
             elif str(reaction.emoji) == r[4]:
                 m = await ctx.send(f"What page you do want to go? 1-{len(input_)}")
 
-                def pager(m_):
+                def pager(m_) -> bool:
                     return m_.author == ctx.author and m_.channel == ctx.channel and int(m_.content) > 1 <= len(input_)
 
                 try:
                     msg = int((await ctx.bot.wait_for('message', check=pager, timeout=60)).content)
                 except asyncio.TimeoutError:
-                    return await m.delete()
+                    await m.delete()
+                    return
                 current = msg - 1
                 try:
                     await pages.remove_reaction(r[4], ctx.author)
@@ -203,7 +206,7 @@ class Help(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=["h"], hidden=True)
-    async def help(self, ctx, *, command=None):
+    async def help(self, ctx, *, command: str = None) -> None:
         # TODO: v1.2 display aliases too
         if not command:
             await paginate(ctx, helper(ctx))
@@ -211,13 +214,14 @@ class Help(commands.Cog):
         if command:
             thing = ctx.bot.get_cog(command) or ctx.bot.get_command(command)
             if not thing:
-                return await ctx.send(f'Looks like "{command}" is not a command or category.')
+                await ctx.send(f'Looks like "{command}" is not a command or category.')
+                return
             if isinstance(thing, commands.Command):
                 await paginate(ctx, command_helper(thing))
             else:
                 await paginate(ctx, cog_helper(thing))
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.remove_command("help")
     bot.add_cog(Help(bot))

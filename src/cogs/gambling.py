@@ -35,7 +35,7 @@ class Gambling(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['flip', 'toss'])
-    async def coinflip(self, ctx, choice: str = None):
+    async def coinflip(self, ctx, choice: str = None) -> None:
         """Tosses a coin."""
         async def result():
             await asyncio.sleep(5)
@@ -63,7 +63,7 @@ class Gambling(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["bet"])
-    async def gamble(self, ctx, amount: int = 100):
+    async def gamble(self, ctx, amount: int = 100) -> None:
         """Gambles an amount of <:neko:521458388513849344>  """
         if amount <= 0:
             raise NotEnoughBalance
@@ -81,7 +81,7 @@ class Gambling(commands.Cog):
             await ctx.channel.send('Unfortunately you lost :(')
 
     @commands.command()
-    async def slots(self, ctx, bet: int = 10):
+    async def slots(self, ctx, bet: int = 10) -> None:
         """Play a game of slots."""
         balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)
 
@@ -105,5 +105,5 @@ class Gambling(commands.Cog):
         await ctx.channel.send(embed=embed)
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Gambling(bot))

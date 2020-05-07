@@ -19,7 +19,7 @@ class Games(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def rps(self, ctx, choice: str = ""):
+    async def rps(self, ctx, choice: str = "") -> None:
         """Play a game of rock paper scissors."""
         options = {
             "r": "rock",
@@ -38,7 +38,8 @@ class Games(commands.Cog):
                                                 timeout=60)
                 choice = choice.content
             except asyncio.TimeoutError:
-                return await m.delete()
+                await m.delete()
+                return
 
         player = choice.lower()
 
@@ -85,5 +86,5 @@ class Games(commands.Cog):
         await ctx.channel.send(embed=embed)
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Games(bot))

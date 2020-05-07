@@ -23,14 +23,14 @@ class Slots(object):
             Fruit(name='seven', weight=5, reward=110, pos=5),
         ]
 
-    def _play_round(self):
+    def _play_round(self) -> None:
         weights = [fruit.weight for fruit in self.fruits]
         selected_fruits = random.choices(self.fruits, k=3, weights=weights)
         fruit_a, fruit_b, fruit_c = selected_fruits
         self.slots = f":{self.fruits[fruit_a.pos].name}: :{self.fruits[fruit_b.pos].name}: :{self.fruits[fruit_c.pos].name}:"
         return self._pay_out(selected_fruits)
 
-    def _pay_out(self, fruits: list):
+    def _pay_out(self, fruits: list) -> None:
         most_common, count = (Counter(fruits).most_common(n=1)[0])
         if count == 1:
             self.win = 0
@@ -43,7 +43,7 @@ class Slots(object):
             self.msg = f"You won {self.win} <:neko:521458388513849344>"
 
     @staticmethod
-    def play(credit: int, bet: int = 1):
+    def play(credit: int, bet: int = 1) -> None:
         slot_machine = Slots(bet=bet)
 
         credit -= bet

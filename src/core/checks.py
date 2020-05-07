@@ -1,3 +1,6 @@
+# Builtins
+from typing import Callable
+
 # Pip
 from discord.ext import commands
 
@@ -12,8 +15,8 @@ class Checks(object):
     """Class containing all custom checks."""
 
     @staticmethod
-    def has_permissions(**permissions):
-        async def predicate(ctx):
+    def has_permissions(**permissions) -> Callable:
+        async def predicate(ctx) -> bool:
             if all(getattr(ctx.channel.permissions_for(ctx.author), name, None) == value for name, value in
                     permissions.items()):
                 return True

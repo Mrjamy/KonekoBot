@@ -24,7 +24,7 @@ class Level(commands.Cog):
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'])
-    async def level(self, ctx, user: discord.User = None):
+    async def level(self, ctx, user: discord.User = None) -> None:
         """Shows your xp stats."""
 
         if user is None:
@@ -44,7 +44,7 @@ class Level(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['score', 'levels'])
-    async def scoreboard(self, ctx, rank: int = 1):
+    async def scoreboard(self, ctx, rank: int = 1) -> None:
         """Shows the server's scoreboard."""
         rank -= 1
         if rank <= 0:
@@ -82,12 +82,12 @@ class Level(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.Cog.listener()
-    async def on_member_join(self, member):
+    async def on_member_join(self, member) -> None:
         """Stores the user in the database whenever a new user joins."""
         await self.level_repository.get(member.id, member.guild.id)
 
     @commands.Cog.listener()
-    async def on_message(self, ctx):
+    async def on_message(self, ctx) -> None:
         """Whenever a user sends a message award them with some exp."""
         if ctx.author.bot:
             return
@@ -115,5 +115,5 @@ class Level(commands.Cog):
                     pass
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Level(bot))

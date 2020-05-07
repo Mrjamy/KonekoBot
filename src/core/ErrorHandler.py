@@ -21,7 +21,7 @@ class ErrorHandler(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error):
+    async def on_command_error(self, ctx, error) -> None:
         """The event triggered when an error is raised while invoking a command.
         ctx   : Context
         error : Exception"""
@@ -110,5 +110,5 @@ class ErrorHandler(commands.Cog):
         module_logger.error(error)
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(ErrorHandler(bot))

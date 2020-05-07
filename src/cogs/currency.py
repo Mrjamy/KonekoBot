@@ -27,7 +27,7 @@ class Currency(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['balance', 'neko'])
-    async def coins(self, ctx, user: discord.User = None):
+    async def coins(self, ctx, user: discord.User = None) -> None:
         """Get your total balance."""
 
         if user is None:
@@ -42,7 +42,7 @@ class Currency(commands.Cog):
     @commands.cooldown(1, 60 * 60 * 20, BucketType.member)
     @commands.guild_only()
     @commands.command(aliases=['login', 'daily'])
-    async def claim(self, ctx):
+    async def claim(self, ctx) -> None:
         """Claim your daily login reward."""
 
         balance = await self.currency_repository.update(ctx.author.id, ctx.guild.id, +100)
@@ -54,7 +54,7 @@ class Currency(commands.Cog):
 
     @commands.guild_only()
     @commands.command()
-    async def transfer(self, ctx, user: discord.User, amount: int):
+    async def transfer(self, ctx, user: discord.User, amount: int) -> None:
         """Transfers an amount of coins to a user."""
 
         if amount <= 0:
@@ -71,7 +71,7 @@ class Currency(commands.Cog):
     @commands.is_owner()
     @commands.guild_only()
     @commands.command(hidden=True)
-    async def give(self, ctx, user: discord.User, amount: int):
+    async def give(self, ctx, user: discord.User, amount: int) -> None:
         """Give a certain amount of currency to a user."""
 
         if amount <= 0:
@@ -87,7 +87,7 @@ class Currency(commands.Cog):
     @commands.is_owner()
     @commands.guild_only()
     @commands.command(hidden=True)
-    async def take(self, ctx, user: discord.User, amount: int):
+    async def take(self, ctx, user: discord.User, amount: int) -> None:
         """Take a certain amount of currency from a user."""
 
         await self.currency_repository.update(user.id, ctx.guild.id, -amount)
@@ -99,7 +99,7 @@ class Currency(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['fortune'])
-    async def wealth(self, ctx, rank: int = 1):
+    async def wealth(self, ctx, rank: int = 1) -> None:
         """Shows the server's wealth."""
         rank -= 1
         if rank < 0:
@@ -136,5 +136,5 @@ class Currency(commands.Cog):
         await ctx.channel.send(embed=embed)
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Currency(bot))

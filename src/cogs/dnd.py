@@ -30,7 +30,7 @@ class Dungeon(commands.Cog):
 
     @commands.bot_has_permissions(embed_links=True)
     @commands.command()
-    async def roll(self, ctx, *, die: str = 'd20'):
+    async def roll(self, ctx, *, die: str = 'd20') -> None:
         """Rolls a die with standard dice notations."""
 
         dicebag = DiceBag(die)
@@ -45,12 +45,12 @@ class Dungeon(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @roll.error
-    async def on_roll_error(self, ctx, error):
+    async def on_roll_error(self, ctx, error) -> None:
         """Roll error handler"""
         embed = discord.Embed(title=f'I don\'t think this is a valid dice roll :upside_down:',
                               color=discord.Color.red())
         await ctx.channel.send(embed=embed)
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Dungeon(bot))

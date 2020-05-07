@@ -24,7 +24,7 @@ class Utility(commands.Cog):
 
     @commands.bot_has_permissions(embed_links=True)
     @commands.command()
-    async def stats(self, ctx):
+    async def stats(self, ctx) -> None:
         """Returns current statistics of the bot."""
 
         seconds = round(time() - self.bot.uptime)
@@ -47,33 +47,36 @@ class Utility(commands.Cog):
 
     @commands.guild_only()
     @commands.group()
-    async def prefix(self, ctx):
+    async def prefix(self, ctx) -> None:
         """Get Koneko's prefix."""
         if ctx.invoked_subcommand is None:
             prefix = await self.prefix_repository.get(ctx.guild)
-            return await ctx.channel.send(f"Prefix for this guild is {prefix}")
+            await ctx.channel.send(f"Prefix for this guild is {prefix}")
+            return
 
     @commands.has_permissions(administrator=True)
     @prefix.command()
-    async def set(self, ctx, prefix: str = None):
+    async def set(self, ctx, prefix: str = None) -> None:
         """Set a custom prefix for Koneko."""
         if not prefix:
-            return await ctx.channel.send(f"Please specify a prefix")
+            await ctx.channel.send(f"Please specify a prefix")
+            return
         prefix = await self.prefix_repository.insert(ctx.guild, prefix)
-        return await ctx.channel.send(f"Prefix for this guild is now {prefix}")
+        await ctx.channel.send(f"Prefix for this guild is now {prefix}")
+        return
 
     @commands.has_permissions(administrator=True)
     @prefix.command()
-    async def delete(self, ctx):
+    async def delete(self, ctx) -> None:
         """Delete koneko's custom prefix."""
         res = await self.prefix_repository.delete(ctx.guild)
         if res:
-            return await ctx.channel.send(f"Successfully deleted custom prefix `{ctx.prefix}` will now be the default prefix for this guild")
+            await ctx.channel.send(f"Successfully deleted custom prefix `{ctx.prefix}` will now be the default prefix for this guild")
         else:
-            return await ctx.channel.send("No custom prefix found")
+            await ctx.channel.send("No custom prefix found")
 
     # TODO: add command /remind <message>
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(Utility(bot))

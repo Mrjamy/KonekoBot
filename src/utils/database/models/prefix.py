@@ -11,5 +11,5 @@ class Prefix(Model):
     class Meta:
         table = 'prefixes'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.prefix)

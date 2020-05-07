@@ -23,7 +23,7 @@ class General(commands.Cog):
 
     # Command ping, listen to /ping
     @commands.command(aliases=["pong"])
-    async def ping(self, ctx):
+    async def ping(self, ctx) -> None:
         """Get the latency of the bot."""
         # Get the latency of the bot
         latency = str(round(self.bot.latency * 1000)) + " ms"
@@ -31,7 +31,7 @@ class General(commands.Cog):
         await ctx.channel.send(latency)
 
     @commands.command(aliases=["pat", "kiss", "slap", "lewd", "respect"])
-    async def hug(self, ctx, users: commands.Greedy[discord.Member]):
+    async def hug(self, ctx, users: commands.Greedy[discord.Member]) -> None:
         """Interact with other users.
 
         Possible interactions are: pat, kiss, slap, lewd and respect"""
@@ -61,7 +61,7 @@ class General(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @commands.command()
-    async def give_item(self, ctx, users: commands.Greedy[discord.Member], *, item):
+    async def give_item(self, ctx, users: commands.Greedy[discord.Member], *, item) -> None:
         """Give one or more users an item."""
         if len(users) == 0:
             users = [self.bot.user]
@@ -71,5 +71,5 @@ class General(commands.Cog):
         await ctx.channel.send(embed=discord.Embed(title=message, color=discord.Color.dark_purple()))
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(General(bot))

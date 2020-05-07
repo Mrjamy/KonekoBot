@@ -14,5 +14,5 @@ class Level(Model):
     class Meta:
         table = 'levels'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.level)

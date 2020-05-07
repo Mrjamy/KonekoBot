@@ -7,6 +7,7 @@ import logging
 import sys
 import time
 import traceback
+from typing import List
 
 # Pip
 import discord
@@ -35,7 +36,7 @@ loggerFileHandler.setFormatter(loggerFormatter)
 logger.addHandler(loggerFileHandler)
 
 
-async def _prefix(bot, msg):
+async def _prefix(bot, msg) -> List[str]:
     user_id = bot.user.id
     prefix = [f'<@!{user_id}> ', f'<@{user_id}> ']
     if msg.guild is None:
@@ -64,7 +65,7 @@ class Koneko(commands.AutoShardedBot):
         self.settings = settings
         self.db = loop.run_until_complete(run())
 
-    async def on_message(self, message: discord.Message):
+    async def on_message(self, message: discord.Message) -> None:
         if message.author.bot:
             return
         if self.user in message.mentions:
@@ -74,15 +75,15 @@ class Koneko(commands.AutoShardedBot):
                 pass
         await self.process_commands(message)
 
-    async def start(self, token):
+    async def start(self, token) -> None:
         await self.login(token, bot=True)
         await self.connect(reconnect=True)
 
-    async def logout(self):
+    async def logout(self) -> None:
         await super().logout()
         exit(0)
 
-    def run(self):
+    def run(self) -> None:
         try:
             self.loop.run_until_complete(self.start(config.get('Koneko', 'token')))
         except KeyboardInterrupt:

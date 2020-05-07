@@ -14,5 +14,5 @@ class Currency(Model):
     class Meta(object):
         table = 'balances'
 
-    def __str__(self):
+    def __str__(self) -> str:
         return str(self.amount)

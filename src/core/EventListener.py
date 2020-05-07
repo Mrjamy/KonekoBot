@@ -20,7 +20,7 @@ class EventListener(commands.Cog):
         self.bot = bot
 
     @commands.Cog.listener()
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         """KonekoBot on_ready event."""
         await self.bot.change_presence(
             status=discord.Status.online,
@@ -38,5 +38,5 @@ class EventListener(commands.Cog):
         self.bot.command_count += 1
 
 
-def setup(bot):
+def setup(bot) -> None:
     bot.add_cog(EventListener(bot))
