@@ -22,6 +22,7 @@ class Games(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # pylint: disable=too-many-branches
     @commands.command()
     async def rps(self, ctx, choice: str = "") -> None:
         """Play a game of rock paper scissors."""

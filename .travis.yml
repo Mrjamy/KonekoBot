@@ -30,7 +30,7 @@ jobs:
     # Run tests
     - stage: test
       python: 3.7
-      name: "pep8 conformance"
+      name: "Code quality insurance"
       install:
         - pip install pycodestyle
         - pip install flake8
