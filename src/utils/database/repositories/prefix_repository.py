@@ -1,3 +1,7 @@
+"""
+Prefix repository.
+"""
+
 # Builtins
 from typing import List
 
@@ -14,7 +18,11 @@ config.read('config.ini')
 module_logger = logging.getLogger('koneko.PrefixRepository')
 
 
-class PrefixRepository(object):
+class PrefixRepository:
+    """Prefix repository
+
+    Contains methods to work with the Prefix model."""
+
     @staticmethod
     async def get(guild_id: int) -> List[Prefix]:
         """ Return all prefixes of a guild.
@@ -73,5 +81,5 @@ class PrefixRepository(object):
         if prefix:
             await prefix.delete()
             return True
-        else:
-            return False
+
+        return False

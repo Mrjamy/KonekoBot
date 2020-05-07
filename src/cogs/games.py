@@ -1,3 +1,7 @@
+"""
+Module containing games and related commands.
+"""
+
 # Builtins
 import asyncio
 import logging
@@ -13,7 +17,7 @@ module_logger = logging.getLogger('koneko.Games')
 class Games(commands.Cog):
     """Some fun games."""
 
-    __slots__ = 'bot'
+    __slots__ = ('bot',)
 
     def __init__(self, bot):
         self.bot = bot
@@ -87,4 +91,5 @@ class Games(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(Games(bot))

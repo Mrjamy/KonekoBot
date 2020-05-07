@@ -1,3 +1,7 @@
+"""
+Module containing gambling related commands.
+"""
+
 # Builtins
 import asyncio
 import logging
@@ -90,7 +94,7 @@ class Gambling(commands.Cog):
 
         mutation = -bet
         slotmachine = Slots(bet=bet)
-        slotmachine._play_round()
+        slotmachine.play_round()
         mutation += slotmachine.win
 
         await self.currency_repository.update(ctx.author.id, ctx.guild.id, mutation)
@@ -106,4 +110,5 @@ class Gambling(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(Gambling(bot))

@@ -1,3 +1,7 @@
+"""
+Module containing commands related to the leveling system.
+"""
+
 # Builtins
 import logging
 
@@ -30,7 +34,7 @@ class Level(commands.Cog):
         if user is None:
             user = ctx.author
         if user.bot:
-            embed = discord.Embed(title=f'This is a bot.',
+            embed = discord.Embed(title='This is a bot.',
                                   color=discord.Color.red())
             await ctx.channel.send(embed=embed)
             return
@@ -116,4 +120,5 @@ class Level(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(Level(bot))

@@ -1,3 +1,7 @@
+"""
+Module containing currency related commands.
+"""
+
 # Builtins
 import logging
 
@@ -137,4 +141,5 @@ class Currency(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(Currency(bot))

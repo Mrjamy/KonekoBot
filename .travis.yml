@@ -34,9 +34,11 @@ jobs:
       install:
         - pip install pycodestyle
         - pip install flake8
+        - pip install pylint
       script:
         - pycodestyle . --ignore=E501
-        - flake8 --ignore E501
+        - flake8
+        - pylint -j 0 src
 
     # Force a boot.
     - stage: run

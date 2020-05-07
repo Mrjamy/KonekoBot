@@ -1,0 +1,9 @@
+[flake8]
+ignore = E501
+exclude =
+    .git,
+    .github,
+    __pycache__,
+    backups,
+    docs
+max-complexity = 50
