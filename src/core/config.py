@@ -25,12 +25,10 @@ class Settings(object):
             "gambling",
             "games",
             "general",
-            # "goodbye",
             "help",
             "level",
             # "stats",
             "utility",
-            # "welcome",
         ]
         self.core_extensions = [
             "ErrorHandler",
