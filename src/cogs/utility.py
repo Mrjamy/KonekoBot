@@ -38,7 +38,7 @@ class Utility(commands.Cog):
         command_count = self.bot.command_count + 1
 
         embed = discord.Embed(title="Koneko's Statistics", description="", color=discord.Color.dark_purple())
-        embed.add_field(name="Guilds", value=guilds, inline=True)
+        embed.add_field(name="Servers", value=guilds, inline=True)
         embed.add_field(name="Users", value=members, inline=True)
         embed.add_field(name="Uptime", value=uptime, inline=True)
         embed.add_field(name="Commands executed", value=command_count, inline=True)
