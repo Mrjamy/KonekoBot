@@ -7,7 +7,8 @@ extension-pkg-whitelist=
 
 # Add files or directories to the blacklist. They should be base names, not
 # paths.
-ignore=CVS
+ignore=CVS,
+       help.py
 
 # Add files or directories matching the regex patterns to the blacklist. The
 # regex matches against base names, not paths.
@@ -140,8 +141,10 @@ disable=print-statement,
         exception-escape,
         comprehension-escape,
         too-few-public-methods,
-        C0301,
-        C0103
+        line-too-long,
+        invalid-name,
+        import-error,
+        fixme
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -361,10 +364,10 @@ ignore-comments=yes
 ignore-docstrings=yes
 
 # Ignore imports when computing similarities.
-ignore-imports=no
+ignore-imports=yes
 
 # Minimum lines number of a similarity.
-min-similarity-lines=4
+min-similarity-lines=15
 
 
 [SPELLING]
