@@ -25,6 +25,9 @@ class Admin(commands.Cog):
         self.currency_repository = CurrencyRepository()
 
     def cog_check(self, ctx):
+        """Cog check
+
+        Only returns true for bot owner."""
         return self.bot.is_owner(ctx.author)
 
     # TODO: allow for custom a status
