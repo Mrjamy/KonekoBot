@@ -27,14 +27,10 @@ class Currency(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['balance', 'neko'])
-    async def coins(self, ctx, user=None):
+    async def coins(self, ctx, user: discord.User = None):
         """Get your total balance."""
 
-        # TODO: add user transformer in function argument
-
-        if len(ctx.message.mentions) == 1:
-            user = ctx.message.mentions[0]
-        else:
+        if user is None:
             user = ctx.author
 
         balance = await self.currency_repository.get(user.id, ctx.guild.id)
@@ -58,19 +54,10 @@ class Currency(commands.Cog):
 
     @commands.guild_only()
     @commands.command()
-    async def transfer(self, ctx, user, amount: int):
+    async def transfer(self, ctx, user: discord.User, amount: int):
         """Transfers an amount of coins to a user."""
 
-        # TODO: add user transformer in function argument
-
         if amount <= 0:
-            return
-        if len(ctx.message.mentions) == 1:
-            user = ctx.message.mentions[0]
-        else:
-            embed = discord.Embed(title=f'Could not find a user to transfer the {self.emoji.cash} to.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
             return
 
         await self.currency_repository.update(ctx.author.id, ctx.guild.id, -amount)
@@ -84,19 +71,10 @@ class Currency(commands.Cog):
     @commands.is_owner()
     @commands.guild_only()
     @commands.command(hidden=True)
-    async def give(self, ctx, user, amount: int):
+    async def give(self, ctx, user: discord.User, amount: int):
         """Give a certain amount of currency to a user."""
 
-        # TODO: add user transformer in function argument
-
         if amount <= 0:
-            return
-        if len(ctx.message.mentions) == 1:
-            user = ctx.message.mentions[0]
-        else:
-            embed = discord.Embed(title=f'Could not find a user to give the {self.emoji.cash} to.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
             return
 
         await self.currency_repository.update(user.id, ctx.guild.id, amount)
@@ -109,18 +87,8 @@ class Currency(commands.Cog):
     @commands.is_owner()
     @commands.guild_only()
     @commands.command(hidden=True)
-    async def take(self, ctx, user, amount: int):
+    async def take(self, ctx, user: discord.User, amount: int):
         """Take a certain amount of currency from a user."""
-
-        # TODO: add user transformer in function argument
-
-        if len(ctx.message.mentions) == 1:
-            user = ctx.message.mentions[0]
-        else:
-            embed = discord.Embed(title=f'Could not find a user to remove {self.emoji.cash} from.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
-            return
 
         await self.currency_repository.update(user.id, ctx.guild.id, -amount)
 

@@ -24,18 +24,16 @@ class Level(commands.Cog):
     # TODO: send a fancy card then responding.
     @commands.guild_only()
     @commands.command(aliases=['xp', 'exp', 'experience'])
-    async def level(self, ctx, user=None):
+    async def level(self, ctx, user: discord.User = None):
         """Shows your xp stats."""
 
-        if len(ctx.message.mentions) == 1:
-            if ctx.author.bot:
-                embed = discord.Embed(title=f'This user is a bot.',
-                                      color=discord.Color.red())
-                await ctx.channel.send(embed=embed)
-                return
-            user = ctx.message.mentions[0]
-        else:
+        if user is None:
             user = ctx.author
+        if user.bot:
+            embed = discord.Embed(title=f'This is a bot.',
+                                  color=discord.Color.red())
+            await ctx.channel.send(embed=embed)
+            return
 
         level = await self.level_repository.get(user.id, ctx.guild.id)
 
@@ -96,23 +94,23 @@ class Level(commands.Cog):
         if not ctx.guild:
             return
 
-        level = await self.level_repository.add_xp(ctx.author.id, ctx.guild.id)
-        await self.level_up(level, ctx)
-
-    async def level_up(self, user, ctx):
-        up = await self.level_repository.levelup_check(ctx.author.id, ctx.guild.id)
+        await self.level_repository.add_xp(ctx.author.id, ctx.guild.id)
+        up = await self.level_repository.levelup_check(ctx.author.id,
+                                                       ctx.guild.id)
         level = await self.level_repository.get(ctx.author.id, ctx.guild.id)
 
         if up:
             try:
-                embed = discord.Embed(title=f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
-                                            f'{level.level}',
-                                      color=discord.Color.dark_purple())
+                embed = discord.Embed(
+                    title=f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
+                          f'{level.level}',
+                    color=discord.Color.dark_purple())
                 await ctx.channel.send(embed=embed)
             except discord.errors.Forbidden:
                 try:
-                    await ctx.channel.send(f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
-                                           f'{level.level}')
+                    await ctx.channel.send(
+                        f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
+                        f'{level.level}')
                 except discord.errors.Forbidden:
                     pass
 
