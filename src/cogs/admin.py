@@ -5,6 +5,8 @@ import logging
 # Pip
 import discord
 from discord.ext import commands
+from src.utils.database.repositories.currency_repository import \
+    CurrencyRepository
 
 module_logger = logging.getLogger('koneko.Admin')
 
@@ -12,10 +14,11 @@ module_logger = logging.getLogger('koneko.Admin')
 class Admin(commands.Cog):
     """Commands only for the bot owner"""
 
-    __slots__ = 'bot'
+    __slots__ = 'bot', 'currency_repository'
 
     def __init__(self, bot):
         self.bot = bot
+        self.currency_repository = CurrencyRepository()
 
     async def cog_check(self, ctx):
         return await self.bot.is_owner(ctx.author)
@@ -34,6 +37,16 @@ class Admin(commands.Cog):
         activity = activities[ctx.invoked_with]
 
         await self.bot.change_presence(status=discord.Status.online, activity=activity)
+
+    # noinspection PyUnusedLocal
+    @commands.command(aliases=["export"], hidden=True)
+    async def export_db(self, ctx):
+        await self.currency_repository.export_db()
+
+    # noinspection PyUnusedLocal
+    @commands.command(aliases=["import"], hidden=True)
+    async def import_db(self, ctx):
+        await self.currency_repository.import_db()
 
     @commands.group(hidden=True)
     async def sentence(self, ctx):

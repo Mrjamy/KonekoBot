@@ -21,3 +21,6 @@ nohup.out
 
 # Os files
 .DS_Store
+
+# Database backups
+backups/

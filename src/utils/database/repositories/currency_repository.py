@@ -1,4 +1,6 @@
 # builtins
+import json
+import jsonpickle
 import logging
 
 # Locals
@@ -88,3 +90,18 @@ class CurrencyRepository(object):
             guild=guild_id,
             amount=0
         )
+
+    @staticmethod
+    async def export_db(file: str = 'currency_db.json') -> None:
+        data = await Currency.all().order_by('-amount')
+
+        with open(f'backups/{file}', 'w') as f:
+            encoded = jsonpickle.encode(data)
+            json.dump(encoded, f, indent=4, sort_keys=True)
+
+    @staticmethod
+    async def import_db(file: str = 'currency_db.json') -> None:
+        with open(f'backups/{file}') as f:
+            data = jsonpickle.decode(f)
+
+            await Currency.bulk_create(data)
