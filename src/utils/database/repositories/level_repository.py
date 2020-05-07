@@ -2,6 +2,7 @@
 import logging
 import random
 from datetime import datetime
+from typing import List
 
 # Locals
 from src.utils.database.models.level import Level
@@ -31,7 +32,7 @@ class LevelRepository(object):
         return level
 
     @staticmethod
-    async def get_all(guild_id: int, offset: int = 0) -> list:
+    async def get_all(guild_id: int, offset: int = 0) -> List[Level]:
         """ Searches the database for the top 10 users based on level. the
         parameter offset can be used to pick a custom starting point.
         Parameters

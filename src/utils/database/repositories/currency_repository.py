@@ -2,6 +2,7 @@
 import json
 import jsonpickle
 import logging
+from typing import List
 
 # Locals
 from src.core.exceptions import NotEnoughBalance
@@ -32,7 +33,7 @@ class CurrencyRepository(object):
         return currency
 
     @staticmethod
-    async def get_all(guild_id: int, offset: int = 0) -> list:
+    async def get_all(guild_id: int, offset: int = 0) -> List[Currency]:
         """ Searches the database for the top 10 users based on currency. the
         parameter offset can be used to pick a custom starting point.
         Parameters

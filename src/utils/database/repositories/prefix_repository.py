@@ -1,3 +1,6 @@
+# Builtins
+from typing import List
+
 # Pip
 import configparser
 import logging
@@ -13,7 +16,7 @@ module_logger = logging.getLogger('koneko.PrefixRepository')
 
 class PrefixRepository(object):
     @staticmethod
-    async def get(guild_id: int) -> list:
+    async def get(guild_id: int) -> List[Prefix]:
         """ Return all prefixes of a guild.
         Parameters
         ------------
@@ -31,7 +34,7 @@ class PrefixRepository(object):
         return _prefix
 
     @staticmethod
-    async def insert(guild_id: int, prefix: str) -> list:
+    async def insert(guild_id: int, prefix: str) -> List[Prefix]:
         """ Set a guild specific prefix
         Parameters
         ------------
