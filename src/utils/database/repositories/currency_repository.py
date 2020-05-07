@@ -22,8 +22,7 @@ class CurrencyRepository:
 
     Contains methods to work with the Currency model."""
 
-    @staticmethod
-    async def get(user_id: int, guild_id: int) -> Currency:
+    async def get(self, user_id: int, guild_id: int) -> Currency:
         """ Searches the database for a specific user, if not found one will be
         created.
         Parameters
@@ -39,7 +38,7 @@ class CurrencyRepository:
         ).first()
 
         if currency is None:
-            currency = await CurrencyRepository.insert(user_id, guild_id)
+            currency = await self.insert(user_id, guild_id)
         return currency
 
     @staticmethod
@@ -59,17 +58,16 @@ class CurrencyRepository:
             .offset(offset) \
             .all()
 
-    @staticmethod
-    async def update(user_id: int, guild_id: int, amount: int = +100) -> Currency:
+    async def update(self, user_id: int, guild_id: int, amount: int = +100) -> Currency:
         """ updates an user's balance by amount, positve or negative.
-        ------------
+        ------------GA
         user_id: int [Required]
             The user's discord snowflake.
         guild_id: int [required]
             The guild the user is related to.
         """
         async def check():
-            balance = await CurrencyRepository.get(user_id, guild_id)
+            balance = await self.get(user_id, guild_id)
             if not bool(balance.amount >= amount):
                 raise NotEnoughBalance
 
@@ -77,7 +75,7 @@ class CurrencyRepository:
         if amount < 0:
             await check()
 
-        currency = await CurrencyRepository.get(user_id, guild_id)
+        currency = await self.get(user_id, guild_id)
 
         bal = currency.amount + amount
         await Currency.filter(
@@ -88,7 +86,7 @@ class CurrencyRepository:
         )
         # Method .update() returns a NoneType so we need to aquire a new
         # copy of the currency object
-        return await CurrencyRepository.get(user_id, guild_id)
+        return await self.get(user_id, guild_id)
 
     @staticmethod
     async def insert(user_id: int, guild_id: int) -> Currency:

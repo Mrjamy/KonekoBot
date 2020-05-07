@@ -41,8 +41,7 @@ class PrefixRepository:
             _prefix.append(str(prefix))
         return _prefix
 
-    @staticmethod
-    async def insert(guild_id: int, prefix: str) -> List[Prefix]:
+    async def insert(self, guild_id: int, prefix: str) -> List[Prefix]:
         """ Set a guild specific prefix
         Parameters
         ------------
@@ -65,7 +64,7 @@ class PrefixRepository:
             ).first().update(
                 prefix=prefix
             )
-        return await PrefixRepository.get(guild_id)
+        return await self.get(guild_id)
 
     @staticmethod
     async def delete(guild_id: int) -> bool:
