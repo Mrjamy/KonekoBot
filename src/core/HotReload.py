@@ -19,7 +19,7 @@ class HotReload(commands.Cog):
         return await self.bot.is_owner(ctx.author)
 
     @commands.command(aliases=["load"], hidden=True)
-    async def reload(self, ctx, cog: str)  -> None:
+    async def reload(self, ctx, cog: str) -> None:
         await ctx.channel.send(F"loaded {cog}")
 
     @commands.command(hidden=True)
