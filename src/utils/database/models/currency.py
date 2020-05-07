@@ -1,3 +1,7 @@
+"""
+Currency model.
+"""
+
 # Pip
 from tortoise import fields
 from tortoise.models import Model
@@ -11,7 +15,8 @@ class Currency(Model):
     guild = fields.TextField(required=True)
     amount = fields.IntField(required=True)
 
-    class Meta(object):
+    class Meta:
+        """Model metadata"""
         table = 'balances'
 
     def __str__(self) -> str:

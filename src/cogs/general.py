@@ -1,3 +1,9 @@
+"""
+Module containing general commands.
+
+General in this sense is quite broad.
+"""
+
 # Builtins
 import json
 import logging
@@ -16,7 +22,7 @@ module_logger = logging.getLogger('koneko.General')
 class General(commands.Cog):
     """General commands."""
 
-    __slots__ = 'bot'
+    __slots__ = ('bot',)
 
     def __init__(self, bot):
         self.bot = bot
@@ -72,4 +78,5 @@ class General(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(General(bot))

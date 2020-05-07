@@ -1,9 +1,15 @@
+"""
+Level model.
+"""
+
 # Pip
 from tortoise import fields
 from tortoise.models import Model
 
 
 class Level(Model):
+    """Level table class."""
+
     id = fields.IntField(pk=True)
     snowflake = fields.TextField(required=True)
     guild = fields.TextField(required=True)
@@ -12,6 +18,7 @@ class Level(Model):
     last_message = fields.DatetimeField(auto_now=True)
 
     class Meta:
+        """Model metadata"""
         table = 'levels'
 
     def __str__(self) -> str:

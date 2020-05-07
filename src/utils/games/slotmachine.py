@@ -22,8 +22,9 @@ class Slots(object):
             Fruit(name='bell', weight=20, reward=11, pos=4),
             Fruit(name='seven', weight=5, reward=110, pos=5),
         ]
+        self.slots = ""
 
-    def _play_round(self) -> None:
+    def play_round(self) -> None:
         weights = [fruit.weight for fruit in self.fruits]
         selected_fruits = random.choices(self.fruits, k=3, weights=weights)
         fruit_a, fruit_b, fruit_c = selected_fruits
@@ -47,7 +48,7 @@ class Slots(object):
         slot_machine = Slots(bet=bet)
 
         credit -= bet
-        slot_machine._play_round()
+        slot_machine.play_round()
         credit += slot_machine.win
 
         module_logger.debug(slot_machine.slots)

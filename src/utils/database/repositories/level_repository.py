@@ -1,3 +1,7 @@
+"""
+Level repository.
+"""
+
 # Builtins
 import logging
 import random
@@ -10,7 +14,11 @@ from src.utils.database.models.level import Level
 module_logger = logging.getLogger('koneko.LevelRepository')
 
 
-class LevelRepository(object):
+class LevelRepository:
+    """Level repository
+
+    Contains methods to work with the Level model."""
+
     @staticmethod
     async def get(user_id: int, guild_id: int) -> Level:
         """ Searches the database for a specific user, if not found one will be

@@ -10,7 +10,7 @@ module_logger = logging.getLogger('koneko.HotReloading')
 class HotReload(commands.Cog):
     """Class for reloading ."""
 
-    __slots__ = 'bot'
+    __slots__ = ('bot',)
 
     def __init__(self, bot):
         self.bot = bot
@@ -28,4 +28,5 @@ class HotReload(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(HotReload(bot))

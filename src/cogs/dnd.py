@@ -1,3 +1,9 @@
+"""
+Module related to DND
+
+This is a wip and might become a project of it's own.
+"""
+
 # Builtins
 import logging
 
@@ -11,11 +17,6 @@ from src.utils.user.nick_helper import Name
 
 # TODO: add a dungeon/dnd based game.
 # TODO: add command /dungeon <arguments>
-"""
-explore
-battle
-etc.
-"""
 
 module_logger = logging.getLogger('koneko.Dungeon')
 
@@ -23,7 +24,7 @@ module_logger = logging.getLogger('koneko.Dungeon')
 class Dungeon(commands.Cog):
     """Explore the dungeon"""
 
-    __slots__ = 'bot'
+    __slots__ = ('bot',)
 
     def __init__(self, bot):
         self.bot = bot
@@ -45,12 +46,13 @@ class Dungeon(commands.Cog):
         await ctx.channel.send(embed=embed)
 
     @roll.error
-    async def on_roll_error(self, ctx, error) -> None:
+    async def on_roll_error(self, ctx, _error) -> None:
         """Roll error handler"""
-        embed = discord.Embed(title=f'I don\'t think this is a valid dice roll :upside_down:',
+        embed = discord.Embed(title='I don\'t think this is a valid dice roll :upside_down:',
                               color=discord.Color.red())
         await ctx.channel.send(embed=embed)
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(Dungeon(bot))

@@ -200,7 +200,7 @@ async def paginate(ctx, input_: List[discord.Embed]) -> None:
 class Help(commands.Cog):
     """Help command"""
 
-    __slots__ = 'bot'
+    __slots__ = ('bot',)
 
     def __init__(self, bot):
         self.bot = bot
@@ -223,5 +223,6 @@ class Help(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.remove_command("help")
     bot.add_cog(Help(bot))

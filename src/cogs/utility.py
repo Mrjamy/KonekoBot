@@ -1,3 +1,7 @@
+"""
+Module containing utility commands.
+"""
+
 # Builtins
 import logging
 from datetime import datetime, timedelta
@@ -59,7 +63,7 @@ class Utility(commands.Cog):
     async def set(self, ctx, prefix: str = None) -> None:
         """Set a custom prefix for Koneko."""
         if not prefix:
-            await ctx.channel.send(f"Please specify a prefix")
+            await ctx.channel.send("Please specify a prefix")
             return
         prefix = await self.prefix_repository.insert(ctx.guild, prefix)
         await ctx.channel.send(f"Prefix for this guild is now {prefix}")
@@ -79,4 +83,5 @@ class Utility(commands.Cog):
 
 
 def setup(bot) -> None:
+    """The setup function to add this cog to Koneko."""
     bot.add_cog(Utility(bot))
