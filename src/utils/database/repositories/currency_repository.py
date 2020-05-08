@@ -11,7 +11,6 @@ import json
 import jsonpickle
 
 # Locals
-from src.core.exceptions import NotEnoughBalance
 from src.utils.database.models.currency import Currency
 
 module_logger = logging.getLogger('koneko.CurrencyRepository')
@@ -60,20 +59,15 @@ class CurrencyRepository:
 
     async def update(self, user_id: int, guild_id: int, amount: int = +100) -> Currency:
         """ updates an user's balance by amount, positve or negative.
-        ------------GA
+        Parameters
+        ------------
         user_id: int [Required]
             The user's discord snowflake.
         guild_id: int [required]
             The guild the user is related to.
+        amount: int [required]
+            The amount to add or subtract from the user's balance.
         """
-        async def check():
-            balance = await self.get(user_id, guild_id)
-            if not bool(balance.amount >= amount):
-                raise NotEnoughBalance
-
-        # Check if a user has the funds to proceed
-        if amount < 0:
-            await check()
 
         currency = await self.get(user_id, guild_id)
 

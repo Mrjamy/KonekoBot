@@ -11,6 +11,8 @@ from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
 
 # Locals
+from src.core.exceptions import NotEnoughBalance
+from src.utils.database.models.currency import Currency as CurrencyModel
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
 from src.utils.emojis.emoji import Emoji
@@ -28,6 +30,13 @@ class Currency(commands.Cog):
         self.bot = bot
         self.currency_repository = CurrencyRepository()
         self.emoji = Emoji()
+
+    async def balance_check(self, user_id: int, guild_id: int, amount: int) -> bool:
+        balance = await self.currency_repository.get(user_id, guild_id)
+
+        if not bool(balance.amount >= amount):
+            raise NotEnoughBalance
+        return True
 
     @commands.guild_only()
     @commands.command(aliases=['balance', 'neko'])
@@ -64,13 +73,17 @@ class Currency(commands.Cog):
         if amount <= 0:
             return
 
-        await self.currency_repository.update(ctx.author.id, ctx.guild.id, -amount)
-        await self.currency_repository.update(user.id, ctx.guild.id, +amount)
+        author_id = ctx.author.id
+        guild_id = ctx.guild.id
 
-        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} successfully transferred {amount} '
-                                    f'{self.emoji.cash} to {Name.nick_parser(user)}.',
-                              color=discord.Color.green())
-        await ctx.channel.send(embed=embed)
+        if await self.balance_check(author_id, ctx.guild.id, amount):
+            await self.currency_repository.update(author_id, guild_id, -amount)
+            await self.currency_repository.update(user.id, guild_id, +amount)
+
+            embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} successfully transferred {amount} '
+                                        f'{self.emoji.cash} to {Name.nick_parser(user)}.',
+                                  color=discord.Color.green())
+            await ctx.channel.send(embed=embed)
 
     @commands.is_owner()
     @commands.guild_only()

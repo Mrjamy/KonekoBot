@@ -31,6 +31,13 @@ class Gambling(commands.Cog):
         self.bot = bot
         self.currency_repository = CurrencyRepository()
 
+    async def balance_check(self, user_id: int, guild_id: int, amount: int) -> bool:
+        balance = await self.currency_repository.get(user_id, guild_id)
+
+        if not bool(balance.amount >= amount):
+            raise NotEnoughBalance
+        return True
+
     # TODO: add options to play blackjack.
 
     # TODO: add options to play roulette.
@@ -70,43 +77,42 @@ class Gambling(commands.Cog):
     async def gamble(self, ctx, amount: int = 100) -> None:
         """Gambles an amount of <:neko:521458388513849344>  """
         if amount <= 0:
-            raise NotEnoughBalance
+            return
 
-        balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)
+        author_id = ctx.author.id
+        guild_id = ctx.guild.id
 
-        if not 0 <= amount <= balance.amount:
-            raise NotEnoughBalance
-
-        if random.randint(1, 100) > 51:
-            await self.currency_repository.update(ctx.author.id, ctx.guild.id, +amount)
-            await ctx.channel.send('Congratulations you doubled your bet!')
-        else:
-            await self.currency_repository.update(ctx.author.id, ctx.guild.id, -amount)
-            await ctx.channel.send('Unfortunately you lost :(')
+        if await self.balance_check(author_id, ctx.guild.id, amount):
+            if random.randint(1, 100) > 51:
+                await self.currency_repository.update(author_id, guild_id, +amount)
+                await ctx.channel.send('Congratulations you doubled your bet!')
+            else:
+                await self.currency_repository.update(author_id, guild_id, -amount)
+                await ctx.channel.send('Unfortunately you lost :(')
 
     @commands.command()
     async def slots(self, ctx, bet: int = 10) -> None:
         """Play a game of slots."""
-        balance = await self.currency_repository.get(ctx.author.id, ctx.guild.id)
+        if bet <= 0:
+            return
 
-        if not 0 <= bet <= balance.amount:
-            raise NotEnoughBalance
+        if await self.balance_check(ctx.author.id, ctx.guild.id, bet):
+            mutation = -bet
+            slotmachine = Slots(bet=bet)
+            slotmachine.play_round()
+            mutation += slotmachine.win
 
-        mutation = -bet
-        slotmachine = Slots(bet=bet)
-        slotmachine.play_round()
-        mutation += slotmachine.win
+            await self.currency_repository.update(ctx.author.id, ctx.guild.id,
+                                                  mutation)
 
-        await self.currency_repository.update(ctx.author.id, ctx.guild.id, mutation)
+            # TODO: add emojoi\'s to the embed.
+            embed = discord.Embed(title=f"You pulled the slots! \n {slotmachine.slots}",
+                                  color=discord.Color.dark_purple())
+            await ctx.channel.send(embed=embed)
 
-        # TODO: add emojoi\'s to the embed.
-        embed = discord.Embed(title=f"You pulled the slots! \n {slotmachine.slots}",
-                              color=discord.Color.dark_purple())
-        await ctx.channel.send(embed=embed)
-
-        embed = discord.Embed(title=f"Your bet {bet}, {slotmachine.msg}",
-                              color=discord.Color.dark_purple())
-        await ctx.channel.send(embed=embed)
+            embed = discord.Embed(title=f"Your bet {bet}, {slotmachine.msg}",
+                                  color=discord.Color.dark_purple())
+            await ctx.channel.send(embed=embed)
 
 
 def setup(bot) -> None:
