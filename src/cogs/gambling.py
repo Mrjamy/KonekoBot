@@ -32,6 +32,7 @@ class Gambling(commands.Cog):
         self.currency_repository = CurrencyRepository()
 
     async def balance_check(self, user_id: int, guild_id: int, amount: int) -> bool:
+        """Check if the user has enough balance"""
         balance = await self.currency_repository.get(user_id, guild_id)
 
         if not bool(balance.amount >= amount):

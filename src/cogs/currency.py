@@ -12,7 +12,6 @@ from discord.ext.commands.cooldowns import BucketType
 
 # Locals
 from src.core.exceptions import NotEnoughBalance
-from src.utils.database.models.currency import Currency as CurrencyModel
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
 from src.utils.emojis.emoji import Emoji
@@ -32,6 +31,7 @@ class Currency(commands.Cog):
         self.emoji = Emoji()
 
     async def balance_check(self, user_id: int, guild_id: int, amount: int) -> bool:
+        """Check if the user has enough balance"""
         balance = await self.currency_repository.get(user_id, guild_id)
 
         if not bool(balance.amount >= amount):
