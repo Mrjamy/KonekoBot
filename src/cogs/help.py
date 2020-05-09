@@ -224,5 +224,4 @@ class Help(commands.Cog):
 
 def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.remove_command("help")
     bot.add_cog(Help(bot))
