@@ -103,7 +103,3 @@ class DiscordEmbed:
         # Message could not be delivered.
         except (discord.Forbidden, discord.HTTPException):
             pass
-        # Message could not be delivered for possibly fixable reasons.
-        except Exception as exception:
-            # Log the exception type for proper handling the next occurrence.
-            module_logger.error(f"{type(exception)} - error delivering message")
