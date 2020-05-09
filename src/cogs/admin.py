@@ -37,13 +37,16 @@ class Admin(commands.Cog):
 
         activities = {
             'game': discord.Game(name=name),
-            'listen': discord.Activity(type=discord.ActivityType.listening, name=name),
-            'watch': discord.Activity(type=discord.ActivityType.watching, name=name)
+            'listen': discord.Activity(type=discord.ActivityType.listening,
+                                       name=name),
+            'watch': discord.Activity(type=discord.ActivityType.watching,
+                                      name=name)
         }
 
         activity = activities[ctx.invoked_with]
 
-        await self.bot.change_presence(status=discord.Status.online, activity=activity)
+        await self.bot.change_presence(status=discord.Status.online,
+                                       activity=activity)
 
     @commands.command(aliases=["export"], hidden=True)
     async def export_db(self, _ctx) -> None:
