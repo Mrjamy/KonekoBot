@@ -14,7 +14,8 @@ src/utils/database/config\.json
 src/core/images/tmp/
 
 # Log files
-/koneko.log
+*.log
+logs/
 
 # Os files
 .DS_Store
