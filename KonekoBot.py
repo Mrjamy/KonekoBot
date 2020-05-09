@@ -22,11 +22,16 @@ if sys.version_info < (3, 6):
     raise ImportError("Python 3.6 or greater is required")
 
 
+# Get the current asyncio event loop.
 loop = asyncio.get_event_loop()
+# Add database connection to the event loop.
+loop.run_until_complete(run())
+
 settings = Settings()
 config = configparser.ConfigParser()
 config.read('config.ini')
-# Add a file logger to koneko
+
+# Add a file logger to koneko.
 logger = logging.getLogger('koneko')
 logger.setLevel(logging.DEBUG)
 loggerFileHandler = logging.FileHandler('koneko.log')
@@ -63,7 +68,6 @@ class Koneko(commands.AutoShardedBot):
         self.command_count = 0
         self.dry_run = settings.dry_run
         self.settings = settings
-        self.db = loop.run_until_complete(run())
 
     async def on_message(self, message: discord.Message) -> None:
         if message.author.bot:
