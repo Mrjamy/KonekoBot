@@ -8,7 +8,7 @@ from discord.ext import commands
 
 # locals
 from src.core.exceptions import NotEnoughBalance
-from src.core.Message import DiscordEmbed
+from src.utils.general import DiscordEmbed
 
 module_logger = logging.getLogger('koneko.ErrorHandler')
 

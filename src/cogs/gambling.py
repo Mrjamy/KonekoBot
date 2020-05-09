@@ -16,7 +16,7 @@ from src.core.exceptions import NotEnoughBalance
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
 from src.utils.games.slotmachine import Slots
-from src.utils.user.nick_helper import Name
+from src.utils.general import NameTransformer
 
 module_logger = logging.getLogger('koneko.Gambling')
 
@@ -53,7 +53,7 @@ class Gambling(commands.Cog):
             await asyncio.sleep(5)
             if choice in options:
                 if choice == flip:
-                    await ctx.channel.send(f'Congratulations {Name.nick_parser(ctx.message.author)}! '
+                    await ctx.channel.send(f'Congratulations {NameTransformer(ctx.message.author)}! '
                                            f'you guessed right it was {flip}')
                 else:
                     await ctx.channel.send(f'The coin landed on {flip}')

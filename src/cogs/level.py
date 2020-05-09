@@ -11,7 +11,7 @@ from discord.ext import commands
 
 # Locals
 from src.utils.database.repositories.level_repository import LevelRepository
-from src.utils.user.nick_helper import Name
+from src.utils.general import NameTransformer
 
 module_logger = logging.getLogger('koneko.Level')
 
@@ -42,7 +42,7 @@ class Level(commands.Cog):
         level = await self.level_repository.get(user.id, ctx.guild.id)
 
         up = (level.level + 1) ** 4
-        embed = discord.Embed(title=f'`{Name.nick_parser(user)}` is level {level.level}, {level.experience}/{up} xp',
+        embed = discord.Embed(title=f'`{NameTransformer(user)}` is level {level.level}, {level.experience}/{up} xp',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -69,7 +69,7 @@ class Level(commands.Cog):
                 if user.experience > 0:
                     try:
                         embed.add_field(
-                            name=f'#{count} {Name.nick_parser(u)}',
+                            name=f'#{count} {NameTransformer(u)}',
                             value=f'Level {user.level}, {user.experience}/{up} xp',
                             inline=False
                         )
@@ -106,14 +106,14 @@ class Level(commands.Cog):
         if up:
             try:
                 embed = discord.Embed(
-                    title=f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
+                    title=f'`{NameTransformer(ctx.author)}` has leveled up to level '
                           f'{level.level}',
                     color=discord.Color.dark_purple())
                 await ctx.channel.send(embed=embed)
             except discord.errors.Forbidden:
                 try:
                     await ctx.channel.send(
-                        f'`{Name.nick_parser(ctx.author)}` has leveled up to level '
+                        f'`{NameTransformer(ctx.author)}` has leveled up to level '
                         f'{level.level}')
                 except discord.errors.Forbidden:
                     pass

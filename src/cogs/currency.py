@@ -14,8 +14,7 @@ from discord.ext.commands.cooldowns import BucketType
 from src.core.exceptions import NotEnoughBalance
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
-from src.utils.emojis.emoji import Emoji
-from src.utils.user.nick_helper import Name
+from src.utils.general import Emoji, NameTransformer
 
 module_logger = logging.getLogger('koneko.Currency')
 
@@ -48,7 +47,7 @@ class Currency(commands.Cog):
 
         balance = await self.currency_repository.get(user.id, ctx.guild.id)
 
-        embed = discord.Embed(title=f'`{Name.nick_parser(user)}` has {balance.amount} {self.emoji.cash}',
+        embed = discord.Embed(title=f'`{NameTransformer(user)}` has {balance.amount} {self.emoji.cash}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -60,7 +59,7 @@ class Currency(commands.Cog):
 
         balance = await self.currency_repository.update(ctx.author.id, ctx.guild.id, +100)
 
-        embed = discord.Embed(title=f'`{Name.nick_parser(ctx.message.author)}` claimed their daily login reward your '
+        embed = discord.Embed(title=f'`{NameTransformer(ctx.message.author)}` claimed their daily login reward your '
                                     f'new balance is {balance.amount} {self.emoji.cash}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
@@ -80,8 +79,8 @@ class Currency(commands.Cog):
             await self.currency_repository.update(author_id, guild_id, -amount)
             await self.currency_repository.update(user.id, guild_id, +amount)
 
-            embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} successfully transferred {amount} '
-                                        f'{self.emoji.cash} to {Name.nick_parser(user)}.',
+            embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} successfully transferred {amount} '
+                                        f'{self.emoji.cash} to {NameTransformer(user)}.',
                                   color=discord.Color.green())
             await ctx.channel.send(embed=embed)
 
@@ -96,8 +95,8 @@ class Currency(commands.Cog):
 
         await self.currency_repository.update(user.id, ctx.guild.id, amount)
 
-        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} gave {amount} {self.emoji.cash} '
-                                    f'to {Name.nick_parser(user)}',
+        embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} gave {amount} {self.emoji.cash} '
+                                    f'to {NameTransformer(user)}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -109,8 +108,8 @@ class Currency(commands.Cog):
 
         await self.currency_repository.update(user.id, ctx.guild.id, -amount)
 
-        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} took {amount} {self.emoji.cash} '
-                                    f'from {Name.nick_parser(user)}',
+        embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} took {amount} {self.emoji.cash} '
+                                    f'from {NameTransformer(user)}',
                               color=discord.Color.green())
         await ctx.channel.send(embed=embed)
 
@@ -136,7 +135,7 @@ class Currency(commands.Cog):
                 if user.amount > 0:
                     try:
                         embed.add_field(
-                            name=f'#{count} {Name.nick_parser(u)}',
+                            name=f'#{count} {NameTransformer(u)}',
                             value=f'{user.amount} {self.emoji.cash}',
                             inline=False
                         )
