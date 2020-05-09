@@ -13,8 +13,7 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.utils.random.image_provider import ImageProvider
-from src.utils.user.nick_helper import Name
+from src.utils.general import ImageProvider, NameTransformer
 
 module_logger = logging.getLogger('koneko.General')
 
@@ -41,24 +40,23 @@ class General(commands.Cog):
         """Interact with other users.
 
         Possible interactions are: pat, kiss, slap, lewd and respect"""
-        provider = ImageProvider()
+        url = str(ImageProvider(ctx.invoked_with))
 
-        url = provider.image(query=ctx.invoked_with)
         if len(users) == 0:
             users = [self.bot.user]
-        mentions = ' '.join([f'{Name.nick_parser(user)}' for user in users])
+        mentions = ' '.join([f'{NameTransformer(user)}' for user in users])
 
         with open('src/cogs/utils/sentences.json') as f:
             data = json.load(f)
             if any(u.id in [502913609458909194, 533653653362311188] for u in users):
                 # TODO: use fstrings.
-                message = data[ctx.invoked_with]['koneko'].format(Name.nick_parser(ctx.message.author))
+                message = data[ctx.invoked_with]['koneko'].format(NameTransformer(ctx.message.author))
             else:
                 if ctx.invoked_with == "respect":
                     message = data[ctx.invoked_with]['other'].format(mentions)
                 else:
                     # TODO: use fstrings.
-                    message = data[ctx.invoked_with]['other'].format(Name.nick_parser(ctx.message.author), mentions)
+                    message = data[ctx.invoked_with]['other'].format(NameTransformer(ctx.message.author), mentions)
 
         embed = discord.Embed(title=message,
                               color=discord.Color.dark_purple())
@@ -71,7 +69,7 @@ class General(commands.Cog):
         """Give one or more users an item."""
         if len(users) == 0:
             users = [self.bot.user]
-        mentions = ' '.join([f'{Name.nick_parser(user)}' for user in users])
+        mentions = ' '.join([f'{NameTransformer(user)}' for user in users])
         message = f"{ctx.message.author} gives {mentions} {item}"
 
         await ctx.channel.send(embed=discord.Embed(title=message, color=discord.Color.dark_purple()))

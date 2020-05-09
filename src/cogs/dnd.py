@@ -13,7 +13,7 @@ from discord.ext import commands
 from rolldice import DiceBag
 
 # Locals
-from src.utils.user.nick_helper import Name
+from src.utils.general import NameTransformer
 
 # TODO: add a dungeon/dnd based game.
 # TODO: add command /dungeon <arguments>
@@ -38,7 +38,7 @@ class Dungeon(commands.Cog):
 
         result, explanation = dicebag.roll_dice()
 
-        embed = discord.Embed(title=f'{Name.nick_parser(ctx.message.author)} rolled {die}',
+        embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} rolled {die}',
                               color=discord.Color.dark_purple())
 
         embed.add_field(name='**Total**', value=result, inline=False)
