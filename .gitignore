@@ -15,10 +15,10 @@ src/core/images/tmp/
 
 # Log files
 *.log
-logs/
 
 # Os files
 .DS_Store
 
 # Database backups
-backups/
+backups/*
+!backups/.gitkeep
