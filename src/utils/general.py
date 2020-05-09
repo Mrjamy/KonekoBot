@@ -1,3 +1,7 @@
+"""
+Module containing General uncategorized utils.
+"""
+
 # Builtins
 import logging
 import os
