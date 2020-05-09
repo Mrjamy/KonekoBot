@@ -63,6 +63,7 @@ class Koneko(commands.AutoShardedBot):
         super().__init__(
             command_prefix=_prefix,
             owner_id=180640710217826304,
+            help_command=None,
         )
         self.uptime = time.time()
         self.command_count = 0
