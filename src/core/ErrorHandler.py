@@ -8,6 +8,7 @@ from discord.ext import commands
 
 # locals
 from src.core.exceptions import NotEnoughBalance
+from src.core.Message import DiscordEmbed
 
 module_logger = logging.getLogger('koneko.ErrorHandler')
 
@@ -44,24 +45,15 @@ class ErrorHandler(commands.Cog):
             return
 
         elif isinstance(error, commands.DisabledCommand):
-            embed = discord.Embed(title=f'`{ctx.prefix}{ctx.command}` has been disabled.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, f'`{ctx.prefix}{ctx.command}` has been disabled.')
             return
 
         elif isinstance(error, commands.NoPrivateMessage):
-            try:
-                embed = discord.Embed(title=f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.',
-                                      color=discord.Color.red())
-                await ctx.channel.send(embed=embed)
-            except (discord.Forbidden, discord.HTTPException):
-                pass
+            await DiscordEmbed.error(ctx, f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.')
             return
 
         elif isinstance(error, commands.BadArgument):
-            embed = discord.Embed(title=f'Refer to `{ctx.prefix}help {ctx.command}`',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, f'Refer to `{ctx.prefix}help {ctx.command}`')
             return
 
         elif isinstance(error, commands.BotMissingPermissions):
@@ -70,9 +62,7 @@ class ErrorHandler(commands.Cog):
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            embed = discord.Embed(title=f'I need the **{fmt}** permission(s) to run this command.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, f'I need the **{fmt}** permission(s) to run this command.')
             return
 
         if isinstance(error, commands.MissingPermissions):
@@ -81,15 +71,11 @@ class ErrorHandler(commands.Cog):
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
                 fmt = ' and '.join(missing)
-            embed = discord.Embed(title=f'You need the **{fmt}** permission(s) to use this command.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, f'You need the **{fmt}** permission(s) to use this command.')
             return
 
         if isinstance(error, NotEnoughBalance):
-            embed = discord.Embed(title=f'You can\'t. afford this right now.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, f'You can\'t. afford this right now.')
             return
 
         if isinstance(error, commands.CommandOnCooldown):
@@ -99,9 +85,7 @@ class ErrorHandler(commands.Cog):
             d = datetime(1, 1, 1) + sec
 
             cooldown = f"{d.hour}h {d.minute}m {d.second}s"
-            embed = discord.Embed(title=f'You can\'t do this right now try again in {cooldown}.',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, f'You can\'t do this right now try again in {cooldown}.')
             return
 
         # All other Errors not returned come here... And we can just print the
