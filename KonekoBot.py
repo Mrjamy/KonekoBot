@@ -15,6 +15,7 @@ from discord.ext import commands
 
 # Locals
 from src.core.config import Settings
+from src.core.logging import Logging
 from src.utils.database.db import run
 from src.utils.database.repositories.prefix_repository import PrefixRepository
 
@@ -31,14 +32,9 @@ settings = Settings()
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-# Add a file logger to koneko.
-logger = logging.getLogger('koneko')
-logger.setLevel(logging.DEBUG)
-loggerFileHandler = logging.FileHandler('koneko.log')
-loggerFormat = '%(asctime)-15s - [%(process)-6s] %(levelname)-8s - %(name)s - %(message)s'
-loggerFormatter = logging.Formatter(loggerFormat)
-loggerFileHandler.setFormatter(loggerFormatter)
-logger.addHandler(loggerFileHandler)
+# Setup module logging.
+Logging()
+module_logger = logging.getLogger('koneko')
 
 
 async def _prefix(bot, msg) -> List[str]:
@@ -104,14 +100,14 @@ if __name__ == '__main__':
         for cog in KonekoBot.settings.core_extensions:
             KonekoBot.load_extension(f"src.core.{cog}")
     except ImportError as error:
-        logger.error(traceback.print_tb(error))
+        module_logger.error(traceback.print_tb(error))
         exit(1)
     KonekoBot.load_extension("jishaku")
 
     # Dry run option for travis.
     if KonekoBot.dry_run is True:
-        logger.debug("Quitting: dry run")
+        module_logger.debug("Quitting: dry run")
         exit(0)
 
-    logger.debug("Logging into Discord...")
+    module_logger.debug("Logging into Discord...")
     KonekoBot.run()
