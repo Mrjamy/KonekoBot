@@ -5,7 +5,7 @@ import optparse
 module_logger = logging.getLogger('koneko.Settings')
 
 
-class Settings(object):
+class Settings:
     __slots__ = 'dry_run', 'toggle_extensions', 'core_extensions'
 
     def __init__(self):
