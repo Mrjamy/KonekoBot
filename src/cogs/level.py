@@ -11,7 +11,7 @@ from discord.ext import commands
 
 # Locals
 from src.utils.database.repositories.level_repository import LevelRepository
-from src.utils.general import NameTransformer
+from src.utils.general import DiscordEmbed, NameTransformer
 
 module_logger = logging.getLogger('koneko.Level')
 
@@ -42,9 +42,10 @@ class Level(commands.Cog):
         level = await self.level_repository.get(user.id, ctx.guild.id)
 
         up = (level.level + 1) ** 4
-        embed = discord.Embed(title=f'`{NameTransformer(user)}` is level {level.level}, {level.experience}/{up} xp',
-                              color=discord.Color.green())
-        await ctx.channel.send(embed=embed)
+
+        await DiscordEmbed.confirm(ctx, title=f'`{NameTransformer(user)}` '
+                                              f'is level {level.level}, '
+                                              f'{level.experience}/{up} xp')
 
     @commands.guild_only()
     @commands.command(aliases=['score', 'levels'])
@@ -57,33 +58,28 @@ class Level(commands.Cog):
         else:
             count = rank + 1
 
-        levels = await self.level_repository.get_all(ctx.guild.id)
+        levels = await self.level_repository.get_all(ctx.guild.id, rank)
 
-        embed = discord.Embed(title=f'{ctx.guild.name}\'s scoreboard:',
-                              color=discord.Color.green())
-
+        parts = []
         if len(levels) >= 1:
             for user in levels:
-                u = ctx.guild.get_member(int(user.snowflake))
-                up = (user.level + 1) ** 4
                 if user.experience > 0:
-                    try:
-                        embed.add_field(
-                            name=f'#{count} {NameTransformer(u)}',
-                            value=f'Level {user.level}, {user.experience}/{up} xp',
-                            inline=False
-                        )
-                        count += 1
-                    except AttributeError:
-                        pass
-        else:
-            embed.add_field(
-                name='Error: ',
-                value='No users found for this range',
-                inline=False
-            )
+                    u = ctx.guild.get_member(int(user.snowflake))
 
-        await ctx.channel.send(embed=embed)
+                    parts.append({
+                        'name': f'#{count} {NameTransformer(u)}',
+                        'value': f'Level {user.level}, '
+                                 f'{user.experience}/{(user.level + 1) ** 4} xp'
+                    })
+                    count += 1
+        else:
+            parts.append({
+                'name': 'Error',
+                'value': 'No users found for this range',
+            })
+
+        await DiscordEmbed.confirm(ctx, parts, title=f'{ctx.guild.name}\'s '
+                                                     f'scoreboard:')
 
     @commands.Cog.listener()
     async def on_member_join(self, member) -> None:
@@ -104,17 +100,18 @@ class Level(commands.Cog):
         level = await self.level_repository.get(ctx.author.id, ctx.guild.id)
 
         if up:
+            # Send an embedded message to notify an user upon leveling up.
             try:
-                embed = discord.Embed(
-                    title=f'`{NameTransformer(ctx.author)}` has leveled up to level '
-                          f'{level.level}',
-                    color=discord.Color.dark_purple())
-                await ctx.channel.send(embed=embed)
+                await DiscordEmbed.message(
+                    ctx, title=f'`{NameTransformer(ctx.author)}` '
+                               f'has leveled up to level {level.level}')
             except discord.errors.Forbidden:
+                # Could not send embedded message, try normal message.
                 try:
                     await ctx.channel.send(
-                        f'`{NameTransformer(ctx.author)}` has leveled up to level '
-                        f'{level.level}')
+                        f'`{NameTransformer(ctx.author)}` has leveled up to '
+                        f'level {level.level}')
+                #  No message could be delivered.
                 except discord.errors.Forbidden:
                     pass
 

@@ -13,6 +13,7 @@ from discord.ext import commands
 
 # Locals
 from src.utils.database.repositories.prefix_repository import PrefixRepository
+from src.utils.general import DiscordEmbed
 
 module_logger = logging.getLogger('koneko.Games')
 
@@ -36,18 +37,23 @@ class Utility(commands.Cog):
         sec = timedelta(seconds=seconds)
         d = datetime(1, 1, 1) + sec
 
-        uptime = f"{d.day-1:d}d {d.hour}h {d.minute}m {d.second}s"
-        guilds = str(len(self.bot.guilds))
-        members = str(len(list(self.bot.get_all_members())))
-        command_count = self.bot.command_count + 1
+        parts = []
 
-        embed = discord.Embed(title="Koneko's Statistics", description="", color=discord.Color.dark_purple())
-        embed.add_field(name="Servers", value=guilds, inline=True)
-        embed.add_field(name="Users", value=members, inline=True)
-        embed.add_field(name="Uptime", value=uptime, inline=True)
-        embed.add_field(name="Commands executed", value=command_count, inline=True)
+        for stat, value in {
+            'uptime': f"{d.day - 1:d}d {d.hour}h {d.minute}m {d.second}s",
+            'guilds': str(len(self.bot.guilds)),
+            'members': str(len(list(self.bot.get_all_members()))),
+            'command_count': self.bot.command_count + 1
+        }:
+            parts.append({
+                {
+                    'name': stat,
+                    'value': value,
+                    'inline': True
+                }
+            })
 
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.message(ctx, parts, title="Koneko's Statistics")
 
     @commands.guild_only()
     @commands.group()

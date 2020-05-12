@@ -11,6 +11,9 @@ import random
 import discord
 from discord.ext import commands
 
+# Locals
+from src.utils.general import DiscordEmbed
+
 module_logger = logging.getLogger('koneko.Games')
 
 
@@ -51,9 +54,8 @@ class Games(commands.Cog):
         if player in options:
             player = options.get(player)
         elif player not in options.values():
-            embed = discord.Embed(title='Please choose from: rock, paper, scissors',
-                                  color=discord.Color.red())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.error(ctx, title='Please choose from: rock, '
+                                                'paper, scissors')
             return
 
         bot = random.choice(list(options.values()))
@@ -86,9 +88,7 @@ class Games(commands.Cog):
             color = discord.Color.red()
             message = "Oops something went wrong"
 
-        embed = discord.Embed(title=message,
-                              color=color)
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.send(ctx, title=message, color=color)
 
 
 def setup(bot) -> None:
