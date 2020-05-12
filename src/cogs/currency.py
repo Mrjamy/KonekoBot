@@ -14,7 +14,7 @@ from discord.ext.commands.cooldowns import BucketType
 from src.core.exceptions import NotEnoughBalance
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
-from src.utils.general import Emoji, NameTransformer
+from src.utils.general import DiscordEmbed, Emoji, NameTransformer
 
 module_logger = logging.getLogger('koneko.Currency')
 
@@ -47,9 +47,7 @@ class Currency(commands.Cog):
 
         balance = await self.currency_repository.get(user.id, ctx.guild.id)
 
-        embed = discord.Embed(title=f'`{NameTransformer(user)}` has {balance.amount} {self.emoji.cash}',
-                              color=discord.Color.green())
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.confirm(ctx, title=f'`{NameTransformer(user)}` has {balance.amount} {self.emoji.cash}')
 
     @commands.cooldown(1, 60 * 60 * 20, BucketType.member)
     @commands.guild_only()
@@ -59,10 +57,7 @@ class Currency(commands.Cog):
 
         balance = await self.currency_repository.update(ctx.author.id, ctx.guild.id, +100)
 
-        embed = discord.Embed(title=f'`{NameTransformer(ctx.message.author)}` claimed their daily login reward your '
-                                    f'new balance is {balance.amount} {self.emoji.cash}',
-                              color=discord.Color.green())
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.confirm(ctx, title=f'`{NameTransformer(ctx.message.author)}` claimed their daily login reward your new balance is {balance.amount} {self.emoji.cash}')
 
     @commands.guild_only()
     @commands.command()
@@ -79,10 +74,7 @@ class Currency(commands.Cog):
             await self.currency_repository.update(author_id, guild_id, -amount)
             await self.currency_repository.update(user.id, guild_id, +amount)
 
-            embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} successfully transferred {amount} '
-                                        f'{self.emoji.cash} to {NameTransformer(user)}.',
-                                  color=discord.Color.green())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.confirm(ctx, title=f'{NameTransformer(ctx.message.author)} successfully transferred {amount} {self.emoji.cash} to {NameTransformer(user)}.')
 
     @commands.is_owner()
     @commands.guild_only()
@@ -95,10 +87,7 @@ class Currency(commands.Cog):
 
         await self.currency_repository.update(user.id, ctx.guild.id, amount)
 
-        embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} gave {amount} {self.emoji.cash} '
-                                    f'to {NameTransformer(user)}',
-                              color=discord.Color.green())
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.confirm(ctx, title=f'{NameTransformer(ctx.message.author)} gave {amount} {self.emoji.cash} to {NameTransformer(user)}')
 
     @commands.is_owner()
     @commands.guild_only()
@@ -108,10 +97,7 @@ class Currency(commands.Cog):
 
         await self.currency_repository.update(user.id, ctx.guild.id, -amount)
 
-        embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} took {amount} {self.emoji.cash} '
-                                    f'from {NameTransformer(user)}',
-                              color=discord.Color.green())
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.confirm(ctx, title=f'{NameTransformer(ctx.message.author)} took {amount} {self.emoji.cash} from {NameTransformer(user)}')
 
     @commands.guild_only()
     @commands.command(aliases=['fortune'])
@@ -126,30 +112,24 @@ class Currency(commands.Cog):
 
         wealth = await self.currency_repository.get_all(ctx.guild.id, rank)
 
-        embed = discord.Embed(title=f'{ctx.guild.name}\'s wealth overview:',
-                              color=discord.Color.green())
-
+        parts = []
         if len(wealth) >= 1:
             for user in wealth:
-                u = ctx.guild.get_member(int(user.snowflake))
                 if user.amount > 0:
-                    try:
-                        embed.add_field(
-                            name=f'#{count} {NameTransformer(u)}',
-                            value=f'{user.amount} {self.emoji.cash}',
-                            inline=False
-                        )
-                        count += 1
-                    except AttributeError:
-                        pass
-        else:
-            embed.add_field(
-                name='Error: ',
-                value='No users found for this range',
-                inline=False
-            )
+                    u = ctx.guild.get_member(int(user.snowflake))
 
-        await ctx.channel.send(embed=embed)
+                    parts.append({
+                        'name': f'#{count} {NameTransformer(u)}',
+                        'value': f'{user.amount} {self.emoji.cash}'
+                    })
+                    count += 1
+        else:
+            parts.append({
+                'name': 'Error',
+                'value': 'No users found for this range',
+            })
+
+        await DiscordEmbed.confirm(ctx, parts, title=f'{ctx.guild.name}\'s wealth overview:')
 
 
 def setup(bot) -> None:

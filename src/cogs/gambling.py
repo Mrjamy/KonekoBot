@@ -16,7 +16,7 @@ from src.core.exceptions import NotEnoughBalance
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
 from src.utils.games.slotmachine import Slots
-from src.utils.general import NameTransformer
+from src.utils.general import DiscordEmbed, NameTransformer
 
 module_logger = logging.getLogger('koneko.Gambling')
 
@@ -107,14 +107,10 @@ class Gambling(commands.Cog):
             await self.currency_repository.update(ctx.author.id, ctx.guild.id,
                                                   mutation)
 
-            # TODO: add emojoi\'s to the embed.
-            embed = discord.Embed(title=f"You pulled the slots! \n {slotmachine.slots}",
-                                  color=discord.Color.dark_purple())
-            await ctx.channel.send(embed=embed)
-
-            embed = discord.Embed(title=f"Your bet {bet}, {slotmachine.msg}",
-                                  color=discord.Color.dark_purple())
-            await ctx.channel.send(embed=embed)
+            await DiscordEmbed.message(ctx, title=f"You pulled the slots! \n "
+                                                  f"{slotmachine.slots}")
+            await DiscordEmbed.message(ctx, title=f"Your bet {bet}, "
+                                                  f"{slotmachine.msg}")
 
 
 def setup(bot) -> None:

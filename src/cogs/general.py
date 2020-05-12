@@ -13,7 +13,7 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.utils.general import ImageProvider, NameTransformer
+from src.utils.general import DiscordEmbed, ImageProvider, NameTransformer
 
 module_logger = logging.getLogger('koneko.General')
 
@@ -58,11 +58,7 @@ class General(commands.Cog):
                     # TODO: use fstrings.
                     message = data[ctx.invoked_with]['other'].format(NameTransformer(ctx.message.author), mentions)
 
-        embed = discord.Embed(title=message,
-                              color=discord.Color.dark_purple())
-        embed.set_image(url=url)
-
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.message(ctx, title=message, image=url)
 
     @commands.command()
     async def give_item(self, ctx, users: commands.Greedy[discord.Member], *, item) -> None:
@@ -72,7 +68,7 @@ class General(commands.Cog):
         mentions = ' '.join([f'{NameTransformer(user)}' for user in users])
         message = f"{ctx.message.author} gives {mentions} {item}"
 
-        await ctx.channel.send(embed=discord.Embed(title=message, color=discord.Color.dark_purple()))
+        await DiscordEmbed.message(ctx, title=message)
 
 
 def setup(bot) -> None:

@@ -11,6 +11,7 @@ import discord
 from discord.ext import commands
 from src.utils.database.repositories.currency_repository import \
     CurrencyRepository
+from src.utils.general import DiscordEmbed
 
 module_logger = logging.getLogger('koneko.Admin')
 
@@ -66,7 +67,9 @@ class Admin(commands.Cog):
         if ctx.invoked_subcommand is None:
             with open('src/cogs/utils/sentences.json') as f:
                 data = json.load(f)
-                await ctx.channel.send(f'```json\n {json.dumps(data, indent=4, sort_keys=True)}```')
+                json_str = json.dumps(data, indent=4, sort_keys=True)
+                await DiscordEmbed.confirm(ctx, description=f'```json\n '
+                                                            f'{json_str}```')
                 return
 
     @sentence.command()

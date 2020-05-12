@@ -13,7 +13,7 @@ from discord.ext import commands
 from rolldice import DiceBag
 
 # Locals
-from src.utils.general import NameTransformer
+from src.utils.general import DiscordEmbed, NameTransformer
 
 # TODO: add a dungeon/dnd based game.
 # TODO: add command /dungeon <arguments>
@@ -48,9 +48,8 @@ class Dungeon(commands.Cog):
     @roll.error
     async def on_roll_error(self, ctx, _error) -> None:
         """Roll error handler"""
-        embed = discord.Embed(title='I don\'t think this is a valid dice roll :upside_down:',
-                              color=discord.Color.red())
-        await ctx.channel.send(embed=embed)
+        await DiscordEmbed.error(ctx, title='I don\'t think this is a valid '
+                                            'dice roll :upside_down:')
 
 
 def setup(bot) -> None:

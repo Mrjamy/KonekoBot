@@ -65,27 +65,26 @@ class DiscordEmbed:
     """Class to send discord embedded messages."""
 
     purple = discord.Color.dark_purple()
-    grey = discord.Color.dark_grey()
     red = discord.Color.red()
     green = discord.Color.green()
 
     @staticmethod
-    async def message(ctx, msg: str, color: discord.Color = purple) -> None:
+    async def message(ctx, parts=None, color: discord.Color = purple, **kwargs) -> None:
         """Send a message"""
-        await DiscordEmbed.send(ctx, msg, color=color)
+        await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
 
     @staticmethod
-    async def confirm(ctx, msg: str, color: discord.Color = green) -> None:
+    async def confirm(ctx, parts=None, color: discord.Color = green, **kwargs) -> None:
         """Sends a confirming message"""
-        await DiscordEmbed.send(ctx, msg, color=color)
+        await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
 
     @staticmethod
-    async def error(ctx, msg: str, color: discord.Color = red) -> None:
+    async def error(ctx, parts=None, color: discord.Color = red, **kwargs) -> None:
         """Sends an error message"""
-        await DiscordEmbed.send(ctx, msg, color=color)
+        await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
 
     @staticmethod
-    async def send(ctx, title: str, color: discord.Color = grey) -> None:
+    async def send(ctx, parts=None, **kwargs) -> None:
         """Send error message in the corresponding channel
          Parameters
         ------------
@@ -98,8 +97,21 @@ class DiscordEmbed:
         description: str[optional]
             Optional embed description/body.
         """
+        image = kwargs.pop('image', None)
+
+        embed = discord.Embed(**kwargs)
+
+        # Add extra fields to the embed.
+        if parts:
+            for part in parts:
+                embed.add_field(inline=False, **part)
+        if image:
+            embed.set_image(url=image)
+
         try:
-            await ctx.channel.send(embed=discord.Embed(title=title, color=color))
+            await ctx.channel.send(embed=embed)
         # Message could not be delivered.
-        except (discord.Forbidden, discord.HTTPException):
+        except (discord.Forbidden, discord.HTTPException) as error:
+            module_logger.error(f'{type(error)} - could not deliver message.')
+            module_logger.error(error)
             pass
