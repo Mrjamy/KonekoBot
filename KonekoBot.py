@@ -86,7 +86,8 @@ class Koneko(commands.AutoShardedBot):
 
     def run(self) -> None:
         try:
-            self.loop.run_until_complete(self.start(config.get('Koneko', 'token')))
+            self.loop.run_until_complete(self.start(config.get('Koneko',
+                                                               'token')))
         except KeyboardInterrupt:
             self.loop.run_until_complete(self.logout())
 
