@@ -34,9 +34,9 @@ class Dungeon(commands.Cog):
     async def roll(self, ctx, *, die: str = 'd20') -> None:
         """Rolls a die with standard dice notations."""
 
-        dicebag = DiceBag(die)
+        dice_bag = DiceBag(die)
 
-        result, explanation = dicebag.roll_dice()
+        result, explanation = dice_bag.roll_dice()
 
         embed = discord.Embed(title=f'{NameTransformer(ctx.message.author)} rolled {die}',
                               color=discord.Color.dark_purple())
