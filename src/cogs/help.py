@@ -9,10 +9,10 @@ import discord
 from discord.ext import commands
 
 
-def chunks(l, n):
-    """Yield successive n-sized chunks from l."""
-    for i in range(0, len(l), n):
-        yield l[i:i + n]
+def chunks(parts, size):
+    """Yield successive size-sized chunks from parts."""
+    for i in range(0, len(parts), size):
+        yield parts[i:i + size]
 
 
 def helper(ctx) -> List[discord.Embed]:

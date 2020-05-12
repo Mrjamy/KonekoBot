@@ -74,7 +74,7 @@ class ErrorHandler(commands.Cog):
             return
 
         if isinstance(error, NotEnoughBalance):
-            await DiscordEmbed.error(ctx, title=f'You can\'t. afford this right now.')
+            await DiscordEmbed.error(ctx, title='You can\'t. afford this right now.')
             return
 
         if isinstance(error, commands.CommandOnCooldown):

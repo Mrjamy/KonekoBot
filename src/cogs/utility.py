@@ -8,7 +8,6 @@ from datetime import datetime, timedelta
 from time import time
 
 # Pip
-import discord
 from discord.ext import commands
 
 # Locals
@@ -40,10 +39,10 @@ class Utility(commands.Cog):
         parts = []
 
         for stat, value in {
-            'uptime': f"{d.day - 1:d}d {d.hour}h {d.minute}m {d.second}s",
-            'guilds': str(len(self.bot.guilds)),
-            'members': str(len(list(self.bot.get_all_members()))),
-            'command_count': self.bot.command_count + 1
+                'uptime': f"{d.day - 1:d}d {d.hour}h {d.minute}m {d.second}s",
+                'guilds': str(len(self.bot.guilds)),
+                'members': str(len(list(self.bot.get_all_members()))),
+                'command_count': self.bot.command_count + 1
         }:
             parts.append({
                 {
