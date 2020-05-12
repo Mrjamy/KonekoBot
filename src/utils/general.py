@@ -114,4 +114,3 @@ class DiscordEmbed:
         except (discord.Forbidden, discord.HTTPException) as error:
             module_logger.error(f'{type(error)} - could not deliver message.')
             module_logger.error(error)
-            pass
