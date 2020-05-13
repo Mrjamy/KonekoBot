@@ -108,9 +108,4 @@ class DiscordEmbed:
         if image:
             embed.set_image(url=image)
 
-        try:
-            await ctx.channel.send(embed=embed)
-        # Message could not be delivered.
-        except (discord.Forbidden, discord.HTTPException) as error:
-            module_logger.error(f'{type(error)} - could not deliver message.')
-            module_logger.error(error)
+        await ctx.channel.send(embed=embed)
