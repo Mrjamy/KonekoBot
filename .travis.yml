@@ -9,7 +9,6 @@ stages:
   - compile
   - quality
   - test
-  - unit test
   - run
   # - deploy
     # if: branch = master
@@ -31,7 +30,7 @@ jobs:
 
     # Run tests
     - stage: quality
-      python: 3.7
+      python: 3.8
       name: "Code quality insurance"
       install:
         - pip install pycodestyle
@@ -40,10 +39,10 @@ jobs:
       script:
         - pycodestyle . --ignore=E501
         - flake8
-        - pylint -j 0 src
+        - pylint -j 0 src tests
 
-    - stage: tests
-      python: 3.7
+    - stage: test
+      python: 3.8
       name: "Unit tests"
       install:
         - pip install coveralls
@@ -54,7 +53,7 @@ jobs:
 
     # Force a boot.
     - stage: run
-      python: 3.7
+      python: 3.8
       install:
         # Install required libraries.
         - pip install -r requirements.txt
