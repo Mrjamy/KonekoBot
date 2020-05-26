@@ -22,6 +22,8 @@ class TestCurrencyRepository(unittest.IsolatedAsyncioTestCase):
     __slots__ = ('connections', 'currency_repository')
 
     def __init__(self):
+        super().__init__()
+
         self._connections = {}
         self.currency_repository = None
 
