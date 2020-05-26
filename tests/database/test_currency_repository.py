@@ -17,4 +17,3 @@ class TestCurrencyRepository(unittest.TestCase):
 
     def test_mutate_balance(self) -> None:
         pass
-
