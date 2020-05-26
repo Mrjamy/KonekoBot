@@ -28,7 +28,7 @@ jobs:
       python: 3.8       # 3.8 Stable/release
 
     # Run tests
-    - stage: test
+    - stage: code quality
       python: 3.7
       name: "Code quality insurance"
       install:
@@ -39,6 +39,16 @@ jobs:
         - pycodestyle . --ignore=E501
         - flake8
         - pylint -j 0 src
+
+    - stage: unit tests
+      python: 3.7
+      name: "Unit tests"
+      install:
+        - pip install coveralls
+      script:
+        - coverage run -m unittest
+      after_success:
+        - coveralls
 
     # Force a boot.
     - stage: run

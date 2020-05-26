@@ -22,3 +22,6 @@ src/core/images/tmp/
 # Database backups
 backups/*
 !backups/.gitkeep
+
+# Test results
+.coverage
