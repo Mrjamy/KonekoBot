@@ -45,6 +45,7 @@ jobs:
       python: 3.8
       name: "Unit tests"
       install:
+        - pip install -r tests/requirements.txt
         - pip install coveralls
       script:
         - coverage run -m unittest discover tests "*.py"
