@@ -8,6 +8,7 @@ services:
 stages:
   - compile
   - test
+  - unit test
   - run
   # - deploy
     # if: branch = master
