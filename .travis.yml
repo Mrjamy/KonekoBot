@@ -48,7 +48,7 @@ jobs:
       install:
         - pip install coveralls
       script:
-        - coverage run -m unittest
+        - coverage run -m unittest discover tests "*.py"
       after_success:
         - coveralls
 
