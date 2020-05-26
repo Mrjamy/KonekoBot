@@ -7,6 +7,7 @@ services:
 
 stages:
   - compile
+  - quality
   - test
   - unit test
   - run
@@ -29,7 +30,7 @@ jobs:
       python: 3.8       # 3.8 Stable/release
 
     # Run tests
-    - stage: code quality
+    - stage: quality
       python: 3.7
       name: "Code quality insurance"
       install:
@@ -41,7 +42,7 @@ jobs:
         - flake8
         - pylint -j 0 src
 
-    - stage: unit tests
+    - stage: tests
       python: 3.7
       name: "Unit tests"
       install:
