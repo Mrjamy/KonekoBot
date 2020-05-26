@@ -1,0 +1,2 @@
+tortoise-orm==0.16.11
+jsonpickle==1.4.1
