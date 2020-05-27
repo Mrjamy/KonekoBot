@@ -62,3 +62,7 @@ class TestCurrencyRepository(unittest.IsolatedAsyncioTestCase):
         user = await self.currency_repository.update(2, 1, 100)
 
         self.assertEqual(user.amount, 100)
+
+
+if __name__ == '__main__':
+    unittest.main()
