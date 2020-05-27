@@ -1,3 +1,7 @@
+"""
+Module containing event-listener for all discord.py errors.
+"""
+
 # Builtins
 import logging
 from datetime import datetime, timedelta
@@ -20,6 +24,7 @@ class ErrorHandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    # pylint: disable=too-many-return-statements, too-many-branches
     @commands.Cog.listener()
     async def on_command_error(self, ctx, error) -> None:
         """The event triggered when an error is raised while invoking a command.
@@ -43,19 +48,19 @@ class ErrorHandler(commands.Cog):
         if isinstance(error, ignored):
             return
 
-        elif isinstance(error, commands.DisabledCommand):
+        if isinstance(error, commands.DisabledCommand):
             await DiscordEmbed.error(ctx, title=f'`{ctx.prefix}{ctx.command}` has been disabled.')
             return
 
-        elif isinstance(error, commands.NoPrivateMessage):
+        if isinstance(error, commands.NoPrivateMessage):
             await DiscordEmbed.error(ctx, title=f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.')
             return
 
-        elif isinstance(error, commands.BadArgument):
+        if isinstance(error, commands.BadArgument):
             await DiscordEmbed.error(ctx, title=f'Refer to `{ctx.prefix}help {ctx.command}`')
             return
 
-        elif isinstance(error, commands.BotMissingPermissions):
+        if isinstance(error, commands.BotMissingPermissions):
             missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
             if len(missing) > 2:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
@@ -89,7 +94,7 @@ class ErrorHandler(commands.Cog):
 
         # All other Errors not returned come here... And we can just print the
         # default TraceBack.
-        module_logger.error(f'Ignoring exception in command {ctx.command}:')
+        module_logger.error('Ignoring exception in command {}:', ctx.command)
         module_logger.error(error)
 
 

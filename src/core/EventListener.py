@@ -1,3 +1,7 @@
+"""
+Module containing event-listeners.
+"""
+
 # Builtins
 import logging
 
@@ -30,11 +34,12 @@ class EventListener(commands.Cog):
             )
         )
         # Bot logged in.
-        module_logger.debug(f'Logged in as {self.bot.user}')
-        module_logger.debug(f'I am in {len(self.bot.guilds)} guilds.')
+        module_logger.debug('Logged in as {}', self.bot.user)
+        module_logger.debug('I am in {} guilds.', len(self.bot.guilds))
 
     @commands.Cog.listener()
     async def on_command(self, _ctx):
+        """on_command event to keep track of executed commands."""
         self.bot.command_count += 1
 
 
