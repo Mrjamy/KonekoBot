@@ -21,12 +21,6 @@ class TestCurrencyRepository(unittest.IsolatedAsyncioTestCase):
 
     __slots__ = ('connections', 'currency_repository')
 
-    def __init__(self):
-        super().__init__()
-
-        self._connections = {}
-        self.currency_repository = None
-
     async def asyncSetUp(self) -> None:
         """Set up function for the tests."""
         config = generate_config(db_url="sqlite://:memory:",
@@ -50,13 +44,13 @@ class TestCurrencyRepository(unittest.IsolatedAsyncioTestCase):
         Tortoise._connections = {}
         Tortoise._inited = False
 
-    async def create_user(self) -> None:
+    async def test_create_user(self) -> None:
         """Tests creating a new user in the database."""
         user = await self.currency_repository.insert(1, 1)
 
         self.assertIsNotNone(user)
 
-    async def mutate_balance(self) -> None:
+    async def test_mutate_balance(self) -> None:
         """Tests mutating an user's balance."""
         await self.currency_repository.insert(2, 1)
         user = await self.currency_repository.update(2, 1, 100)

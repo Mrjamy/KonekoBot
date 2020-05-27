@@ -14,15 +14,13 @@ class TestSlotmachine(unittest.TestCase):
 
     Tests for the slotmachine."""
 
-    async def play_round(self) -> None:
+    def test_play_round(self) -> None:
         slots = Slots()
         slots.play_round()
 
         self.assertIsNotNone(slots.win)
-        self.assertIs(slots.win, int)
+        self.assertIs(type(slots.win), int)
 
 
 if __name__ == '__main__':
     unittest.main()
-
-
