@@ -1,3 +1,7 @@
+"""
+Module to reload cogs on the go.
+"""
+
 # Builtins
 import logging
 
@@ -15,15 +19,20 @@ class HotReload(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def cog_check(self, ctx) -> bool:
-        return await self.bot.is_owner(ctx.author)
+    def cog_check(self, ctx) -> bool:
+        """Cog check
+
+        Only returns true for bot owner."""
+        return self.bot.is_owner(ctx.author)
 
     @commands.command(aliases=["load"], hidden=True)
     async def reload(self, ctx, cog: str) -> None:
+        """Reloads specified cog."""
         await ctx.channel.send(F"loaded {cog}")
 
     @commands.command(hidden=True)
     async def unload(self, ctx, cog: str) -> None:
+        """Unloads specified cog."""
         await ctx.channel.send(F"unloaded {cog}")
 
 

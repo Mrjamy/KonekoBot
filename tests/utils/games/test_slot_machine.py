@@ -15,6 +15,7 @@ class TestSlotmachine(unittest.TestCase):
     Tests for the slotmachine."""
 
     def test_play_round(self) -> None:
+        """Tests playing a round of slots."""
         slots = Slots()
         slots.play_round()
 
