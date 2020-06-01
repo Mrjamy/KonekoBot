@@ -22,13 +22,6 @@ from src.utils.database.repositories.prefix_repository import PrefixRepository
 if sys.version_info < (3, 6):
     raise ImportError("Python 3.6 or greater is required")
 
-
-# Get the current asyncio event loop.
-loop = asyncio.get_event_loop()
-# Add database connection to the event loop.
-loop.run_until_complete(run())
-
-settings = Settings()
 config = configparser.ConfigParser()
 config.read('config.ini')
 
@@ -63,8 +56,9 @@ class Koneko(commands.AutoShardedBot):
         )
         self.uptime = time.time()
         self.command_count = 0
-        self.dry_run = settings.dry_run
-        self.settings = settings
+        if len(sys.argv) > 1:
+            self.dry_run = bool(sys.argv[1])
+        self.settings = Settings()
 
     async def on_message(self, message: discord.Message) -> None:
         if message.author.bot:
@@ -93,6 +87,11 @@ class Koneko(commands.AutoShardedBot):
 
 
 if __name__ == '__main__':
+    # Get the current asyncio event loop.
+    loop = asyncio.get_event_loop()
+    # Add database connection to the event loop.
+    loop.run_until_complete(run())
+
     KonekoBot = Koneko()
 
     try:
