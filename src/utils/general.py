@@ -69,22 +69,22 @@ class DiscordEmbed:
     green = discord.Color.green()
 
     @staticmethod
-    async def message(ctx, parts=None, color: discord.Color = purple, **kwargs) -> None:
+    async def message(ctx, parts=None, color: discord.Color = purple, **kwargs) -> discord.Embed:
         """Send a message"""
-        await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
+        return await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
 
     @staticmethod
-    async def confirm(ctx, parts=None, color: discord.Color = green, **kwargs) -> None:
+    async def confirm(ctx, parts=None, color: discord.Color = green, **kwargs) -> discord.Embed:
         """Sends a confirming message"""
-        await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
+        return await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
 
     @staticmethod
-    async def error(ctx, parts=None, color: discord.Color = red, **kwargs) -> None:
+    async def error(ctx, parts=None, color: discord.Color = red, **kwargs) -> discord.Embed:
         """Sends an error message"""
-        await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
+        return await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
 
     @staticmethod
-    async def send(ctx, parts=None, **kwargs) -> None:
+    async def send(ctx, parts=None, **kwargs) -> discord.Embed:
         """Send error message in the corresponding channel
          Parameters
         ------------
@@ -109,3 +109,6 @@ class DiscordEmbed:
             embed.set_image(url=image)
 
         await ctx.channel.send(embed=embed)
+
+        # return embedded message for test assertion.
+        return embed

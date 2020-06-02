@@ -36,7 +36,7 @@ class General(commands.Cog):
         await ctx.channel.send(latency)
 
     @commands.command(aliases=["pat", "kiss", "slap", "lewd", "respect"])
-    async def hug(self, ctx, users: commands.Greedy[discord.Member]) -> None:
+    async def hug(self, ctx, users: commands.Greedy[discord.Member]) -> discord.Embed:
         """Interact with other users.
 
         Possible interactions are: pat, kiss, slap, lewd and respect"""
@@ -58,17 +58,7 @@ class General(commands.Cog):
                     # TODO: use fstrings.
                     message = data[ctx.invoked_with]['other'].format(NameTransformer(ctx.message.author), mentions)
 
-        await DiscordEmbed.message(ctx, title=message, image=url)
-
-    @commands.command()
-    async def give_item(self, ctx, users: commands.Greedy[discord.Member], *, item) -> None:
-        """Give one or more users an item."""
-        if len(users) == 0:
-            users = [self.bot.user]
-        mentions = ' '.join([f'{NameTransformer(user)}' for user in users])
-        message = f"{ctx.message.author} gives {mentions} {item}"
-
-        await DiscordEmbed.message(ctx, title=message)
+        return await DiscordEmbed.message(ctx, title=message, image=url)
 
 
 def setup(bot) -> None:
