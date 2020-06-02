@@ -34,12 +34,14 @@ class GeneralCogTests(unittest.IsolatedAsyncioTestCase):
             f"{str(round(self.bot.latency * 1000))} ms")
 
     async def test_hug(self):
+        """Multipurpose interaction command test."""
         for invoked_with in ["hug", "pat", "kiss", "slap", "lewd", "respect"]:
             self.ctx.reset_mock()
             with self.subTest(invoked_with=invoked_with):
                 self.ctx.invoked_with = invoked_with
 
-                embed = await self.cog.hug(self.cog, self.ctx, users=[self.user])
+                # pylint: disable=too-many-function-args
+                embed = await self.cog.hug(self.cog, self.ctx, [self.user])
 
                 self.assertEqual(embed.colour, discord.Color.dark_purple())
                 self.assertTrue(is_valid_url(embed.image.url))
