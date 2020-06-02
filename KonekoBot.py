@@ -56,8 +56,7 @@ class Koneko(commands.AutoShardedBot):
         )
         self.uptime = time.time()
         self.command_count = 0
-        if len(sys.argv) > 1:
-            self.dry_run = bool(sys.argv[1])
+        self.dry_run = sys.argv[1] if len(sys.argv) > 1 else 0
         self.settings = Settings()
 
     async def on_message(self, message: discord.Message) -> None:
