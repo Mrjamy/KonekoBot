@@ -22,9 +22,6 @@ from src.utils.database.repositories.prefix_repository import PrefixRepository
 if sys.version_info < (3, 6):
     raise ImportError("Python 3.6 or greater is required")
 
-config = configparser.ConfigParser()
-config.read('config.ini')
-
 # Setup module logging.
 Logging()
 module_logger = logging.getLogger('koneko')
@@ -76,6 +73,13 @@ class Koneko(commands.AutoShardedBot):
     async def logout(self) -> None:
         await super().logout()
         exit(0)
+
+    @property
+    def config(self) -> configparser.ConfigParser:
+        config = configparser.ConfigParser()
+        config.read('config.ini')
+
+        return config
 
     def run(self) -> None:
         try:

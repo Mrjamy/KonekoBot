@@ -6,12 +6,8 @@ Module containing event-listeners.
 import logging
 
 # Pip
-import configparser
 import discord
 from discord.ext import commands
-
-config = configparser.ConfigParser()
-config.read('config.ini')
 module_logger = logging.getLogger('koneko.EventListener')
 
 
@@ -30,7 +26,7 @@ class EventListener(commands.Cog):
             status=discord.Status.online,
             activity=discord.Activity(
                 type=discord.ActivityType.watching,
-                name=f"{config.get('Koneko', 'prefix')}h for help"
+                name=f"{self.bot.config.get('Koneko', 'prefix')}h for help"
             )
         )
         # Bot logged in.
