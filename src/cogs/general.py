@@ -31,7 +31,7 @@ class General(commands.Cog):
     async def ping(self, ctx) -> None:
         """Get the latency of the bot."""
         # Get the latency of the bot
-        latency = str(round(self.bot.latency * 1000)) + " ms"
+        latency = f"{str(round(self.bot.latency * 1000))} ms"
         # Send it to the user
         await ctx.channel.send(latency)
 
