@@ -45,12 +45,8 @@ class Koneko(commands.AutoShardedBot):
                 'logger', 'loop'
 
     # Create an AutoSharded bot.
-    def __init__(self):
-        super().__init__(
-            command_prefix=_prefix,
-            owner_id=180640710217826304,
-            help_command=None,
-        )
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.uptime = time.time()
         self.command_count = 0
         self.dry_run = sys.argv[1] if len(sys.argv) > 1 else 0
@@ -83,8 +79,8 @@ class Koneko(commands.AutoShardedBot):
 
     def run(self) -> None:
         try:
-            self.loop.run_until_complete(self.start(config.get('Koneko',
-                                                               'token')))
+            self.loop.run_until_complete(self.start(self.config.get('Koneko',
+                                                                    'token')))
         except KeyboardInterrupt:
             self.loop.run_until_complete(self.logout())
 
@@ -95,7 +91,8 @@ if __name__ == '__main__':
     # Add database connection to the event loop.
     loop.run_until_complete(run())
 
-    KonekoBot = Koneko()
+    KonekoBot = Koneko(command_prefix=_prefix, owner_id=180640710217826304,
+                       help_command=None,)
 
     try:
         for cog in KonekoBot.settings.toggle_extensions:
