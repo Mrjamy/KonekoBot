@@ -41,7 +41,7 @@ async def _prefix(bot, msg) -> List[str]:
 class Koneko(commands.AutoShardedBot):
     """Auto sharded discord bot."""
 
-    __slots__ = 'uptime', 'command_count', 'dry_run', 'settings', 'db', \
+    __slots__ = 'uptime', 'command_count', 'settings', 'db', \
                 'logger', 'loop'
 
     # Create an AutoSharded bot.
@@ -49,7 +49,6 @@ class Koneko(commands.AutoShardedBot):
         super().__init__(*args, **kwargs)
         self.uptime = time.time()
         self.command_count = 0
-        self.dry_run = sys.argv[1] if len(sys.argv) > 1 else 0
         self.settings = Settings()
 
     async def on_message(self, message: discord.Message) -> None:
@@ -105,7 +104,7 @@ if __name__ == '__main__':
     KonekoBot.load_extension("jishaku")
 
     # Dry run option for travis.
-    if KonekoBot.dry_run is True:
+    if sys.argv[1] if len(sys.argv) > 1 else 0:
         module_logger.debug("Quitting: dry run")
         exit(0)
 

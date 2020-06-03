@@ -10,7 +10,7 @@ module_logger = logging.getLogger('koneko.Settings')
 
 class Settings:
     """Settings class"""
-    __slots__ = 'dry_run', 'toggle_extensions', 'core_extensions'
+    __slots__ = 'toggle_extensions', 'core_extensions'
 
     def __init__(self):
         self.toggle_extensions = [
