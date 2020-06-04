@@ -10,10 +10,12 @@ module_logger = logging.getLogger('koneko.Settings')
 
 class Settings:
     """Settings class"""
-    __slots__ = 'toggle_extensions', 'core_extensions'
+    __slots__ = ('_toggle_extensions', '_core_extensions')
 
-    def __init__(self):
-        self.toggle_extensions = [
+    @property
+    def toggle_extensions(self):
+        """Optional extensions for Koneko."""
+        return [
             "admin",
             # "adminstration",
             # "alert",
@@ -27,7 +29,11 @@ class Settings:
             # "stats",
             "utility",
         ]
-        self.core_extensions = [
+
+    @property
+    def core_extensions(self):
+        """Core extensions for Koneko."""
+        return [
             "ErrorHandler",
             "EventListener",
             "HotReload"
