@@ -43,7 +43,7 @@ class Games(commands.Cog):
         # Getting the input inside <choice>
         if choice == "":
             m = await ctx.channel.send("Please choose from: rock, paper, scissors")
-            
+
             def validate(m_):
                 return m_.author == ctx.author and m_.channel == ctx.channel
             try:
