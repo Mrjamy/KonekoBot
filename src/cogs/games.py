@@ -8,7 +8,6 @@ import logging
 import random
 
 # Pip
-import discord
 from discord.ext import commands
 
 # Locals
@@ -83,5 +82,3 @@ class Games(commands.Cog):
 def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
     bot.add_cog(Games(bot))
-
-
