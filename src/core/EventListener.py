@@ -30,8 +30,8 @@ class EventListener(commands.Cog):
             )
         )
         # Bot logged in.
-        module_logger.debug('Logged in as {}', self.bot.user)
-        module_logger.debug('I am in {} guilds.', len(self.bot.guilds))
+        module_logger.debug('Logged in as %s', self.bot.user)
+        module_logger.debug('I am in %d guilds.', len(self.bot.guilds))
 
     @commands.Cog.listener()
     async def on_command(self, _ctx):
