@@ -90,8 +90,12 @@ if __name__ == '__main__':
     # Add database connection to the event loop.
     loop.run_until_complete(run())
 
+    intends = discord.Intents.default()
+    intends.members = True
+
     KonekoBot = Koneko(command_prefix=_prefix, owner_id=180640710217826304,
-                       help_command=None,)
+                       help_command=None, intends=intends,
+                       chunk_guilds_at_startup=False)
 
     try:
         for cog in KonekoBot.settings.toggle_extensions:
