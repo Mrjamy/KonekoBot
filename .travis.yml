@@ -20,18 +20,9 @@ jobs:
   include:
     # Compile all files.
     - stage: compile
-      python: 3.7-dev   # 3.7 development branch
-    - stage: compile
       python: 3.7       # 3.7 Stable/release
-    - stage: compile
-      python: 3.8-dev   # 3.8 development branch
-    - stage: compile
-      python: 3.8       # 3.8 Stable/release
-    -   stage: compile
-        python: 3.9-dev   # 3.9 development branch
-    -   stage: compile
-        python: 3.9       # 3.9 Stable/release
-    -   python: "nightly"
+    -   python: 3.8-dev   # 3.8 development branch
+    -   python: 3.8       # 3.8 Stable/release
 
     # Run tests
     - stage: quality
