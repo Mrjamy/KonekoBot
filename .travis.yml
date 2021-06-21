@@ -27,6 +27,11 @@ jobs:
       python: 3.8-dev   # 3.8 development branch
     - stage: compile
       python: 3.8       # 3.8 Stable/release
+    -   stage: compile
+        python: 3.9-dev   # 3.9 development branch
+    -   stage: compile
+        python: 3.9       # 3.9 Stable/release
+    -   python: "nightly"
 
     # Run tests
     - stage: quality
