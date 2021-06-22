@@ -5,7 +5,7 @@ on:
     - pull_request
 
 jobs:
-    validate-data:
+    quality_assurance:
         strategy:
             matrix:
                 python-version: [ 3.8 ]

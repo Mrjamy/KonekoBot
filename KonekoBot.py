@@ -95,7 +95,7 @@ if __name__ == '__main__':
 
     KonekoBot = Koneko(command_prefix=_prefix, owner_id=180640710217826304,
                        help_command=None, intends=intends,
-                       chunk_guilds_at_startup=False)
+                       chunk_guilds_at_startup=False, heartbeat_timeout=150.0)
 
     try:
         for cog in KonekoBot.settings.toggle_extensions:
