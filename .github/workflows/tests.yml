@@ -6,7 +6,7 @@ on:
     pull_request
 
 jobs:
-    validate-data:
+    tests:
         strategy:
             matrix:
                 python-version: [ 3.8 ]

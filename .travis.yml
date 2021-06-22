@@ -10,8 +10,6 @@ stages:
   - quality
   - test
   - run
-  # - deploy
-    # if: branch = master
 
 script:
   - find . | grep -E "\.py$" | xargs python -m compileall
@@ -21,8 +19,8 @@ jobs:
     # Compile all files.
     - stage: compile
       python: 3.7       # 3.7 Stable/release
-    -   python: 3.8-dev   # 3.8 development branch
-    -   python: 3.8       # 3.8 Stable/release
+    - python: 3.8-dev   # 3.8 development branch
+    - python: 3.8       # 3.8 Stable/release
 
     # Run tests
     - stage: quality
@@ -63,9 +61,5 @@ jobs:
         - cp config.example.ini config.ini
       script:
         - python KonekoBot.py 1
-
-    # - stage: deploy
-      # deploy to ssh
-      # reboot bot
 
 cache: pip
