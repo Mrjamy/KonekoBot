@@ -1,0 +1,21 @@
+name: Validate Data
+
+on:
+    - push
+    - pull_request
+
+jobs:
+    validate-data:
+        strategy:
+            matrix:
+                python-version: [ 3.7, 3.8 ]
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Set up Python ${{ matrix.python-version }}
+              uses: actions/setup-python@v2
+              with:
+                python-version: ${{ matrix.python-version }}
+            - name: Validate workflows
+              run: |
+                  find . | grep -E "\.py$" | xargs python -m compileall
