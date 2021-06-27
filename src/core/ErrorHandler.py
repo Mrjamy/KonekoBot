@@ -5,6 +5,7 @@ Module containing event-listener for all discord.py errors.
 # Builtins
 import logging
 from datetime import datetime, timedelta
+from traceback import print_tb
 
 # Pip
 from discord.ext import commands
@@ -94,9 +95,8 @@ class ErrorHandler(commands.Cog):
 
         # All other Errors not returned come here... And we can just print the
         # default TraceBack.
-        module_logger.error('Ignoring exception in command %s:', ctx.command)
-        module_logger.error(error)
-
+        module_logger.error('Ignoring %s in command %s:', type(error) or "exception", ctx.command)
+        module_logger.error("error: %s", error)
 
 def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""

@@ -12,7 +12,7 @@ from discord.ext.commands.cooldowns import BucketType
 
 # Locals
 from src.core.exceptions import NotEnoughBalance
-from src.utils.database.repositories.currency_repository import \
+from src.utils.database.postgress.repositories.currency_repository import \
     CurrencyRepository
 from src.utils.general import DiscordEmbed, Emoji, NameTransformer
 
