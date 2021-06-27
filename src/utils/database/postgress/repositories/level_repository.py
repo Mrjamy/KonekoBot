@@ -3,13 +3,18 @@ Level repository.
 """
 
 # Builtins
+import json
 import logging
 import random
 from datetime import datetime
+from time import time
 from typing import List
 
+# Pip
+import discord
+
 # Locals
-from src.utils.database.models.level import Level
+from src.utils.database.postgress.models.level import Level
 
 module_logger = logging.getLogger('koneko.LevelRepository')
 
@@ -37,6 +42,20 @@ class LevelRepository:
         if level is None:
             level = await self.insert(user_id, guild_id)
         return level
+
+    async def get_json(self, user: discord.User, guild_id: int):
+        with open('src/utils/database/json/levels.json') as f:
+            data = json.load(f)
+
+            try:
+                user = data[guild_id][user.id]
+                module_logger.debug(user)
+                return user
+            except KeyError:
+                pass
+
+            module_logger.debug(data)
+
 
     @staticmethod
     async def get_all(guild_id: int, offset: int = 0) -> List[Level]:
@@ -100,6 +119,31 @@ class LevelRepository:
             experience=0,
             level=0
         )
+
+    async def json_insert(self, user: discord.User, guild_id: str):
+        with open('src/utils/database/json/levels.json', 'r') as f:
+            data = json.load(f)
+
+        try:
+            # Check if the guild is already known.
+            if guild_id not in data:
+                data[guild_id] = {}
+            if user.id not in data[guild_id]:
+                data[guild_id][user.id] = {
+                    "name": "test",
+                    "experience": 0,
+                    "level": 1,
+                    "last_message": int(time())
+                }
+            else:
+                module_logger.debug(user.id not in data[guild_id])
+        except KeyError:
+            return False
+
+        with open('src/utils/database/json/levels.json', 'w') as f:
+            json.dump(data, f, indent=4, sort_keys=True)
+
+
 
     async def levelup_check(self, user_id: int, guild_id: int) -> bool:
         """ Check if the target user has passed the required amount to level up.

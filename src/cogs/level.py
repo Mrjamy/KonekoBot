@@ -10,7 +10,7 @@ import discord
 from discord.ext import commands
 
 # Locals
-from src.utils.database.repositories.level_repository import LevelRepository
+from src.utils.database.postgress.repositories.level_repository import LevelRepository
 from src.utils.general import DiscordEmbed, NameTransformer
 
 module_logger = logging.getLogger('koneko.Level')
@@ -46,6 +46,22 @@ class Level(commands.Cog):
         await DiscordEmbed.confirm(ctx, title=f'`{NameTransformer(user)}` '
                                               f'is level {level.level}, '
                                               f'{level.experience}/{up} xp')
+
+    @commands.guild_only()
+    @commands.command()
+    async def level_test(self, ctx, user: discord.User = None) -> None:
+        if user is None:
+            user = ctx.author
+
+        await self.level_repository.get_json(user, ctx.guild.id)
+
+    @commands.guild_only()
+    @commands.command()
+    async def add_level_test(self, ctx, user: discord.User = None) -> None:
+        if user is None:
+            user = ctx.author
+
+        await self.level_repository.json_insert(user, ctx.guild.id)
 
     @commands.guild_only()
     @commands.command(aliases=['score', 'levels'])
@@ -86,34 +102,34 @@ class Level(commands.Cog):
         """Stores the user in the database whenever a new user joins."""
         await self.level_repository.get(member.id, member.guild.id)
 
-    @commands.Cog.listener()
-    async def on_message(self, ctx) -> None:
-        """Whenever a user sends a message award them with some exp."""
-        if ctx.author.bot:
-            return
-        if not ctx.guild:
-            return
-
-        await self.level_repository.add_xp(ctx.author.id, ctx.guild.id)
-        up = await self.level_repository.levelup_check(ctx.author.id,
-                                                       ctx.guild.id)
-        level = await self.level_repository.get(ctx.author.id, ctx.guild.id)
-
-        if up:
-            # Send an embedded message to notify an user upon leveling up.
-            try:
-                await DiscordEmbed.message(
-                    ctx, title=f'`{NameTransformer(ctx.author)}` '
-                               f'has leveled up to level {level.level}')
-            except discord.errors.Forbidden:
-                # Could not send embedded message, try normal message.
-                try:
-                    await ctx.channel.send(
-                        f'`{NameTransformer(ctx.author)}` has leveled up to '
-                        f'level {level.level}')
-                #  No message could be delivered.
-                except discord.errors.Forbidden:
-                    pass
+    # @commands.Cog.listener()
+    # async def on_message(self, ctx) -> None:
+    #     """Whenever a user sends a message award them with some exp."""
+    #     if ctx.author.bot:
+    #         return
+    #     if not ctx.guild:
+    #         return
+    #
+    #     # await self.level_repository.add_xp(ctx.author.id, ctx.guild.id)
+    #     # up = await self.level_repository.levelup_check(ctx.author.id,
+    #     #                                                ctx.guild.id)
+    #     # level = await self.level_repository.get(ctx.author.id, ctx.guild.id)
+    #     #
+    #     # if up:
+    #     #     # Send an embedded message to notify an user upon leveling up.
+    #     #     try:
+    #     #         await DiscordEmbed.message(
+    #     #             ctx, title=f'`{NameTransformer(ctx.author)}` '
+    #     #                        f'has leveled up to level {level.level}')
+    #     #     except discord.errors.Forbidden:
+    #     #         # Could not send embedded message, try normal message.
+    #     #         try:
+    #     #             await ctx.channel.send(
+    #     #                 f'`{NameTransformer(ctx.author)}` has leveled up to '
+    #     #                 f'level {level.level}')
+    #     #         #  No message could be delivered.
+    #     #         except discord.errors.Forbidden:
+    #     #             pass
 
 
 def setup(bot) -> None:

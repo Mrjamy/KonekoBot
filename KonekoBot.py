@@ -16,8 +16,6 @@ from discord.ext import commands
 # Locals
 from src.core.config import Settings
 from src.core.logging import Logging
-from src.utils.database.db import run
-from src.utils.database.repositories.prefix_repository import PrefixRepository
 
 if sys.version_info < (3, 6):
     raise ImportError("Python 3.6 or greater is required")
@@ -29,13 +27,7 @@ module_logger = logging.getLogger('koneko')
 
 async def _prefix(bot, msg) -> List[str]:
     user_id = bot.user.id
-    prefix = [f'<@!{user_id}> ', f'<@{user_id}> ']
-    if msg.guild is None:
-        prefix.append('$')
-    else:
-        guild_prefix = await PrefixRepository().get(msg.guild)
-        prefix.extend(guild_prefix)
-    return prefix
+    return [f'<@!{user_id}> ', f'<@{user_id}> ', '$']
 
 
 class Koneko(commands.AutoShardedBot):
@@ -88,7 +80,7 @@ if __name__ == '__main__':
     # Get the current asyncio event loop.
     loop = asyncio.get_event_loop()
     # Add database connection to the event loop.
-    loop.run_until_complete(run())
+    # loop.run_until_complete(run())
 
     intends = discord.Intents.default()
     intends.members = True
