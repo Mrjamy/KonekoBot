@@ -9,8 +9,6 @@ import logging
 # Pip
 import discord
 from discord.ext import commands
-from src.utils.database.postgress.repositories.currency_repository import \
-    CurrencyRepository
 from src.utils.general import DiscordEmbed
 
 module_logger = logging.getLogger('koneko.Admin')
@@ -23,7 +21,6 @@ class Admin(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
-        self.currency_repository = CurrencyRepository()
 
     def cog_check(self, ctx):
         """Cog check

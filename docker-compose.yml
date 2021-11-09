@@ -4,13 +4,5 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        depends_on:
-            - db
         volumes:
             - .:/code
-    db:
-        image: postgres
-        environment:
-            POSTGRES_DB: koneko
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: password

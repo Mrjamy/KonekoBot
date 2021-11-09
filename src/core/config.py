@@ -18,15 +18,11 @@ class Settings:
         """Optional extensions for Koneko."""
         return [
             "admin",
-            # "adminstration",
-            # "alert",
-            "currency",
             # "dnd",
             "gambling",
             "games",
             "general",
             "help",
-            "level",
             # "stats",
             "utility",
         ]
