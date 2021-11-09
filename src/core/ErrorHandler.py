@@ -95,7 +95,6 @@ class ErrorHandler(commands.Cog):
 
         # All other Errors not returned come here... And we can just print the
         # default TraceBack.
-        module_logger.error(traceback.print_tb(error.__traceback__))
         module_logger.error('Ignoring %s in command %s:', type(error) or "exception", ctx.command)
         module_logger.error("error: %s", error)
 

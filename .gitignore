@@ -8,7 +8,6 @@ __pycache__/
 # Configuration
 *.ini
 !config.example.ini
-src/utils/database/postgress/config.json
 
 # Temp files
 src/core/images/tmp/
