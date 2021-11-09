@@ -69,19 +69,19 @@ class DiscordEmbed:
     green = discord.Color.green()
 
     @staticmethod
-    async def message(ctx, parts=None, color: discord.Color = purple, **kwargs) -> discord.Embed:
+    async def message(ctx, parts=None, inline: bool = False, color: discord.Color = purple, **kwargs) -> discord.Embed:
         """Send a message"""
-        return await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
+        return await DiscordEmbed.send(ctx, parts, inline=inline, color=color, **kwargs)
 
     @staticmethod
-    async def confirm(ctx, parts=None, color: discord.Color = green, **kwargs) -> discord.Embed:
+    async def confirm(ctx, parts=None, inline: bool = False, color: discord.Color = green, **kwargs) -> discord.Embed:
         """Sends a confirming message"""
-        return await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
+        return await DiscordEmbed.send(ctx, parts, inline=inline, color=color, **kwargs)
 
     @staticmethod
-    async def error(ctx, parts=None, color: discord.Color = red, **kwargs) -> discord.Embed:
+    async def error(ctx, parts=None, inline: bool = False, color: discord.Color = red, **kwargs) -> discord.Embed:
         """Sends an error message"""
-        return await DiscordEmbed.send(ctx, parts, color=color, **kwargs)
+        return await DiscordEmbed.send(ctx, parts, inline=inline, color=color, **kwargs)
 
     @staticmethod
     async def send(ctx, parts=None, **kwargs) -> discord.Embed:
@@ -98,13 +98,13 @@ class DiscordEmbed:
             Optional embed description/body.
         """
         image = kwargs.pop('image', None)
-
+        inline = kwargs.pop('inline', False)
         embed = discord.Embed(**kwargs)
 
         # Add extra fields to the embed.
         if parts:
             for part in parts:
-                embed.add_field(inline=False, **part)
+                embed.add_field(inline=inline, **part)
         if image:
             embed.set_image(url=image)
 

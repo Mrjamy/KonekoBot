@@ -9,18 +9,19 @@
     },
     "lewd": {
         "koneko": "*Gets embarresed* Baka",
-        "other": "*{} lewds {}*"
+        "other": "*{} lewds {}*",
+        "test": "no"
     },
     "pat": {
         "koneko": "*Pats {} back :heart:*",
         "other": "*{} pats {}*"
     },
-    "slap": {
-        "koneko": "*Gets slightly angry*",
-        "other": "*{} slaps {}*"
-    },
     "respect": {
         "koneko": "F in the chat for me :(",
         "other": "Can we have an F in the chat for {}"
+    },
+    "slap": {
+        "koneko": "*Gets slightly angry*",
+        "other": "*{} slaps {}*"
     }
 }
