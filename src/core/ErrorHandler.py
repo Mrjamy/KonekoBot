@@ -7,8 +7,6 @@ import traceback
 
 import logging
 from datetime import datetime, timedelta
-from traceback import print_tb
-
 # Pip
 from discord.ext import commands
 
@@ -100,6 +98,7 @@ class ErrorHandler(commands.Cog):
         module_logger.error(traceback.print_tb(error.__traceback__))
         module_logger.error('Ignoring %s in command %s:', type(error) or "exception", ctx.command)
         module_logger.error("error: %s", error)
+
 
 def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
