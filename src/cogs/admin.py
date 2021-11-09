@@ -46,18 +46,6 @@ class Admin(commands.Cog):
         await self.bot.change_presence(status=discord.Status.online,
                                        activity=activity)
 
-    @commands.command(aliases=["export"], hidden=True)
-    async def export_db(self, ctx) -> None:
-        """Create an export of the currency table to a json file."""
-        await self.currency_repository.export_db()
-        await ctx.message.add_reaction("✅")
-
-    @commands.command(aliases=["import"], hidden=True)
-    async def import_db(self, ctx) -> None:
-        """Import to the currency table from a json file."""
-        await self.currency_repository.import_db()
-        await ctx.message.add_reaction("✅")
-
     @commands.group(hidden=True)
     async def sentence(self, ctx) -> None:
         """Sentence command group
