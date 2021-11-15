@@ -76,11 +76,6 @@ class Koneko(commands.AutoShardedBot):
 
 
 if __name__ == '__main__':
-    # Get the current asyncio event loop.
-    loop = asyncio.get_event_loop()
-    # Add database connection to the event loop.
-    # loop.run_until_complete(run())
-
     intends = discord.Intents.default()
     intends.members = True
 
