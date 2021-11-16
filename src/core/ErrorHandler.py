@@ -2,9 +2,6 @@
 Module containing event-listener for all discord.py errors.
 """
 
-# Builtins
-import traceback
-
 import logging
 from datetime import datetime, timedelta
 # Pip

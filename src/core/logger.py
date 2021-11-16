@@ -6,7 +6,7 @@ Module to bootstrap the loggers.
 import logging
 
 
-class Logging:
+class Logger:
     """Logging class to setup logging for all used modules."""
 
     def __init__(self):
