@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # Builtins
-import asyncio
 import configparser
 import logging
 import sys
@@ -15,13 +14,13 @@ from discord.ext import commands
 
 # Locals
 from src.core.config import Settings
-from src.core.logging import Logging
+from src.core.logger import Logger
 
 if sys.version_info < (3, 6):
     raise ImportError("Python 3.6 or greater is required")
 
 # Setup module logging.
-Logging()
+Logger()
 module_logger = logging.getLogger('koneko')
 
 
