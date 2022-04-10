@@ -6,6 +6,7 @@ Module containing gambling related commands.
 import asyncio
 import logging
 import random
+from enum import Enum
 
 # Pip
 from discord.ext import commands
@@ -14,6 +15,14 @@ from discord.ext import commands
 from src.utils.general import NameTransformer
 
 module_logger = logging.getLogger('koneko.Gambling')
+
+
+class RollMode(Enum):
+    DEFAULT = "default"
+    ADVANTAGE = "advantage"
+    A = "a"
+    DISADVANTAGE = "disadvantage"
+    D = "d"
 
 
 # TODO: add the option to place a bet of :neko: on the following commands
@@ -52,6 +61,30 @@ class Gambling(commands.Cog):
         flip = random.choice(options)
 
         await result()
+
+    @commands.command()
+    async def roll(self, ctx, dice: str, mode: RollMode = RollMode.DEFAULT, keep: int = 1) -> None:
+        """Rolls a die in NdN format."""
+        try:
+            amount, limit = map(int, dice.split('d'))
+        except ValueError:
+            await ctx.channel.send('Format has to be in NdN!')
+            return
+        rolls: list = [random.randint(1, limit) for _ in range(amount)]
+        if keep <= 0: keep = len(rolls)
+
+        rolls.sort()
+        if mode in [RollMode.ADVANTAGE, RollMode.A]:
+            mode: RollMode = RollMode.ADVANTAGE
+            rolls: list = rolls[-keep:]
+        if mode in [RollMode.DISADVANTAGE, RollMode.A]:
+            mode: RollMode = RollMode.DISADVANTAGE
+            rolls: list = rolls[:keep]
+
+        addition: str = f' with {mode.value}' if mode != RollMode.DEFAULT else ''
+        result: str = 'rolled ' + ', '.join(str(roll) for roll in rolls) + addition
+        await ctx.channel.send(result)
+
 
 
 def setup(bot) -> None:
