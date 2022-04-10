@@ -48,7 +48,6 @@ class Admin(commands.Cog):
         if not result:
             return await ctx.channel.send(f"Guild \"{guild}\" could not be found")
 
-        module_logger.debug(self.bot.config.get('favorite_guilds'))
         favorite_guilds = self.bot.config.get('favorite_guilds')
         if favorite_guilds and result.id in favorite_guilds:
             return await ctx.channel.send('Favorite guilds cannot be left.')
