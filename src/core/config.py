@@ -18,7 +18,6 @@ class Settings:
         """Optional extensions for Koneko."""
         return [
             "admin",
-            # "dnd",
             "gambling",
             "games",
             "general",
