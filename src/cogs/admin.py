@@ -40,14 +40,18 @@ class Admin(commands.Cog):
 
     @guilds.command()
     async def leave(self, ctx: commands.Context, *, guild: Union[str, int]) -> None:
-        result: Union[discord.Guild, None] = None
         if isinstance(guild, str):
             result: discord.Guild = discord.utils.get(self.bot.guilds, name=guild)
-        if isinstance(guild, int):
+        else:
             result: discord.Guild = self.bot.get_guild(int(guild))
 
         if not result:
             return await ctx.channel.send(f"Guild \"{guild}\" could not be found")
+
+        module_logger.debug(self.bot.config.get('favorite_guilds'))
+        favorite_guilds = self.bot.config.get('favorite_guilds')
+        if favorite_guilds and result.id in favorite_guilds:
+            return await ctx.channel.send('Favorite guilds cannot be left.')
 
         m: discord.Message = await ctx.channel.send(f"Are you sure you want to leave \"{result}\"? [y-N]")
 
@@ -75,7 +79,7 @@ class Admin(commands.Cog):
         if not result:
             return await ctx.channel.send(f"Guild \"{guild}\" could not be found")
 
-        await ctx.channel.send(f"Found {result.name} {result.member_count} members.")
+        await ctx.channel.send(f"Found {result.id} {result.name} {result.member_count} members.")
 
     # TODO: allow for custom a status
     @commands.command(aliases=["watch", "listen"], hidden=True)
