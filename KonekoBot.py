@@ -56,7 +56,7 @@ class Koneko(commands.AutoShardedBot):
         await self.connect(reconnect=True)
 
     async def logout(self) -> None:
-        await super().logout()
+        await super().close()
         exit(0)
 
     @property
