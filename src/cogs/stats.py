@@ -1,5 +1,5 @@
 """
-Module containing utility commands.
+Module containing stats commands.
 """
 
 # Builtins
@@ -17,8 +17,8 @@ from src.utils.general import DiscordEmbed, NameTransformer
 module_logger = logging.getLogger('koneko.Games')
 
 
-class Utility(commands.Cog):
-    """Utility commands."""
+class Stats(commands.Cog):
+    """Stats commands."""
 
     __slots__ = 'bot',
 
@@ -62,4 +62,4 @@ class Utility(commands.Cog):
 
 def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(Utility(bot))
+    bot.add_cog(Stats(bot))

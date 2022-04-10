@@ -21,8 +21,7 @@ class Settings:
             "gambling",
             "games",
             "general",
-            # "stats",
-            "utility",
+            "stats",
         ]
 
     @property
