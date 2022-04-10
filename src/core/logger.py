@@ -16,6 +16,7 @@ class Logger:
                 'asyncio': logging.CRITICAL
         }.items():
             self.file_logger(module, level)
+            self.std_err_logger(module, level)
 
     @staticmethod
     def file_logger(module: str, level: int):
@@ -27,3 +28,14 @@ class Logger:
         logger_formatter = logging.Formatter(logger_format)
         logger_file_handler.setFormatter(logger_formatter)
         logger.addHandler(logger_file_handler)
+
+    @staticmethod
+    def std_err_logger(module: str, level: int):
+        """Template function for all loggers."""
+        logger = logging.getLogger(module)
+        logger.setLevel(level)
+        logger_format = '%(asctime)-15s - [%(process)-6s] %(levelname)-8s - %(name)s - %(message)s'
+        logger_formatter = logging.Formatter(logger_format)
+        logger_stream_handler = logging.StreamHandler()
+        logger_stream_handler.setFormatter(logger_formatter)
+        logger.addHandler(logger_stream_handler)
