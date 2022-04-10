@@ -3,8 +3,10 @@ Module containing admin commands.
 """
 
 # Builtins
+import asyncio
 import json
 import logging
+from typing import Union
 
 # Pip
 import discord
@@ -17,7 +19,7 @@ module_logger = logging.getLogger('koneko.Admin')
 class Admin(commands.Cog):
     """Commands only for the bot owner"""
 
-    __slots__ = 'bot', 'currency_repository'
+    __slots__ = 'bot'
 
     def __init__(self, bot):
         self.bot = bot
@@ -27,6 +29,51 @@ class Admin(commands.Cog):
 
         Only returns true for bot owner."""
         return self.bot.is_owner(ctx.author)
+
+    @commands.group(hidden=True)
+    async def guilds(self, ctx) -> None:
+        if ctx.invoked_subcommand is None:
+            message = '\n'.join([f'{guild}' for guild in self.bot.guilds])
+
+            return await ctx.channel.send(message)
+
+
+    @guilds.command()
+    async def leave(self, ctx, *, guild: Union[str, int]) -> None:
+        result = None
+        if isinstance(guild, str):
+            result = discord.utils.get(self.bot.guilds, name=guild)
+        if isinstance(guild, int):
+            result = self.bot.get_guild(int(guild))
+
+        if not result:
+            return await ctx.channel.send(f"Guild \"{guild}\" could not be found")
+
+        m = await ctx.channel.send(f"Are you sure you want to leave \"{result}\"? [y-N]")
+
+        def validate(m_):
+            return m_.author == ctx.author and m_.channel == ctx.channel
+
+        try:
+            confirm = await ctx.bot.wait_for('message', check=validate,
+                                            timeout=60)
+            confirm = confirm.content
+        except asyncio.TimeoutError:
+            await m.delete()
+            await ctx.channel.send('No response, aborted.')
+            return
+
+        if confirm in ['y', 'Y']:
+            await result.leave()
+            await ctx.channel.send(f"Left \"{result}\".")
+        else:
+            await ctx.channel.send(f"Action canceled.")
+
+    @guilds.command()
+    async def details(self, ctx, *, guild: str) -> None:
+        result = discord.utils.get(self.bot.guilds, name=guild)
+
+        await ctx.channel.send(f"Found {result.name} {result.member_count} members.")
 
     # TODO: allow for custom a status
     @commands.command(aliases=["watch", "listen"], hidden=True)

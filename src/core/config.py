@@ -33,5 +33,5 @@ class Settings:
         return [
             "ErrorHandler",
             "EventListener",
-            "HotReload"
+            "HotReload",
         ]
