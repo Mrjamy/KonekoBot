@@ -20,7 +20,7 @@ module_logger = logging.getLogger('koneko.Gambling')
 class Gambling(commands.Cog):
     """Gambling commands."""
 
-    __slots__ = 'bot', 'currency_repository'
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

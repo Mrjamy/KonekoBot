@@ -17,7 +17,7 @@ module_logger = logging.getLogger('koneko.ErrorHandler')
 class ErrorHandler(commands.Cog):
     """Class for error handling."""
 
-    __slots__ = ('bot',)
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

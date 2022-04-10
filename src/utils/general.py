@@ -16,7 +16,7 @@ module_logger = logging.getLogger('koneko.utils')
 class Emoji:
     """Emoji provider class."""
 
-    __slots__ = ('cash', )
+    __slots__ = 'cash',
 
     def __init__(self):
         """Assign all used emoji\'s."""
@@ -26,7 +26,7 @@ class Emoji:
 class ImageProvider:
     """Image provider class."""
 
-    __slots__ = ('image', )
+    __slots__ = 'image',
 
     def __init__(self, query):
         """Generate a random image."""
@@ -51,7 +51,7 @@ class ImageProvider:
 class NameTransformer:
     """User to display name transformer."""
 
-    __slots__ = ('user', )
+    __slots__ = 'user',
 
     def __init__(self, user: discord.User):
         self.user = user

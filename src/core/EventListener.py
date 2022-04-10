@@ -14,7 +14,7 @@ module_logger = logging.getLogger('koneko.EventListener')
 class EventListener(commands.Cog):
     """Class that listens to events dispatched by dpy."""
 
-    __slots__ = ('bot',)
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

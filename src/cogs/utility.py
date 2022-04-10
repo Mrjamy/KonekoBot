@@ -20,7 +20,7 @@ module_logger = logging.getLogger('koneko.Games')
 class Utility(commands.Cog):
     """Utility commands."""
 
-    __slots__ = 'bot', 'prefix_repository'
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

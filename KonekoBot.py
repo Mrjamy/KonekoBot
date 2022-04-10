@@ -40,7 +40,7 @@ async def _prefix(bot, _msg) -> List[str]:
 class Koneko(commands.AutoShardedBot):
     """Auto sharded discord bot."""
 
-    __slots__ = 'uptime', 'command_count', 'settings', 'logger', 'loop'
+    __slots__ = 'uptime', 'command_count', 'settings', 'logger', 'loop',
 
     # Create an AutoSharded bot.
     def __init__(self, *args, **kwargs):

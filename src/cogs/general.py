@@ -21,7 +21,7 @@ module_logger = logging.getLogger('koneko.General')
 class General(commands.Cog):
     """General commands."""
 
-    __slots__ = ('bot',)
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

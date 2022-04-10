@@ -18,7 +18,7 @@ module_logger = logging.getLogger('koneko.General')
 class Rpg(commands.Cog):
     """Rpg commands."""
 
-    __slots__ = ('bot',)
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

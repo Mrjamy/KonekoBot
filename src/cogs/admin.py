@@ -19,7 +19,7 @@ module_logger = logging.getLogger('koneko.Admin')
 class Admin(commands.Cog):
     """Commands only for the bot owner"""
 
-    __slots__ = 'bot'
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

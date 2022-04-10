@@ -20,7 +20,7 @@ module_logger = logging.getLogger('koneko.Games')
 class Games(commands.Cog):
     """Some fun games."""
 
-    __slots__ = ('bot',)
+    __slots__ = 'bot',
 
     def __init__(self, bot):
         self.bot = bot

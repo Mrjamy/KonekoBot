@@ -11,7 +11,7 @@ module_logger = logging.getLogger('koneko.Settings')
 
 class Settings:
     """Settings class"""
-    __slots__ = ('_toggle_extensions', '_core_extensions')
+    __slots__ = '_toggle_extensions', '_core_extensions',
 
     @property
     def toggle_extensions(self) -> List[str]:
