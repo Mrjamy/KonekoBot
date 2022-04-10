@@ -24,12 +24,12 @@ class Rpg(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def give_item(self, ctx, users: commands.Greedy[discord.Member], *, item) -> discord.Embed:
+    async def give_item(self, ctx: commands.Context, users: commands.Greedy[discord.Member], *, item) -> discord.Embed:
         """Give one or more users an item."""
         if len(users) == 0:
-            users = [self.bot.user]
-        mentions = ' '.join([f'{NameTransformer(user)}' for user in users])
-        message = f"{ctx.message.author} gives {mentions} {item}"
+            users: list = [self.bot.user]
+        mentions: str = ' '.join([f'{NameTransformer(user)}' for user in users])
+        message: str = f"{ctx.message.author} gives {mentions} {item}"
 
         return await DiscordEmbed.message(ctx, title=message)
 

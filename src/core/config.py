@@ -21,7 +21,6 @@ class Settings:
             "gambling",
             "games",
             "general",
-            "help",
             # "stats",
             "utility",
         ]

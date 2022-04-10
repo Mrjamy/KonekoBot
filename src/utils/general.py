@@ -9,6 +9,7 @@ import random
 
 # Pip
 import discord
+from discord.ext import commands
 
 module_logger = logging.getLogger('koneko.utils')
 
@@ -20,7 +21,7 @@ class Emoji:
 
     def __init__(self):
         """Assign all used emoji\'s."""
-        self.cash = '<:cashmoney:699293408442974238>'
+        self.cash: str = '<:cashmoney:699293408442974238>'
 
 
 class ImageProvider:
@@ -30,18 +31,17 @@ class ImageProvider:
 
     def __init__(self, query):
         """Generate a random image."""
-        path = os.path.join(os.path.dirname(__file__), '..')
+        path: str = os.path.join(os.path.dirname(__file__), '..')
 
-        local = os.path.join(rf'{path}', 'core', 'images', query)
+        local: str = os.path.join(rf'{path}', 'core', 'images', query)
+        remote: str = rf'https://raw.githubusercontent.com/mrjamy/KonekoBot/master/src/core/images/{query}'
 
-        remote = rf'https://raw.githubusercontent.com/mrjamy/KonekoBot/master/src/core/images/{query}'
-
-        filename = random.choice([
+        filename: str = random.choice([
             file for file in os.listdir(local)
             if os.path.isfile(os.path.join(local, file))
         ])
 
-        self.image = rf'{remote}/{filename}'
+        self.image: str = rf'{remote}/{filename}'
 
     def __str__(self) -> str:
         """Provide an absolute link to an image in str format."""
@@ -54,7 +54,7 @@ class NameTransformer:
     __slots__ = 'user',
 
     def __init__(self, user: discord.User):
-        self.user = user
+        self.user: discord.User = user
 
     def __str__(self) -> str:
         """Shows the display name of a discord.User object."""
@@ -64,27 +64,27 @@ class NameTransformer:
 class DiscordEmbed:
     """Class to send discord embedded messages."""
 
-    purple = discord.Color.dark_purple()
-    red = discord.Color.red()
-    green = discord.Color.green()
+    purple: discord.Color = discord.Color.dark_purple()
+    red: discord.Color = discord.Color.red()
+    green: discord.Color = discord.Color.green()
 
     @staticmethod
-    async def message(ctx, parts=None, inline: bool = False, color: discord.Color = purple, **kwargs) -> discord.Embed:
+    async def message(ctx: commands.Context, parts=None, inline: bool = False, color: discord.Color = purple, **kwargs) -> discord.Embed:
         """Send a message"""
         return await DiscordEmbed.send(ctx, parts, inline=inline, color=color, **kwargs)
 
     @staticmethod
-    async def confirm(ctx, parts=None, inline: bool = False, color: discord.Color = green, **kwargs) -> discord.Embed:
+    async def confirm(ctx: commands.Context, parts=None, inline: bool = False, color: discord.Color = green, **kwargs) -> discord.Embed:
         """Sends a confirming message"""
         return await DiscordEmbed.send(ctx, parts, inline=inline, color=color, **kwargs)
 
     @staticmethod
-    async def error(ctx, parts=None, inline: bool = False, color: discord.Color = red, **kwargs) -> discord.Embed:
+    async def error(ctx: commands.Context, parts=None, inline: bool = False, color: discord.Color = red, **kwargs) -> discord.Embed:
         """Sends an error message"""
         return await DiscordEmbed.send(ctx, parts, inline=inline, color=color, **kwargs)
 
     @staticmethod
-    async def send(ctx, parts=None, **kwargs) -> discord.Embed:
+    async def send(ctx: commands.Context, parts=None, **kwargs) -> discord.Embed:
         """Send error message in the corresponding channel
          Parameters
         ------------
@@ -97,9 +97,9 @@ class DiscordEmbed:
         description: str[optional]
             Optional embed description/body.
         """
-        image = kwargs.pop('image', None)
-        inline = kwargs.pop('inline', False)
-        embed = discord.Embed(**kwargs)
+        image: str = kwargs.pop('image', None)
+        inline: bool = kwargs.pop('inline', False)
+        embed: discord.Embed = discord.Embed(**kwargs)
 
         # Add extra fields to the embed.
         if parts:

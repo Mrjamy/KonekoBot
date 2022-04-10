@@ -36,7 +36,7 @@ class Gambling(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=['flip', 'toss'])
-    async def coinflip(self, ctx, choice: str = None) -> None:
+    async def coinflip(self, ctx: commands.Context, choice: str = None) -> None:
         """Tosses a coin."""
         async def result():
             await asyncio.sleep(5)
@@ -50,20 +50,20 @@ class Gambling(commands.Cog):
                 await ctx.channel.send(f'The coin landed on {flip}')
 
         if choice is not None:
-            choice = choice.lower()
-        options = [
+            choice: str = choice.lower()
+        options: list = [
             "heads",
             "tails",
         ]
         await ctx.channel.send('Tossing a coin in the air')
 
         await ctx.trigger_typing()
-        flip = random.choice(options)
+        flip: str = random.choice(options)
 
         await result()
 
     @commands.command()
-    async def roll(self, ctx, dice: str, mode: RollMode = RollMode.DEFAULT, keep: int = 1) -> None:
+    async def roll(self, ctx: commands.Context, dice: str, mode: RollMode = RollMode.DEFAULT, keep: int = 1) -> None:
         """Rolls a die in NdN format."""
         try:
             amount, limit = map(int, dice.split('d'))

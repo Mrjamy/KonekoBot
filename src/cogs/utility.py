@@ -8,11 +8,11 @@ from datetime import datetime, timedelta
 from time import time
 
 # Pip
-from discord import Embed
+import discord
 from discord.ext import commands
 
 # Locals
-from src.utils.general import DiscordEmbed
+from src.utils.general import DiscordEmbed, NameTransformer
 
 module_logger = logging.getLogger('koneko.Games')
 
@@ -27,19 +27,18 @@ class Utility(commands.Cog):
 
     @commands.bot_has_permissions(embed_links=True)
     @commands.command()
-    async def stats(self, ctx) -> Embed:
+    async def stats(self, ctx: commands.Context) -> discord.Embed:
         """Returns current statistics of the bot."""
 
-        seconds = round(time() - self.bot.uptime)
+        seconds: int = round(time() - self.bot.uptime)
 
-        sec = timedelta(seconds=seconds)
-        d = datetime(1, 1, 1) + sec
+        sec: timedelta = timedelta(seconds=seconds)
+        d: datetime = datetime(1, 1, 1) + sec
 
-        parts = []
-        data = {
+        parts: list = []
+        data: dict = {
             'uptime': f"{d.day - 1:d}d {d.hour}h {d.minute}m {d.second}s",
             'guilds': str(len(self.bot.guilds)),
-            # 'members': str(len(list(self.bot.get_all_members()))),
             'command_count': self.bot.command_count + 1
         }
 
@@ -51,6 +50,15 @@ class Utility(commands.Cog):
 
         return await DiscordEmbed.message(ctx, parts, title="Koneko's Statistics")
 
+    @commands.guild_only()
+    @commands.command(aliases=["followage"])
+    async def joined(self, ctx: commands.Context, users: commands.Greedy[discord.Member]):
+        """Says when a member joined."""
+        if len(users) == 0:
+            users: list = [ctx.message.author]
+        message: str = ''.join([f'{NameTransformer(user)} joined in {user.joined_at}\n' for user in users])
+
+        await ctx.channel.send(message)
 
 def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""

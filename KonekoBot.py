@@ -4,13 +4,13 @@
 import logging
 import sys
 import time
-import traceback
-from typing import List
+from typing import List, Union
 
 # Pip
 import discord
 import yaml
 from discord.ext import commands
+
 try:
     from yaml import CLoader as Loader
 except ImportError:
@@ -28,12 +28,12 @@ Logger()
 module_logger = logging.getLogger('koneko')
 
 
-async def _prefix(bot, _msg) -> List[str]:
-    prefix = bot.config.get('prefix')
+async def _prefix(bot, _msg: discord.Message) -> List[str]:
+    prefix: Union[str, None] = bot.config.get('prefix')
     if not prefix:
-        prefix = '$'
+        prefix: str = '$'
 
-    user_id = bot.user.id
+    user_id: int = bot.user.id
     return [f'<@!{user_id}> ', f'<@{user_id}> ', prefix]
 
 
@@ -45,9 +45,9 @@ class Koneko(commands.AutoShardedBot):
     # Create an AutoSharded bot.
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.uptime = time.time()
-        self.command_count = 0
-        self.settings = Settings()
+        self.uptime: float = time.time()
+        self.command_count: int = 0
+        self.settings: Settings = Settings()
 
     async def on_message(self, message: discord.Message) -> None:
         if message.author.bot:
@@ -71,7 +71,7 @@ class Koneko(commands.AutoShardedBot):
     def config(self) -> dict:
         try:
             with open('config.yaml', 'rb+') as file:
-               config = yaml.load(file, Loader)
+               config: dict = yaml.load(file, Loader)
         except FileNotFoundError:
             print('config.yaml not found.')
             exit(1)
@@ -93,17 +93,17 @@ if __name__ == '__main__':
     intends = discord.Intents.default()
     intends.members = True
 
-    KonekoBot = Koneko(command_prefix=_prefix, owner_id=180640710217826304,
-                       help_command=None, intends=intends,
-                       chunk_guilds_at_startup=False, heartbeat_timeout=150.0)
+    KonekoBot: Koneko = Koneko(command_prefix=_prefix, owner_id=180640710217826304,
+                       intends=intends, chunk_guilds_at_startup=False,
+                       heartbeat_timeout=150.0)
 
     try:
         for cog in KonekoBot.settings.toggle_extensions:
             KonekoBot.load_extension(f"src.cogs.{cog}")
         for cog in KonekoBot.settings.core_extensions:
             KonekoBot.load_extension(f"src.core.{cog}")
-    except ImportError as error:
-        module_logger.error(traceback.print_tb(error))
+    except (ImportError, commands.ExtensionNotFound) as error:
+        module_logger.error(error)
         exit(1)
 
     # Dry run option for travis.

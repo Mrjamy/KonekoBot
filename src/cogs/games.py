@@ -29,37 +29,38 @@ class Games(commands.Cog):
     @commands.command()
     async def rps(self, ctx, choice: str = "") -> None:
         """Play a game of rock paper scissors."""
-        options = {
+        options: dict = {
             "r": "rock",
             "p": "paper",
             "s": "scissors"
         }
 
         if choice == "":
-            m = await ctx.channel.send("Please choose from: rock, paper, scissors")
+            m: discord.Message = await ctx.channel.send("Please choose from: rock, paper, scissors")
 
             def validate(m_):
                 return m_.author == ctx.author and m_.channel == ctx.channel
 
             try:
-                choice = await ctx.bot.wait_for('message', check=validate,
+                choice: discord.Message = await ctx.bot.wait_for('message', check=validate,
                                                 timeout=60)
-                choice = choice.content
+                choice: str = choice.content
             except asyncio.TimeoutError:
                 await m.delete()
                 return
 
-        player = choice.lower()
+        player: str = choice.lower()
 
         if player in options:
-            player = options.get(player)
+            player: str = options.get(player)
         elif player not in options.values():
             await DiscordEmbed.error(ctx, title='Please choose from: rock, '
                                                 'paper, scissors')
             return
 
-        bot = random.choice(list(options.values()))
+        bot: str = random.choice(list(options.values()))
 
+        # TODO: refactor
         if player == bot:
             color = discord.Color.dark_grey()
             message = "Tie!"

@@ -8,6 +8,8 @@ from datetime import datetime, timedelta
 from discord.ext import commands
 
 # locals
+from typing import List
+
 from src.core.exceptions import NotEnoughBalance
 from src.utils.general import DiscordEmbed
 
@@ -24,7 +26,7 @@ class ErrorHandler(commands.Cog):
 
     # pylint: disable=too-many-return-statements, too-many-branches
     @commands.Cog.listener()
-    async def on_command_error(self, ctx, error) -> None:
+    async def on_command_error(self, ctx: commands.Context, error: commands.CommandError) -> None:
         """The event triggered when an error is raised while invoking a command.
         ctx   : Context
         error : Exception"""
@@ -39,14 +41,14 @@ class ErrorHandler(commands.Cog):
         # Allows us to check for original exceptions raised and sent to
         # CommandInvokeError. If nothing is found. We keep the exception passed
         # to on_command_error.
-        error = getattr(error, 'original', error)
+        error: commands.CommandError = getattr(error, 'original', error)
 
         # Anything in ignored will return and prevent anything happening.
         if isinstance(error, ignored):
             return
 
-        command = ctx.invoked_with or ctx.command
-        prefix = ctx.prefix
+        command: str = ctx.invoked_with or ctx.command
+        prefix: str = ctx.prefix
 
         if isinstance(error, commands.DisabledCommand):
             await DiscordEmbed.error(ctx, title=f'`{prefix}{command}` has been disabled.')
@@ -62,16 +64,16 @@ class ErrorHandler(commands.Cog):
             return
 
         if isinstance(error, commands.BotMissingPermissions):
-            missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+            missing: List[str] = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
             if len(missing) > 2:
-                fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+                fmt: str = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
-                fmt = ' and '.join(missing)
+                fmt: str = ' and '.join(missing)
             await DiscordEmbed.error(ctx, title=f'I need the **{fmt}** permission(s) to run this command.')
             return
 
         if isinstance(error, commands.MissingPermissions):
-            missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+            missing: List[str] = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
             if len(missing) > 2:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
@@ -84,12 +86,12 @@ class ErrorHandler(commands.Cog):
             return
 
         if isinstance(error, commands.CommandOnCooldown):
-            seconds = round(error.retry_after)
+            seconds: int = round(error.retry_after)
 
-            sec = timedelta(seconds=seconds)
-            d = datetime(1, 1, 1) + sec
+            sec: timedelta = timedelta(seconds=seconds)
+            d: datetime = datetime(1, 1, 1) + sec
 
-            cooldown = f"{d.hour}h {d.minute}m {d.second}s"
+            cooldown: str = f"{d.hour}h {d.minute}m {d.second}s"
             await DiscordEmbed.error(ctx, title=f'You can\'t do this right now try again in {cooldown}.')
             return
 

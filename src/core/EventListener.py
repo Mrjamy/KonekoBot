@@ -34,7 +34,7 @@ class EventListener(commands.Cog):
         module_logger.debug('I am in %d guilds.', len(self.bot.guilds))
 
     @commands.Cog.listener()
-    async def on_command(self, _ctx):
+    async def on_command(self, _ctx: commands.Context):
         """on_command event to keep track of executed commands."""
         self.bot.command_count += 1
 
