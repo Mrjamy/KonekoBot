@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # Builtins
-import configparser
 import logging
 import sys
 import time
@@ -10,7 +9,12 @@ from typing import List
 
 # Pip
 import discord
+import yaml
 from discord.ext import commands
+try:
+    from yaml import CLoader as Loader
+except ImportError:
+    from yaml import Loader
 
 # Locals
 from src.core.config import Settings
@@ -24,9 +28,13 @@ Logger()
 module_logger = logging.getLogger('koneko')
 
 
-async def _prefix(bot, msg) -> List[str]:
+async def _prefix(bot, _msg) -> List[str]:
+    prefix = bot.config.get('prefix')
+    if not prefix:
+        prefix = '$'
+
     user_id = bot.user.id
-    return [f'<@!{user_id}> ', f'<@{user_id}> ', '$']
+    return [f'<@!{user_id}> ', f'<@{user_id}> ', prefix]
 
 
 class Koneko(commands.AutoShardedBot):
@@ -60,16 +68,23 @@ class Koneko(commands.AutoShardedBot):
         exit(0)
 
     @property
-    def config(self) -> configparser.ConfigParser:
-        config = configparser.ConfigParser()
-        config.read('config.ini')
+    def config(self) -> dict:
+        try:
+            with open('config.yaml', 'rb+') as file:
+               config = yaml.load(file, Loader)
+        except FileNotFoundError:
+            print('config.yaml not found.')
+            exit(1)
 
-        return config
+        if config is None:
+            print('config.yaml could not be opened and parsed')
+            exit(1)
+
+        return config.get('koneko')
 
     def run(self) -> None:
         try:
-            self.loop.run_until_complete(self.start(self.config.get('Koneko',
-                                                                    'token')))
+            self.loop.run_until_complete(self.start(self.config.get('token')))
         except KeyboardInterrupt:
             self.loop.run_until_complete(self.logout())
 

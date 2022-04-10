@@ -1,0 +1,5 @@
+# Copy this file and rename it config.yaml
+
+koneko:
+    token: ~  # Discord bot token
+    prefix: $ # Prefix to use when no custom guild prefix is found

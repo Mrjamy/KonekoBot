@@ -6,8 +6,8 @@ __pycache__/
 \.idea/
 
 # Configuration
-*.ini
-!config.example.ini
+config.yaml
+!config.example.yaml
 
 # Temp files
 src/core/images/tmp/

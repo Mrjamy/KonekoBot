@@ -26,7 +26,7 @@ class EventListener(commands.Cog):
             status=discord.Status.online,
             activity=discord.Activity(
                 type=discord.ActivityType.watching,
-                name=f"{self.bot.config.get('Koneko', 'prefix')}h for help"
+                name=f"{self.bot.config.get('prefix')}h for help"
             )
         )
         # Bot logged in.
