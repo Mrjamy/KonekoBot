@@ -90,7 +90,6 @@ if __name__ == '__main__':
     except ImportError as error:
         module_logger.error(traceback.print_tb(error))
         exit(1)
-    KonekoBot.load_extension("jishaku")
 
     # Dry run option for travis.
     if sys.argv[1] if len(sys.argv) > 1 else 0:
