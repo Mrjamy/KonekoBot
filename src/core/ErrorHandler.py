@@ -34,8 +34,7 @@ class ErrorHandler(commands.Cog):
         if hasattr(ctx.command, 'on_error'):
             return
 
-        ignored = (commands.CommandNotFound, commands.UserInputError,
-                   commands.CheckFailure)
+        ignored = (commands.CommandNotFound, commands.CheckFailure)
 
         # Allows us to check for original exceptions raised and sent to
         # CommandInvokeError. If nothing is found. We keep the exception passed
@@ -46,16 +45,20 @@ class ErrorHandler(commands.Cog):
         if isinstance(error, ignored):
             return
 
+        command = ctx.invoked_with or ctx.command
+        prefix = ctx.prefix
+
         if isinstance(error, commands.DisabledCommand):
-            await DiscordEmbed.error(ctx, title=f'`{ctx.prefix}{ctx.command}` has been disabled.')
+            await DiscordEmbed.error(ctx, title=f'`{prefix}{command}` has been disabled.')
             return
 
         if isinstance(error, commands.NoPrivateMessage):
-            await DiscordEmbed.error(ctx, title=f'`{ctx.prefix}{ctx.command}` can not be used in Private Messages.')
+            await DiscordEmbed.error(ctx, title=f'`{prefix}{command}` can not be used in Private Messages.')
             return
 
-        if isinstance(error, commands.BadArgument):
-            await DiscordEmbed.error(ctx, title=f'Refer to `{ctx.prefix}help {ctx.command}`')
+        # TODO send expected input instead
+        if isinstance(error, (commands.BadArgument, commands.UserInputError)):
+            await DiscordEmbed.error(ctx, title=f'Incorrect command usage, Refer to `{prefix}help {command}`')
             return
 
         if isinstance(error, commands.BotMissingPermissions):
@@ -92,7 +95,7 @@ class ErrorHandler(commands.Cog):
 
         # All other Errors not returned come here... And we can just print the
         # default TraceBack.
-        module_logger.error('Ignoring %s in command %s:', type(error) or "exception", ctx.command)
+        module_logger.error('Ignoring %s in command %s:', type(error) or "exception", command)
         module_logger.error("error: %s", error)
 
 
