@@ -49,13 +49,11 @@ class General(commands.Cog):
         with open('src/cogs/utils/sentences.json') as f:
             data: dict = json.load(f)
             if any(u.id in [502913609458909194, 533653653362311188] for u in users):
-                # TODO: use fstrings.
                 message: str = data[ctx.invoked_with]['koneko'].format(NameTransformer(ctx.message.author))
             else:
                 if ctx.invoked_with == "respect":
                     message: str = data[ctx.invoked_with]['other'].format(mentions)
                 else:
-                    # TODO: use fstrings.
                     message: str = data[ctx.invoked_with]['other'].format(NameTransformer(ctx.message.author), mentions)
 
         return await DiscordEmbed.message(ctx, title=message, image=url)
