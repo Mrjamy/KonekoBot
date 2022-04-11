@@ -59,6 +59,6 @@ class General(commands.Cog):
         return await DiscordEmbed.message(ctx, title=message, image=url)
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(General(bot))
+    await bot.add_cog(General(bot))

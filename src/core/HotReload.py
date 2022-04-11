@@ -31,7 +31,8 @@ class HotReload(commands.Cog):
         """Reloads specified cog."""
         cog: str = self.__cog_namespace(cog)
         if not cog:
-            return await ctx.channel.send(F"Could not find cog: {cog}")
+            await ctx.channel.send(F"Could not find cog: {cog}")
+            return
 
         self.bot.reload_extension(cog)
 
@@ -42,7 +43,8 @@ class HotReload(commands.Cog):
         """Unloads specified cog."""
         cog: str = self.__cog_namespace(cog)
         if not cog:
-            return await ctx.channel.send(F"Could not find cog: {cog}")
+            await ctx.channel.send(F"Could not find cog: {cog}")
+            return
 
         self.bot.unload_extension(cog)
 
@@ -57,6 +59,6 @@ class HotReload(commands.Cog):
             return False
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(HotReload(bot))
+    await bot.add_cog(HotReload(bot))

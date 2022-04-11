@@ -34,6 +34,6 @@ class Rpg(commands.Cog):
         return await DiscordEmbed.message(ctx, title=message)
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(Rpg(bot))
+    await bot.add_cog(Rpg(bot))

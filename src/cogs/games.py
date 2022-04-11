@@ -92,6 +92,6 @@ class Games(commands.Cog):
         await DiscordEmbed.send(ctx, title=message, color=color)
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(Games(bot))
+    await bot.add_cog(Games(bot))

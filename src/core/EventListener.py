@@ -39,6 +39,6 @@ class EventListener(commands.Cog):
         self.bot.command_count += 1
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(EventListener(bot))
+    await bot.add_cog(EventListener(bot))

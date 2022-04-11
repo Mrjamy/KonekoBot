@@ -64,7 +64,7 @@ class ErrorHandler(commands.Cog):
             return
 
         if isinstance(error, commands.BotMissingPermissions):
-            missing: List[str] = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+            missing: List[str] = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_permissions]
             if len(missing) > 2:
                 fmt: str = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
@@ -73,7 +73,7 @@ class ErrorHandler(commands.Cog):
             return
 
         if isinstance(error, commands.MissingPermissions):
-            missing: List[str] = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+            missing: List[str] = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_permissions]
             if len(missing) > 2:
                 fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
             else:
@@ -101,6 +101,6 @@ class ErrorHandler(commands.Cog):
         module_logger.error("error: %s", error)
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(ErrorHandler(bot))
+    await bot.add_cog(ErrorHandler(bot))

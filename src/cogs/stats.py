@@ -60,6 +60,6 @@ class Stats(commands.Cog):
 
         await ctx.channel.send(message)
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(Stats(bot))
+    await bot.add_cog(Stats(bot))

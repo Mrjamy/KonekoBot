@@ -35,7 +35,8 @@ class Admin(commands.Cog):
         if ctx.invoked_subcommand is None:
             message: str = '\n'.join([f'{guild}' for guild in self.bot.guilds])
 
-            return await ctx.channel.send(message)
+            await ctx.channel.send(message)
+            return
 
 
     @guilds.command()
@@ -46,11 +47,13 @@ class Admin(commands.Cog):
             result: discord.Guild = self.bot.get_guild(int(guild))
 
         if not result:
-            return await ctx.channel.send(f"Guild \"{guild}\" could not be found")
+            await ctx.channel.send(f"Guild \"{guild}\" could not be found")
+            return
 
         favorite_guilds = self.bot.config.get('favorite_guilds')
         if favorite_guilds and result.id in favorite_guilds:
-            return await ctx.channel.send('Favorite guilds cannot be left.')
+            await ctx.channel.send('Favorite guilds cannot be left.')
+            return
 
         m: discord.Message = await ctx.channel.send(f"Are you sure you want to leave \"{result}\"? [y-N]")
 
@@ -76,7 +79,8 @@ class Admin(commands.Cog):
     async def details(self, ctx: commands.Context, *, guild: str) -> None:
         result: Union[discord.Guild, None] = discord.utils.get(self.bot.guilds, name=guild)
         if not result:
-            return await ctx.channel.send(f"Guild \"{guild}\" could not be found")
+            await ctx.channel.send(f"Guild \"{guild}\" could not be found")
+            return
 
         await ctx.channel.send(f"Found {result.id} {result.name} {result.member_count} members.")
 
@@ -158,6 +162,6 @@ class Admin(commands.Cog):
             raise error
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(Admin(bot))
+    await bot.add_cog(Admin(bot))

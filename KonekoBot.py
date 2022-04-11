@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 # Builtins
+import asyncio
 import logging
 import sys
 import time
@@ -49,6 +50,15 @@ class Koneko(commands.AutoShardedBot):
         self.command_count: int = 0
         self.settings: Settings = Settings()
 
+        try:
+            for cog in self.settings.toggle_extensions:
+                asyncio.run(self.load_extension(f"src.cogs.{cog}"))
+            for cog in self.settings.core_extensions:
+                asyncio.run(self.load_extension(f"src.core.{cog}"))
+        except (ImportError, commands.ExtensionNotFound) as error:
+            module_logger.error(error)
+            exit(1)
+
     async def on_message(self, message: discord.Message) -> None:
         if message.author.bot:
             return
@@ -58,14 +68,6 @@ class Koneko(commands.AutoShardedBot):
             except discord.HTTPException:
                 pass
         await self.process_commands(message)
-
-    async def start(self, token) -> None:
-        await self.login(token, bot=True)
-        await self.connect(reconnect=True)
-
-    async def logout(self) -> None:
-        await super().close()
-        exit(0)
 
     @property
     def config(self) -> dict:
@@ -84,32 +86,27 @@ class Koneko(commands.AutoShardedBot):
 
     def run(self) -> None:
         try:
-            self.loop.run_until_complete(self.start(self.config.get('token')))
+            super().run(self.config.get('token'), reconnect=True)
         except KeyboardInterrupt:
-            self.loop.run_until_complete(self.logout())
+            exit(0)
 
+    async def close(self) -> None:
+        await super().close()
+
+def main():
+    intents = discord.Intents.default()
+    intents.members = True
+
+    kwargs = {
+        'command_prefix': _prefix,
+        'owner_id': 180640710217826304,
+        'intents': intents,
+        'chunk_guilds_at_startup': False,
+        'heartbeat_timeout':150.0
+    }
+
+    koneko = Koneko(**kwargs)
+    koneko.run()
 
 if __name__ == '__main__':
-    intends = discord.Intents.default()
-    intends.members = True
-
-    KonekoBot: Koneko = Koneko(command_prefix=_prefix, owner_id=180640710217826304,
-                       intends=intends, chunk_guilds_at_startup=False,
-                       heartbeat_timeout=150.0)
-
-    try:
-        for cog in KonekoBot.settings.toggle_extensions:
-            KonekoBot.load_extension(f"src.cogs.{cog}")
-        for cog in KonekoBot.settings.core_extensions:
-            KonekoBot.load_extension(f"src.core.{cog}")
-    except (ImportError, commands.ExtensionNotFound) as error:
-        module_logger.error(error)
-        exit(1)
-
-    # Dry run option for travis.
-    if sys.argv[1] if len(sys.argv) > 1 else 0:
-        module_logger.debug("Quitting: dry run")
-        exit(0)
-
-    module_logger.debug("Logging into Discord...")
-    KonekoBot.run()
+    main()

@@ -87,6 +87,6 @@ class Gambling(commands.Cog):
 
 
 
-def setup(bot) -> None:
+async def setup(bot) -> None:
     """The setup function to add this cog to Koneko."""
-    bot.add_cog(Gambling(bot))
+    await bot.add_cog(Gambling(bot))
