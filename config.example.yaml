@@ -4,3 +4,4 @@ koneko:
     token: ~  # Discord bot token
     prefix: $ # Prefix to use when no custom guild prefix is found
     favorite_guilds: ~
+    blacklist: ~

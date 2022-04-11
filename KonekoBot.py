@@ -49,6 +49,7 @@ class Koneko(commands.AutoShardedBot):
         self.uptime: float = time.time()
         self.command_count: int = 0
         self.settings: Settings = Settings()
+        self.blacklist = self.config.get('blacklist')
 
         try:
             for cog in self.settings.toggle_extensions:
@@ -60,14 +61,28 @@ class Koneko(commands.AutoShardedBot):
             exit(1)
 
     async def on_message(self, message: discord.Message) -> None:
+        ctx = await self.get_context(message, cls=commands.Context)
+
         if message.author.bot:
             return
+
         if self.user in message.mentions:
             try:
                 await message.add_reaction("\N{EYES}")
             except discord.HTTPException:
                 pass
-        await self.process_commands(message)
+
+        if ctx.command is None:
+            return
+
+        if self.blacklist:
+            if ctx.author.id in self.blacklist:
+                return
+
+            if  ctx.guild is not None and ctx.guild.id in self.blacklist:
+                return
+
+        await self.invoke(ctx)
 
     @property
     def config(self) -> dict:
