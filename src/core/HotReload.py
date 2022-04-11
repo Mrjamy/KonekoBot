@@ -34,7 +34,7 @@ class HotReload(commands.Cog):
             await ctx.channel.send(F"Could not find cog: {cog}")
             return
 
-        self.bot.reload_extension(cog)
+        await self.bot.reload_extension(cog)
 
         await ctx.channel.send(F"loaded {cog}")
 
@@ -46,7 +46,7 @@ class HotReload(commands.Cog):
             await ctx.channel.send(F"Could not find cog: {cog}")
             return
 
-        self.bot.unload_extension(cog)
+        await self.bot.unload_extension(cog)
 
         await ctx.channel.send(F"unloaded {cog}")
 
