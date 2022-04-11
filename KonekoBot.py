@@ -109,13 +109,16 @@ class Koneko(commands.AutoShardedBot):
         await super().close()
 
 def main():
-    intents = discord.Intents.default()
-    intents.members = True
+    intents: dict = {
+        'presences': False,
+        'members': True,
+        'message_content': False
+    }
 
-    kwargs = {
+    kwargs: dict = {
         'command_prefix': _prefix,
         'owner_id': 180640710217826304,
-        'intents': intents,
+        'intents': discord.Intents(**intents),
         'chunk_guilds_at_startup': False,
         'heartbeat_timeout':150.0
     }
