@@ -21,8 +21,8 @@ except ImportError:
 from src.core.config import Settings
 from src.core.logger import Logger
 
-if sys.version_info < (3, 6):
-    raise ImportError("Python 3.6 or greater is required")
+if sys.version_info < (3, 8):
+    raise ImportError("Python 3.8 or greater is required")
 
 # Setup module logging.
 Logger()
