@@ -4,6 +4,10 @@ Module to bootstrap the loggers.
 
 # Builtins
 import logging
+from logging.handlers import TimedRotatingFileHandler
+
+
+LOGGER_FORMAT: str = '%(asctime)-15s - [%(process)-6s] %(levelname)-8s - %(name)s - %(message)s'
 
 
 class Logger:
@@ -23,19 +27,19 @@ class Logger:
         """Template function for all loggers."""
         logger = logging.getLogger(module)
         logger.setLevel(level)
-        logger_file_handler = logging.FileHandler(f'logs/{module}.log')
-        logger_format = '%(asctime)-15s - [%(process)-6s] %(levelname)-8s - %(name)s - %(message)s'
+        logger_handler = TimedRotatingFileHandler(f'logs/{module}.log', when='d', interval=1, backupCount=5)
+        logger_format = LOGGER_FORMAT
         logger_formatter = logging.Formatter(logger_format)
-        logger_file_handler.setFormatter(logger_formatter)
-        logger.addHandler(logger_file_handler)
+        logger_handler.setFormatter(logger_formatter)
+        logger.addHandler(logger_handler)
 
     @staticmethod
     def std_err_logger(module: str, level: int):
         """Template function for all loggers."""
         logger = logging.getLogger(module)
         logger.setLevel(level)
-        logger_format = '%(asctime)-15s - [%(process)-6s] %(levelname)-8s - %(name)s - %(message)s'
+        logger_format = LOGGER_FORMAT
         logger_formatter = logging.Formatter(logger_format)
-        logger_stream_handler = logging.StreamHandler()
-        logger_stream_handler.setFormatter(logger_formatter)
-        logger.addHandler(logger_stream_handler)
+        logger_handler = logging.StreamHandler()
+        logger_handler.setFormatter(logger_formatter)
+        logger.addHandler(logger_handler)
