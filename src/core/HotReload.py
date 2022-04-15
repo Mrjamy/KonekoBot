@@ -7,6 +7,7 @@ import logging
 from typing import Union
 
 # Pip
+import discord
 from discord.ext import commands
 
 module_logger = logging.getLogger('koneko.HotReloading')
@@ -27,16 +28,23 @@ class HotReload(commands.Cog):
         return self.bot.is_owner(ctx.author)
 
     @commands.command(aliases=["load"], hidden=True)
-    async def reload(self, ctx: commands.Context, cog: str) -> None:
+    async def reload(self, ctx: commands.Context, cog: str) -> discord.Message:
         """Reloads specified cog."""
-        cog: str = self.__cog_namespace(cog)
-        if not cog:
-            await ctx.channel.send(F"Could not find cog: {cog}")
-            return
+        _cog: str = self.__cog_namespace(cog)
+        if not _cog:
+            return await ctx.channel.send(F"Could not find cog: {cog}")
 
-        await self.bot.reload_extension(cog)
-
-        await ctx.channel.send(F"loaded {cog}")
+        extension = _cog or cog
+        try:
+            await self.bot.load_extension(extension)
+            return await ctx.channel.send(F"Loaded {extension}")
+        except commands.ExtensionAlreadyLoaded:
+            await self.bot.reload_extension(extension)
+            return await ctx.channel.send(F"Reloaded {extension}")
+        except commands.NoEntryPointError:
+            return await ctx.channel.send(F"{extension} does not contain a setup function")
+        except commands.ExtensionFailed:
+            return await ctx.channel.send(F"{extension} could not be loaded")
 
     @commands.command(hidden=True)
     async def unload(self, ctx: commands.Context, cog: str) -> None:
