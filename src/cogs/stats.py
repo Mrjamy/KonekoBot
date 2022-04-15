@@ -37,9 +37,9 @@ class Stats(commands.Cog):
 
         parts: list = []
         data: dict = {
-            'uptime': f"{d.day - 1:d}d {d.hour}h {d.minute}m {d.second}s",
-            'guilds': str(len(self.bot.guilds)),
-            'command_count': self.bot.command_count + 1
+            'Uptime': f"{d.day - 1:d}d {d.hour}h {d.minute}m {d.second}s",
+            'Guilds': str(len(self.bot.guilds)),
+            'Commands used': self.bot.command_count + 1
         }
 
         for stat, value in data.items():
